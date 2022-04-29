@@ -18,6 +18,7 @@ void Game::onStart()
 	//ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	GameDevice::getModelManager().startLoading();
 	GameDevice::getModelManager().load("Cube", "Resources/Models/cube/", "cube");
+	GameDevice::getModelManager().load("Sphere", "Resources/Models/sphere/", "sphere");
 
 	m_SceneManager.addScene("Hoge", new HogeScene());
 	m_SceneManager.changeScene("Hoge");
