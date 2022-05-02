@@ -1,4 +1,10 @@
 #include "HogeScene.h"
+#include "Actor/Base/GameObject.h"
+#include "Component/Physics/BoxColliderBt.h"
+#include "Device/GameDevice.h"
+#include "Utility/ModelGameObjectHelper.h"
+
+#include "Component/Player/PlayerMovement.h"
 
 std::string HogeScene::nextScene()
 {
@@ -12,6 +18,12 @@ bool HogeScene::isEnd()
 
 void HogeScene::start()
 {
+	auto pCube = GameDevice::getModelManager().getModel("Cube");
+
+	auto pPlayer = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, -10.0f, 10.0f));
+	pPlayer->getTransform().setLocalScale(Vec3(0.02f, 0.02f, 0.02f));
+	pPlayer->addComponent<PlayerMovement>();
 }
 
 void HogeScene::update()

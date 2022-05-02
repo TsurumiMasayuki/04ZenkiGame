@@ -154,10 +154,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerHealth.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Component\Player\PlayerHealth.h" />
+    <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Scene\HogeScene.h" />
   </ItemGroup>
