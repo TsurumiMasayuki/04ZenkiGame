@@ -164,18 +164,20 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\Component\Enemy\LinearlyEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
+    <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
-    <ClCompile Include="Source\TestEffect.cpp" />
-    <ClCompile Include="Source\TestVibrationEffect.cpp" />
+    <ClCompile Include="Source\Effect\TestEffect.cpp" />
+    <ClCompile Include="Source\Effect\TestVibrationEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Enemy\LinearlyEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
+    <ClInclude Include="Source\Effect\TestFlameEffect.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Scene\HogeScene.h" />
-    <ClInclude Include="Source\TestEffect.h" />
-    <ClInclude Include="Source\TestVibrationEffect.h" />
+    <ClInclude Include="Source\Effect\TestEffect.h" />
+    <ClInclude Include="Source\Effect\TestVibrationEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\AdditivePixelShader.hlsl">

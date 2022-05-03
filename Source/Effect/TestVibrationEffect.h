@@ -11,6 +11,8 @@ namespace Action
         virtual void update(float time) override;
         virtual void onSuspend() override;
         virtual AbstractAction* clone() override;
+    public:
+        void setCamera(GameObject* pCameraObj) { m_pCameraObj = pCameraObj; }
     private:
         GameObject* m_pCameraObj;
     };
