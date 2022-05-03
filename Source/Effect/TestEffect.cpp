@@ -11,18 +11,13 @@ void Action::TestEffect::init()
 	auto& random = GameDevice::getRandom();
 
 	//エフェクト用オブジェクトを10個生成
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 100; ++i)
 	{
-		//色をランダムで決定
-		float color = random.getRandom(0.0f, 1.0f);
-		//スケールをランダムで決定
-		float scale = random.getRandom(5.0f, 15.0f);
-
-		auto pObj = ModelGameObjectHelper::instantiateModel<int>(m_pUser->getGameMediator(), GameDevice::getModelManager().getModel("Cube"), false);
+		auto pObj = ModelGameObjectHelper::instantiateModel<int>(m_pUser->getGameMediator(), GameDevice::getModelManager().getModel("Sphere"), false);
 		pObj->getTransform().setLocalPosition(m_pUser->getTransform().getLocalPosition());
-		pObj->getTransform().setLocalScale(Vec3(scale));
+		pObj->getTransform().setLocalScale(Vec3(0.05f));
 		auto pRenderer = pObj->getChildren().at(0)->getComponent<MeshRenderer>();
-		pRenderer->setColor(Color(color, color, color, 1.0f));
+		pRenderer->setColor(Color(1.0f, 0.8f, 0.0f, 1.0f));
 
 		//ランダムな方向に移動+透明化
 		pObj->getActionManager().enqueueAction
@@ -30,8 +25,8 @@ void Action::TestEffect::init()
 			new Spawn
 			(
 				{
-					new EaseOutQuart(new MoveBy(Vec3(random.getRandom(-1.0f, 1.0f), random.getRandom(-1.0f, 1.0f), random.getRandom(-1.0f, 1.0f)) * 25.0f, 1.0f)),
-					new ColorTo(Color(color, color, color, 0.0f), pRenderer, 1.0f)
+					new EaseOutCubic(new MoveBy(Vec3(random.getRandom(-1.0f, 1.0f), random.getRandom(-1.0f, 1.0f), random.getRandom(-1.0f, 1.0f)) * 1.1f, 1.0f)),
+					new ColorTo(Color(1.0f, 1.0f, 1.0f, 0.0f), pRenderer, 1.0f)
 				}
 			)
 		);
