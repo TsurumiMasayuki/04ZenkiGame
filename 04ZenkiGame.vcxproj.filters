@@ -45,4 +45,20 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shaders\AdditivePixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\BasicPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\BasicVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\CirclePixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\GaussianBlurPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\InstancingPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\InstancingVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\LuminanceExtractPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\MeshPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\MeshVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\ParticleGeometryShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\ParticlePixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\ParticleVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\PostEffectPixelShader.hlsl" />
+  </ItemGroup>
 </Project>
