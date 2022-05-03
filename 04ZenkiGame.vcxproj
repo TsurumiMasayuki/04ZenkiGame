@@ -158,12 +158,16 @@
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
+    <ClCompile Include="Source\TestEffect.cpp" />
+    <ClCompile Include="Source\TestVibrationEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Enemy\LinearlyEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Scene\HogeScene.h" />
+    <ClInclude Include="Source\TestEffect.h" />
+    <ClInclude Include="Source\TestVibrationEffect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
