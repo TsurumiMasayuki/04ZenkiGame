@@ -5,6 +5,11 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Player/PlayerMovement.h"
+#include "Component/Utility/Action/ActionManager.h"
+#include "Component/Utility/Action/Actions.h"
+#include "Effect/TestEffect.h"
+#include "Effect/TestFlameEffect.h"
+#include "Effect/TestVibrationEffect.h"
 
 std::string HogeScene::nextScene()
 {
