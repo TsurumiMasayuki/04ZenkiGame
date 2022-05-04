@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Component">
+      <UniqueIdentifier>{9a3ebff5-ebad-408e-8fd6-53f79530383a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Component">
+      <UniqueIdentifier>{2273490c-5ff7-49db-bc17-d2e265cb42c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -28,6 +34,19 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Component\Player\PlayerHealth.cpp">
+    <ClCompile Include="Source\Component\Enemy\LinearlyEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Effect\TestEffect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Effect\TestVibrationEffect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Effect\TestFlameEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,5 +63,36 @@
     <ClInclude Include="Source\Component\Player\PlayerHealth.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\Enemy\LinearlyEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\Enemy\TestEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effect\TestEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effect\TestVibrationEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effect\TestFlameEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shaders\AdditivePixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\BasicPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\BasicVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\CirclePixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\GaussianBlurPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\InstancingPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\InstancingVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\LuminanceExtractPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\MeshPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\MeshVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\ParticleGeometryShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\ParticlePixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\ParticleVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\PostEffectPixelShader.hlsl" />
   </ItemGroup>
 </Project>
