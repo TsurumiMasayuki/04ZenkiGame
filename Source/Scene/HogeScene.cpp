@@ -4,6 +4,9 @@
 #include "Device/GameDevice.h"
 #include "Utility/ModelGameObjectHelper.h"
 
+#include "Component/Enemy/TestEnemy.h"
+#include "Component/Enemy/LinearlyEnemy.h"
+
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Utility/Action/ActionManager.h"
 #include "Component/Utility/Action/Actions.h"
@@ -23,16 +26,33 @@ bool HogeScene::isEnd()
 
 void HogeScene::start()
 {
+	getMainCamera()->getUser().addComponent<Action::ActionManager>();
+
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	auto pPlayer = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
-	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, -10.0f, 10.0f));
-	pPlayer->getTransform().setLocalScale(Vec3(0.02f, 0.02f, 0.02f));
+
+	pPlayer->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 10.0f));
 	pPlayer->addComponent<PlayerMovement>();
+
+	auto pEnemy = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
+	pEnemy->setTag("Enemy");
+	pEnemy->getTransform().setLocalPosition(Vec3(10.0f, 0.0f, 10.0f));
+
+	auto pBoxCollider = pEnemy->addComponent<BoxColiiderBt>();
+	pBoxCollider->setMass(1.0f);
+	pBoxCollider->setTrigger(false);
+	pBoxCollider->setUseGravity(false);
+
+	auto pTestEnemy = pEnemy->addComponent<TestEnemy>();
+	pTestEnemy->SetTarget(pPlayer);
 }
 
 void HogeScene::update()
 {
+	int a = 90;
 }
 
 void HogeScene::shutdown()

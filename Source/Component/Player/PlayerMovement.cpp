@@ -5,6 +5,8 @@
 #include "Device/GameDevice.h"
 #include "Math/MathUtility.h"
 
+#include "Component/Player/PlayerAttack.h"
+
 using namespace Action;
 
 void PlayerMovement::onStart()
@@ -82,8 +84,20 @@ void PlayerMovement::dash(const Vec3& moveDir)
 	if (m_pActionManager->actionCount() > 0)
 		return;
 
+	//移動時間の割合を算出
+	float moveTimeRatio = std::fmaxf(0.0f, 1.0f - m_DashElapsedTime / m_DashMaxTime);
+
 	const Vec3& position = getUser().getTransform().getLocalPosition();
-	m_pActionManager->enqueueAction(new MoveBy(moveDir, 0.25f * std::fmaxf(0.0f, 1.0f - m_DashElapsedTime / m_DashMaxTime)));
+
+	//移動
+	m_pActionManager->enqueueAction(new MoveBy(moveDir, 0.25f * moveTimeRatio));
+
+	//攻撃用オブジェクトを生成
+	auto pAttackObject = new GameObject(getUser().getGameMediator());
+	//自身の座標を設定
+	pAttackObject->getTransform().setLocalPosition(getUser().getTransform().getLocalPosition());
+	//攻撃用コンポーネントをアタッチ
+	pAttackObject->addComponent<PlayerAttack>();
 
 	return;
 }
