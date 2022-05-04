@@ -38,6 +38,7 @@ public:
 	void checkHitStates();
 
 	void setTrigger(bool trigger);
+	void setUseGravity(bool gravity);
 
 private:
 	void initialize();
@@ -65,4 +66,5 @@ private:
 	float m_Mass;
 	bool m_Initialized;
 	bool m_IsTrigger;
+	bool m_UseGravity;
 };
