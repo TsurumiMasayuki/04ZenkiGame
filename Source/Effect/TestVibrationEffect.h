@@ -1,6 +1,5 @@
 #pragma once
-#pragma once
-#include "C:\K019G1491\gamejam\inc\Component\Utility\Action\AbstractAction.h"
+#include "Component/Utility/Action/AbstractAction.h"
 
 namespace Action
 {
@@ -12,6 +11,8 @@ namespace Action
         virtual void update(float time) override;
         virtual void onSuspend() override;
         virtual AbstractAction* clone() override;
+    public:
+        void setCamera(GameObject* pCameraObj) { m_pCameraObj = pCameraObj; }
     private:
         GameObject* m_pCameraObj;
     };
