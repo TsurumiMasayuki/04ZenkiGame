@@ -167,6 +167,7 @@
     <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
     <ClCompile Include="Source\Component\Enemy\LinearlyEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
     <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
@@ -179,11 +180,14 @@
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
     <ClInclude Include="Source\Component\Enemy\LinearlyEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
+    <ClInclude Include="Source\Component\Player\PlayerStats.h" />
     <ClInclude Include="Source\Effect\TestFlameEffect.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Scene\HogeScene.h" />
     <ClInclude Include="Source\Effect\TestEffect.h" />
     <ClInclude Include="Source\Effect\TestVibrationEffect.h" />
+    <ClInclude Include="Source\Utility\JsonFileManager.h" />
+    <ClInclude Include="Source\Utility\SingletonTemplate.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\AdditivePixelShader.hlsl">
