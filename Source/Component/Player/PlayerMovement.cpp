@@ -7,6 +7,8 @@
 
 #include "Component/Player/PlayerAttack.h"
 
+#include "Utility/JsonFileManager.h"
+
 using namespace Action;
 
 void PlayerMovement::onStart()
@@ -15,12 +17,20 @@ void PlayerMovement::onStart()
 
 	m_DashElapsedTime = 0.0f;
 	m_DashMaxTime = 3.0f;
+
+	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 }
 
 void PlayerMovement::onUpdate()
 {
 	//入力デバイスを取得
 	const auto& input = GameDevice::getInput();
+
+	//設定ファイルをホットリロード
+	if (input.isKeyDown(DIK_R))
+	{
+		m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
+	}
 
 	//移動方向
 	Vec3 moveDir = Vec3::zero();
@@ -62,7 +72,7 @@ void PlayerMovement::move(const Vec3& moveDir)
 		return;
 
 	//1マス移動
-	m_pActionManager->enqueueAction(new EaseOutCubic(new MoveBy(moveDir, 0.25f)));
+	m_pActionManager->enqueueAction(new EaseOutCubic(new MoveBy(moveDir, m_Stats.m_WalkTime)));
 }
 
 void PlayerMovement::dash(const Vec3& moveDir)
@@ -90,7 +100,7 @@ void PlayerMovement::dash(const Vec3& moveDir)
 	const Vec3& position = getUser().getTransform().getLocalPosition();
 
 	//移動
-	m_pActionManager->enqueueAction(new MoveBy(moveDir, 0.25f * moveTimeRatio));
+	m_pActionManager->enqueueAction(new MoveBy(moveDir, m_Stats.m_DashTime * moveTimeRatio));
 
 	//攻撃用オブジェクトを生成
 	auto pAttackObject = new GameObject(getUser().getGameMediator());

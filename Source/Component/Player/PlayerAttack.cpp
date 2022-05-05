@@ -7,8 +7,12 @@
 #include "Component/Utility/Action/Actions.h"
 #include "Component/Utility/Action/ActionManager.h"
 
+#include "Component/Player/PlayerStats.h"
+
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
+
+#include "Utility/JsonFileManager.h"
 
 void PlayerAttack::onStart()
 {
@@ -22,8 +26,12 @@ void PlayerAttack::onStart()
 	auto pActionManager = getUser().addComponent<Action::ActionManager>();
 	//火炎エフェクトを実行
 	pActionManager->enqueueAction(new Action::TestFlameEffect());
+
+	//生存時間を取得
+	float m_TimeUntilDestroy = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_FlameRemainTime;
+
 	//自身を破棄
-	pActionManager->enqueueAction(new Action::Destroy(3.0f));
+	pActionManager->enqueueAction(new Action::Destroy(m_TimeUntilDestroy));
 
 	//カメラがアタッチされているオブジェクトを取得
 	auto pCameraObject = &getUser().getGameMediator()->getMainCamera()->getUser();
@@ -46,6 +54,6 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 		return;
 
 	//カメラを揺らす
-	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(1.0f, 0.0f, 0.0f), 0.5f)));
-	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(-1.0f, 0.0f, 0.0f), 0.5f)));
+	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(1.0f, 0.0f, 0.0f), 0.25f)));
+	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(-1.0f, 0.0f, 0.0f), 0.25f)));
 }
