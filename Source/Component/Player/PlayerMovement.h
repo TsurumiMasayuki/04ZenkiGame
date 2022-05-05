@@ -1,7 +1,8 @@
 #pragma once
 #include "Component/Base/AbstractComponent.h"
-
 #include "Utility/Timer.h"
+
+#include "Component/Player/PlayerStats.h"
 
 namespace Action
 {
@@ -25,7 +26,8 @@ private:
 private:
 	Action::ActionManager* m_pActionManager;
 
-	float m_BaseDashSpeed;
+	PlayerStats m_Stats;
+
 	float m_DashElapsedTime;
 	float m_DashMaxTime;
 };
