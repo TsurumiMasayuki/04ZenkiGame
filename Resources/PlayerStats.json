@@ -1,4 +1,5 @@
 {
     "WalkTime" : 0.25,
-    "DashTime" : 0.25
+    "DashTime" : 0.25,
+    "FlameRemainTime" : 10.0
 }
