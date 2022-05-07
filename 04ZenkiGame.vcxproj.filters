@@ -29,6 +29,7 @@
     <ClCompile Include="Source\Effect\TestVibrationEffect.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
+    <ClCompile Include="Source\Device\ControllerInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerHealth.h" />
@@ -44,5 +45,6 @@
     <ClInclude Include="Source\Utility\JsonFileManager.h" />
     <ClInclude Include="Source\Utility\SingletonTemplate.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
+    <ClInclude Include="Source\Device\ControllerInput.h" />
   </ItemGroup>
 </Project>
