@@ -136,12 +136,7 @@ PS_OUT main(PS_IN input) : SV_TARGET
 	PS_OUT result;
 	
 	float3 eyeDir = normalize(cameraPos.xyz - input.worldPos.xyz);
-
-	float4 color = float4(0, 0, 0, 1);
-	for (int i = 0; i < 3; i++)
-	{
-		color.xyz += BRDF(lightDir[i].xyz, eyeDir, input.normal) * lightColor[i];
-	}
+	float4 color = tex.Sample(smp, input.uv) * baseColor;
 
 	result.target0 = color;
 
