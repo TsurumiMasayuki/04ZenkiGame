@@ -1,5 +1,6 @@
 #include "PlayerMovement.h"
 #include "Actor/Base/GameObject.h"
+#include "Component/Audio/AudioSource.h"
 #include "Component/Utility/Action/Actions.h"
 #include "Component/Utility/Action/ActionManager.h"
 #include "Device/GameDevice.h"
@@ -14,6 +15,10 @@ using namespace Action;
 void PlayerMovement::onStart()
 {
 	m_pActionManager = getUser().addComponent<ActionManager>();
+
+	m_pAudioSource = getUser().addComponent<AudioSource>();
+	m_pAudioSource->setAudio("Walk");
+	m_pAudioSource->setVolume(0.1f);
 
 	m_DashElapsedTime = 0.0f;
 	m_DashMaxTime = 3.0f;
@@ -49,13 +54,13 @@ void PlayerMovement::onUpdate()
 	if (input.isKey(DIK_LEFT))
 		moveDir = Vec3(-1.0f, 0.0f, 0.0f);
 
-	//移動量がゼロなら実行しない
-	if (moveDir.x == 0.0f && moveDir.y == 0.0f)
-	{
-		//ダッシュ経過時間をゼロにする
+	//ダッシュキーが押されていないならダッシュ経過時間をゼロにする
+	if (!input.isKey(DIK_SPACE))
 		m_DashElapsedTime = 0.0f;
+
+	//移動量がゼロなら実行しない
+	if (moveDir.x == 0.0f && moveDir.y == 0.0f) 
 		return;
-	}
 
 	dash(moveDir);
 	move(moveDir);
@@ -73,6 +78,13 @@ void PlayerMovement::move(const Vec3& moveDir)
 
 	//1マス移動
 	m_pActionManager->enqueueAction(new EaseOutCubic(new MoveBy(moveDir, m_Stats.m_WalkTime)));
+
+	//歩くサウンドを再生
+	m_pAudioSource->play();
+
+	//ランダムでピッチを設定
+	float pitch = GameDevice::getRandom().getRandom(1.0f, 1.1f);
+	m_pAudioSource->setPitch(pitch);
 }
 
 void PlayerMovement::dash(const Vec3& moveDir)
@@ -95,12 +107,22 @@ void PlayerMovement::dash(const Vec3& moveDir)
 		return;
 
 	//移動時間の割合を算出
-	float moveTimeRatio = std::fmaxf(0.0f, 1.0f - m_DashElapsedTime / m_DashMaxTime);
+	float moveTimeRatio = std::fmaxf(0.25f, 1.0f - m_DashElapsedTime / m_DashMaxTime);
 
 	const Vec3& position = getUser().getTransform().getLocalPosition();
 
 	//移動
 	m_pActionManager->enqueueAction(new MoveBy(moveDir, m_Stats.m_DashTime * moveTimeRatio));
+
+	//歩くサウンドを再生
+	m_pAudioSource->play();
+
+	//ピッチを段々上げる
+	float pitch = Easing::easeOutCubic(1.0f - moveTimeRatio);
+	//ピッチ制限
+	pitch = std::fminf(pitch, 0.4f);
+	//ピッチをセット
+	m_pAudioSource->setPitch(pitch);
 
 	//攻撃用オブジェクトを生成
 	auto pAttackObject = new GameObject(getUser().getGameMediator());

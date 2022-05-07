@@ -27,6 +27,10 @@ void Game::onStart()
 	GameDevice::getModelManager().load("Cube", "Resources/Models/cube/", "cube");
 	GameDevice::getModelManager().load("Sphere", "Resources/Models/sphere/", "sphere");
 
+	//サウンド読み込み
+	GameDevice::getAudioManager().loadWavFile("Walk", L"Resources/Sounds/Player/Walk.wav");
+	GameDevice::getAudioManager().loadWavFile("EnemyHit", L"Resources/Sounds/Enemy/Enemy_Hit.wav");
+
 	//プレイヤー設定ファイル読み込み
 	JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
 

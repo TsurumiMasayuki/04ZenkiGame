@@ -9,6 +9,8 @@ namespace Action
 	class ActionManager;
 }
 
+class AudioSource;
+
 class PlayerMovement
 	: public AbstractComponent
 {
@@ -25,6 +27,7 @@ private:
 
 private:
 	Action::ActionManager* m_pActionManager;
+	AudioSource* m_pAudioSource;
 
 	PlayerStats m_Stats;
 
