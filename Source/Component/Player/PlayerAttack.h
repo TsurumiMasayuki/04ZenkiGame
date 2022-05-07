@@ -7,6 +7,8 @@ namespace Action
 	class ActionManager;
 }
 
+class AudioSource;
+
 //プレイヤー//攻撃判定用コンポーネント
 class PlayerAttack
 	: public AbstractComponent
@@ -21,4 +23,7 @@ protected:
 private:
 	//カメラにアタッチされているActionManager
 	Action::ActionManager* m_pCameraActionManager;
+
+	//ダメージ用音声
+	AudioSource* m_pAudioSource;
 };

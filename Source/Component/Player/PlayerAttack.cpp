@@ -1,5 +1,8 @@
 #include "PlayerAttack.h"
 #include "Actor/Base/GameObject.h"
+
+#include "Component/Audio/AudioSource.h"
+
 #include "Component/Graphics/Camera.h"
 
 #include "Component/Physics/BoxColliderBt.h"
@@ -38,6 +41,11 @@ void PlayerAttack::onStart()
 
 	//ActionManagerを取得
 	m_pCameraActionManager = pCameraObject->getComponent<Action::ActionManager>();
+
+	//AudioSourceをアタッチ
+	m_pAudioSource = getUser().addComponent<AudioSource>();
+	m_pAudioSource->setAudio("EnemyHit");
+	m_pAudioSource->setVolume(0.1f);
 }
 
 void PlayerAttack::onUpdate()
@@ -56,4 +64,7 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 	//カメラを揺らす
 	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(1.0f, 0.0f, 0.0f), 0.25f)));
 	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(-1.0f, 0.0f, 0.0f), 0.25f)));
+
+	//エネミーの被ダメージ音を鳴らす
+	m_pAudioSource->play();
 }
