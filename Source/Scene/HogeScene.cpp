@@ -25,6 +25,7 @@ bool HogeScene::isEnd()
 
 void HogeScene::start()
 {
+	auto& cameraTransform = getMainCamera()->getUser().getTransform();
 	getMainCamera()->getUser().addComponent<Action::ActionManager>();
 
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
