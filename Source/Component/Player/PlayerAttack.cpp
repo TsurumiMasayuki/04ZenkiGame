@@ -2,7 +2,6 @@
 #include "Actor/Base/GameObject.h"
 
 #include "Component/Audio/AudioSource.h"
-
 #include "Component/Graphics/Camera.h"
 
 #include "Component/Physics/BoxColliderBt.h"
@@ -19,30 +18,30 @@
 
 void PlayerAttack::onStart()
 {
-	//©g‚ÉƒRƒ‰ƒCƒ_[‚ğƒAƒ^ƒbƒ`
+	//è‡ªèº«ã«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ã‚¢ã‚¿ãƒƒãƒ
 	auto pBoxCollider = getUser().addComponent<BoxColiiderBt>();
 	pBoxCollider->setMass(1.0f);
 	pBoxCollider->setTrigger(true);
 	pBoxCollider->setUseGravity(false);
 
-	//©g‚ÉActionManager‚ğƒAƒ^ƒbƒ`
+	//è‡ªèº«ã«ActionManagerã‚’ã‚¢ã‚¿ãƒƒãƒ
 	auto pActionManager = getUser().addComponent<Action::ActionManager>();
-	//‰Î‰ŠƒGƒtƒFƒNƒg‚ğÀs
+	//ç«ç‚ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å®Ÿè¡Œ
 	pActionManager->enqueueAction(new Action::TestFlameEffect());
 
-	//¶‘¶ŠÔ‚ğæ“¾
+	//ç”Ÿå­˜æ™‚é–“ã‚’å–å¾—
 	float m_TimeUntilDestroy = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_FlameRemainTime;
 
-	//©g‚ğ”jŠü
+	//è‡ªèº«ã‚’ç ´æ£„
 	pActionManager->enqueueAction(new Action::Destroy(m_TimeUntilDestroy));
 
-	//ƒJƒƒ‰‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚ğæ“¾
+	//ã‚«ãƒ¡ãƒ©ãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
 	auto pCameraObject = &getUser().getGameMediator()->getMainCamera()->getUser();
 
-	//ActionManager‚ğæ“¾
+	//ActionManagerã‚’å–å¾—
 	m_pCameraActionManager = pCameraObject->getComponent<Action::ActionManager>();
 
-	//AudioSource‚ğƒAƒ^ƒbƒ`
+	//AudioSourceã‚’ã‚¢ã‚¿ãƒƒãƒ
 	m_pAudioSource = getUser().addComponent<AudioSource>();
 	m_pAudioSource->setAudio("EnemyHit");
 	m_pAudioSource->setVolume(0.1f);
@@ -54,17 +53,17 @@ void PlayerAttack::onUpdate()
 
 void PlayerAttack::onCollisionEnter(GameObject* pHit)
 {
-	//“G‚Å‚È‚¢‚È‚çreturn
+	//æ•µã§ãªã„ãªã‚‰return
 	if (!pHit->compareTag("Enemy")) 
 		return;
 
 	if (m_pCameraActionManager->actionCount() > 0) 
 		return;
 
-	//ƒJƒƒ‰‚ğ—h‚ç‚·
+	//ã‚«ãƒ¡ãƒ©ã‚’æºã‚‰ã™
 	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(1.0f, 0.0f, 0.0f), 0.25f)));
 	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(-1.0f, 0.0f, 0.0f), 0.25f)));
 
-	//ƒGƒlƒ~[‚Ì”íƒ_ƒ[ƒW‰¹‚ğ–Â‚ç‚·
+	//ã‚¨ãƒãƒŸãƒ¼ã®è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸éŸ³ã‚’é³´ã‚‰ã™
 	m_pAudioSource->play();
 }

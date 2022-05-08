@@ -1,5 +1,6 @@
 #include "PlayerMovement.h"
 #include "Actor/Base/GameObject.h"
+
 #include "Component/Audio/AudioSource.h"
 #include "Component/Utility/Action/Actions.h"
 #include "Component/Utility/Action/ActionManager.h"
@@ -28,37 +29,37 @@ void PlayerMovement::onStart()
 
 void PlayerMovement::onUpdate()
 {
-	//“ü—ÍƒfƒoƒCƒX‚ğæ“¾
+	//å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã‚’å–å¾—
 	const auto& input = GameDevice::getInput();
 
-	//İ’èƒtƒ@ƒCƒ‹‚ğƒzƒbƒgƒŠƒ[ƒh
+	//è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ›ãƒƒãƒˆãƒªãƒ­ãƒ¼ãƒ‰
 	if (input.isKeyDown(DIK_R))
 	{
 		m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 	}
 
-	//ˆÚ“®•ûŒü
+	//ç§»å‹•æ–¹å‘
 	Vec3 moveDir = Vec3::zero();
 
-	//“ü—Í‚É‰‚¶‚ÄˆÚ“®•ûŒü‚ğƒZƒbƒg(ƒ}ƒX–Ú‚È‚Ì‚ÅÎ‚ßˆÚ“®‚Í‚È‚µ)
-	//ã
+	//å…¥åŠ›ã«å¿œã˜ã¦ç§»å‹•æ–¹å‘ã‚’ã‚»ãƒƒãƒˆ(ãƒã‚¹ç›®ãªã®ã§æ–œã‚ç§»å‹•ã¯ãªã—)
+	//ä¸Š
 	if (input.isKey(DIK_UP))
 		moveDir = Vec3(0.0f, 1.0f, 0.0f);
-	//‰º
+	//ä¸‹
 	if (input.isKey(DIK_DOWN))
 		moveDir = Vec3(0.0f, -1.0f, 0.0f);
-	//‰E
+	//å³
 	if (input.isKey(DIK_RIGHT))
 		moveDir = Vec3(1.0f, 0.0f, 0.0f);
-	//¶
+	//å·¦
 	if (input.isKey(DIK_LEFT))
 		moveDir = Vec3(-1.0f, 0.0f, 0.0f);
 
-	//ƒ_ƒbƒVƒ…ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢‚È‚çƒ_ƒbƒVƒ…Œo‰ßŠÔ‚ğƒ[ƒ‚É‚·‚é
+	//ãƒ€ãƒƒã‚·ãƒ¥ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãªã„ãªã‚‰ãƒ€ãƒƒã‚·ãƒ¥çµŒéæ™‚é–“ã‚’ã‚¼ãƒ­ã«ã™ã‚‹
 	if (!input.isKey(DIK_SPACE))
 		m_DashElapsedTime = 0.0f;
 
-	//ˆÚ“®—Ê‚ªƒ[ƒ‚È‚çÀs‚µ‚È‚¢
+	//ç§»å‹•é‡ãŒã‚¼ãƒ­ãªã‚‰å®Ÿè¡Œã—ãªã„
 	if (moveDir.x == 0.0f && moveDir.y == 0.0f) 
 		return;
 
@@ -68,67 +69,67 @@ void PlayerMovement::onUpdate()
 
 void PlayerMovement::move(const Vec3& moveDir)
 {
-	//ƒ_ƒbƒVƒ…ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚È‚çI—¹
+	//ãƒ€ãƒƒã‚·ãƒ¥ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ãªã‚‰çµ‚äº†
 	if (GameDevice::getInput().isKey(DIK_SPACE))
 		return;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì“r’†‚È‚çI—¹
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®é€”ä¸­ãªã‚‰çµ‚äº†
 	if (m_pActionManager->actionCount() > 0)
 		return;
 
-	//1ƒ}ƒXˆÚ“®
+	//1ãƒã‚¹ç§»å‹•
 	m_pActionManager->enqueueAction(new EaseOutCubic(new MoveBy(moveDir, m_Stats.m_WalkTime)));
 
-	//•à‚­ƒTƒEƒ“ƒh‚ğÄ¶
+	//æ­©ãã‚µã‚¦ãƒ³ãƒ‰ã‚’å†ç”Ÿ
 	m_pAudioSource->play();
 
-	//ƒ‰ƒ“ƒ_ƒ€‚Åƒsƒbƒ`‚ğİ’è
+	//ãƒ©ãƒ³ãƒ€ãƒ ã§ãƒ”ãƒƒãƒã‚’è¨­å®š
 	float pitch = GameDevice::getRandom().getRandom(1.0f, 1.1f);
 	m_pAudioSource->setPitch(pitch);
 }
 
 void PlayerMovement::dash(const Vec3& moveDir)
 {
-	//ƒfƒ‹ƒ^ƒ^ƒCƒ€‚ğæ“¾
+	//ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ã‚’å–å¾—
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
-	//ƒ_ƒbƒVƒ…ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚È‚çˆÚ“®‘¬“x‘‰Á
+	//ãƒ€ãƒƒã‚·ãƒ¥ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ãªã‚‰ç§»å‹•é€Ÿåº¦å¢—åŠ 
 	if (GameDevice::getInput().isKey(DIK_SPACE))
 	{
 		m_DashElapsedTime += deltaTime;
 	}
 
-	//ƒ_ƒbƒVƒ…ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢‚È‚çI—¹
+	//ãƒ€ãƒƒã‚·ãƒ¥ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãªã„ãªã‚‰çµ‚äº†
 	if (!GameDevice::getInput().isKey(DIK_SPACE))
 		return;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì“r’†‚È‚çI—¹
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®é€”ä¸­ãªã‚‰çµ‚äº†
 	if (m_pActionManager->actionCount() > 0)
 		return;
 
-	//ˆÚ“®ŠÔ‚ÌŠ„‡‚ğZo
+	//ç§»å‹•æ™‚é–“ã®å‰²åˆã‚’ç®—å‡º
 	float moveTimeRatio = std::fmaxf(0.25f, 1.0f - m_DashElapsedTime / m_DashMaxTime);
 
 	const Vec3& position = getUser().getTransform().getLocalPosition();
 
-	//ˆÚ“®
+	//ç§»å‹•
 	m_pActionManager->enqueueAction(new MoveBy(moveDir, m_Stats.m_DashTime * moveTimeRatio));
 
-	//•à‚­ƒTƒEƒ“ƒh‚ğÄ¶
+	//æ­©ãã‚µã‚¦ãƒ³ãƒ‰ã‚’å†ç”Ÿ
 	m_pAudioSource->play();
 
-	//ƒsƒbƒ`‚ğ’iXã‚°‚é
+	//ãƒ”ãƒƒãƒã‚’æ®µã€…ä¸Šã’ã‚‹
 	float pitch = Easing::easeOutCubic(1.0f - moveTimeRatio);
-	//ƒsƒbƒ`§ŒÀ
+	//ãƒ”ãƒƒãƒåˆ¶é™
 	pitch = std::fminf(pitch, 0.4f);
-	//ƒsƒbƒ`‚ğƒZƒbƒg
+	//ãƒ”ãƒƒãƒã‚’ã‚»ãƒƒãƒˆ
 	m_pAudioSource->setPitch(pitch);
 
-	//UŒ‚—pƒIƒuƒWƒFƒNƒg‚ğ¶¬
+	//æ”»æ’ƒç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 	auto pAttackObject = new GameObject(getUser().getGameMediator());
-	//©g‚ÌÀ•W‚ğİ’è
+	//è‡ªèº«ã®åº§æ¨™ã‚’è¨­å®š
 	pAttackObject->getTransform().setLocalPosition(getUser().getTransform().getLocalPosition());
-	//UŒ‚—pƒRƒ“ƒ|[ƒlƒ“ƒg‚ğƒAƒ^ƒbƒ`
+	//æ”»æ’ƒç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ã‚¢ã‚¿ãƒƒãƒ
 	pAttackObject->addComponent<PlayerAttack>();
 
 	return;

@@ -1,5 +1,6 @@
 #pragma once
 #include "Component/Utility/Action/AbstractAction.h"
+#include "Component/Graphics/MeshRenderer.h"
 
 namespace Action
 {
@@ -10,6 +11,10 @@ namespace Action
 		virtual void update(float time) override;
 		virtual void onSuspend() override;
 		virtual AbstractAction* clone() override;
+
+	private:
+		GameObject* pObjParticle;
+		MeshRenderer* pRenderer;
 	};
 }
 

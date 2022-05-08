@@ -10,7 +10,6 @@
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Utility/Action/ActionManager.h"
 #include "Component/Utility/Action/Actions.h"
-#include "Effect/TestEffect.h"
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
 
@@ -53,6 +52,7 @@ void HogeScene::start()
 
 void HogeScene::update()
 {
+	int a = 90;
 }
 
 void HogeScene::shutdown()
