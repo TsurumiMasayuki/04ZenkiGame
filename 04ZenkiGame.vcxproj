@@ -162,6 +162,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\Component\Floor\Floor.cpp" />
+    <ClCompile Include="Source\Component\Map\Map.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerHealth.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
@@ -176,6 +178,8 @@
     <ClCompile Include="Source\Effect\TestVibrationEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Component\Floor\Floor.h" />
+    <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Component\Player\PlayerAttack.h" />
     <ClInclude Include="Source\Component\Player\PlayerHealth.h" />
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
