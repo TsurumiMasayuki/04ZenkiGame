@@ -7,32 +7,32 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 void Action::TestFlameEffect::init()
-{
+{	
 	auto& random = GameDevice::getRandom();
-	const float interval = 0.4f;
-
-	//エフェクト用オブジェクトを10個生成
-	for (int i = 0; i < 10; ++i)
+	//エフェクト持続時間
+	const float effectDuration = 1.0f;
+	for (int i = 0; i < 15; ++i)
 	{
-		auto pObj = ModelGameObjectHelper::instantiateModel<int>(m_pUser->getGameMediator(), GameDevice::getModelManager().getModel("Cube"));
-		pObj->getTransform().setLocalPosition(m_pUser->getTransform().getLocalPosition());
-		pObj->getTransform().setLocalScale(Vec3(0.3f,0.3f,0.3f));
-		auto pRenderer = pObj->getChildren().at(0)->getComponent<MeshRenderer>();
-		pRenderer->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+		pObjParticle = ModelGameObjectHelper::instantiateModel<int>(m_pUser->getGameMediator(), GameDevice::getModelManager().getModel("Cube"));
+		pObjParticle->getTransform().setLocalPosition(m_pUser->getTransform().getLocalPosition());
+		pObjParticle->getTransform().setLocalScale(Vec3(0.5f));
+		pRenderer = pObjParticle->getChildren().at(0)->getComponent<MeshRenderer>();
+		pRenderer->setColor(Color(0.6f, 0.0f, 0.0f, 1.0f));
 
-		//直線
-		pObj->getActionManager().enqueueAction
+		//ランダムな方向に移動+透明化
+		pObjParticle->getActionManager().enqueueAction
 		(
 			new Spawn
 			(
 				{
-					new EaseInSine(new MoveBy(Vec3(0, i, i) * -interval, 1.0f)),
-					new ColorTo(Color(1.0f,0.0f, 0.0f, 0.0f), pRenderer, 1.0f)
+					new EaseOutCubic(new MoveBy(Vec3(random.getRandom(-0.5f, 0.5f), random.getRandom(0.0f, 1.0f), random.getRandom(-1.0f, -0.1f)), 1.0f)),
+					new ScaleTo(Vec3(0.0f, 0.0f, 0.0f),effectDuration),
+					new ColorTo(Color(1.0f, 0.0f, 0.0f, 1.0f), pRenderer, effectDuration)
 				}
 			)
 		);
-
-		pObj->getActionManager().enqueueAction(new Destroy(0.0f));
+		
+		pObjParticle->getActionManager().enqueueAction(new Destroy(0.0f));
 	}
 }
 
