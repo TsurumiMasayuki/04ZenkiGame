@@ -3,10 +3,14 @@
 
 #include "Utility/Timer.h"
 
+#include "Component/Player/PlayerStats.h"
+
 namespace Action
 {
 	class ActionManager;
 }
+
+class AudioSource;
 
 class PlayerMovement
 	: public AbstractComponent
@@ -16,16 +20,19 @@ public:
 	virtual void onUpdate() override;
 
 private:
-	//ˆÚ“®
+	//Ë†Ãšâ€œÂ®
 	void move(const Vec3& moveDir);
 
-	//ƒ_ƒbƒVƒ…
+	//Æ’_Æ’bÆ’VÆ’â€¦
 	void dash(const Vec3& moveDir);
 
 private:
 	Action::ActionManager* m_pActionManager;
 
-	float m_BaseDashSpeed;
+	AudioSource* m_pAudioSource;
+
+	PlayerStats m_Stats;
+
 	float m_DashElapsedTime;
 	float m_DashMaxTime;
 };
