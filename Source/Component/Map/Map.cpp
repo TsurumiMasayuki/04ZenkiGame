@@ -3,7 +3,8 @@
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/LinearlyEnemy.h"
 #include "Component/Player/PlayerMovement.h"
-#include "Conmponent/Floor/Floor.h"
+#include "Component/Floor/Floor.h"
+#include <Device/GameDevice.h>
 
 
 Map::Map(){}
@@ -17,7 +18,7 @@ void Map::Initialize(int stegNum)
 {
 	FunctionInitialize();
 
-	SetMap(stegNumber);
+	SetMap(stegNum);
 }
 
 void Map::FunctionInitialize()
@@ -158,7 +159,7 @@ void Map::LoadObject(int stegNumber)
 
 void Map::CreateMap()
 {
-	Vec position = { 0,0,0 };
+	Vec3 position = Vec3{ 0,0,0 };
 
 	for (int y = 0; y < mapsizeY; y++)
 	{
@@ -166,7 +167,7 @@ void Map::CreateMap()
 		{
 			if (mapdata[y][x] != 0)
 			{
-				position = { x,0,y };
+				position = Vec3{ (float)x,0,(float)y };
 				functionMap[mapdata[y][x]](position);
 			}
 		}
@@ -175,7 +176,7 @@ void Map::CreateMap()
 
 void Map::CreateObject()
 {
-	Vec position = { 0,0,-1.0f };
+	Vec3 position = Vec3{ 0,0,-1.0f };
 
 	for (int y = 0; y < mapsizeY; y++)
 	{
@@ -183,7 +184,7 @@ void Map::CreateObject()
 		{
 			if (object[y][x] != 0)
 			{
-				position = { x,-1.0,y };
+				position = Vec3{ (float)x,-1.0,(float)y };
 				functionObject[object[y][x]](position);
 			}
 		}
