@@ -7,9 +7,13 @@
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/LinearlyEnemy.h"
 
-#include "Component/Player/PlayerMovement.h"
 #include "Component/Utility/Action/ActionManager.h"
 #include "Component/Utility/Action/Actions.h"
+
+#include "Component/Map/Map.h"
+#include "Component/Player/PlayerMovement.h"
+#include "Component/Player/PlayerParamManager.h"
+
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
 #include "Component/TestUI/TestUI.h"
@@ -27,7 +31,11 @@ bool HogeScene::isEnd()
 void HogeScene::start()
 {
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
+	cameraTransform.setLocalPosition(Vec3(15.0f, 10.0f, 0.0f));
+	cameraTransform.setLocalAngles(Vec3(60.0f, 0.0f, 0.0f));
+
 	getMainCamera()->getUser().addComponent<Action::ActionManager>();
+	//getMainCamera()->getUser().addComponent<PlayerMovement>();
 
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
@@ -35,8 +43,11 @@ void HogeScene::start()
 
 	pPlayer->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 10.0f));
-	pPlayer->addComponent<PlayerMovement>();
+	pPlayer->getTransform().setLocalPosition(Vec3(15.0f, 1.0f, 7.0f));
+	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
+	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
+
+	pPlayerMove->init(pPlayerParam);
 
 	auto pEnemy = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
 	pEnemy->setTag("Enemy");
@@ -50,13 +61,13 @@ void HogeScene::start()
 	auto pTestEnemy = pEnemy->addComponent<TestEnemy>();
 	pTestEnemy->SetTarget(pPlayer);
 
-	GameObject* pTestUI = new GameObject(this);
-	pTestUI->addComponent<TestUI>();
+	Map map;
+	map.Initialize(1, this);
+	map.CreateMap();
 }
 
 void HogeScene::update()
 {
-	int a = 90;
 }
 
 void HogeScene::shutdown()
