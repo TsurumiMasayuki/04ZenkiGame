@@ -7,7 +7,9 @@ namespace Action
 	class ActionManager;
 }
 
-//ƒvƒŒƒCƒ„[//UŒ‚”»’è—pƒRƒ“ƒ|[ƒlƒ“ƒg
+class AudioSource;
+
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼//æ”»æ’ƒåˆ¤å®šç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 class PlayerAttack
 	: public AbstractComponent
 {
@@ -19,6 +21,9 @@ protected:
 	virtual void onCollisionEnter(GameObject* pHit) override;
 
 private:
-	//ƒJƒƒ‰‚ÉƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éActionManager
+	//ã‚«ãƒ¡ãƒ©ã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ActionManager
 	Action::ActionManager* m_pCameraActionManager;
+
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸ç”¨éŸ³å£°
+	AudioSource* m_pAudioSource;
 };
