@@ -9,8 +9,8 @@
 void Action::TestVibrationEffect::init()
 {
     //ƒJƒƒ‰‚ð—h‚ç‚·
-    m_pCameraObj->getActionManager().enqueueAction(new Action::EaseInBounce(new Action::RotateTo(Vec3(1.0f, 0.0f, 0.0f), 0.5f)));
-    m_pCameraObj->getActionManager().enqueueAction(new Action::EaseInBounce(new Action::RotateTo(Vec3(1.0f, 0.0f, 0.0f), 0.5f)));
+    m_pCameraObj->getActionManager().enqueueAction(new Action::EaseInOutBounce(new Action::RotateTo(Vec3(2.0f, 0.0f, 2.0f), 1.0f)));
+    m_pCameraObj->getActionManager().enqueueAction(new Action::EaseInOutBounce(new Action::RotateTo(Vec3(0.0f, 0.0f, 0.0f), 1.0f)));
 }
 
 void Action::TestVibrationEffect::update(float time)
