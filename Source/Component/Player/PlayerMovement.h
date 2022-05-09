@@ -11,6 +11,7 @@ namespace Action
 }
 
 class AudioSource;
+class PlayerParamManager;
 
 class PlayerMovement
 	: public AbstractComponent
@@ -19,20 +20,21 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
+	void init(PlayerParamManager* pPlayerParam);
+
 private:
-	//ˆÚ“®
+	//移動
 	void move(const Vec3& moveDir);
 
-	//ƒ_ƒbƒVƒ…
+	//ダッシュ
 	void dash(const Vec3& moveDir);
 
 private:
+	PlayerParamManager* m_pPlayerParam;
+
 	Action::ActionManager* m_pActionManager;
 
 	AudioSource* m_pAudioSource;
 
 	PlayerStats m_Stats;
-
-	float m_DashElapsedTime;
-	float m_DashMaxTime;
 };

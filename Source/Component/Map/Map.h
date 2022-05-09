@@ -1,9 +1,11 @@
 #pragma once
-#include<fstream>
-#include<sstream>
-#include<unordered_map>
-#include<functional>
-#include<Math/Vec3.h>
+#include <fstream>
+#include <sstream>
+#include <unordered_map>
+#include <functional>
+#include "Math/Vec3.h"
+
+class IGameMediator;
 
 class Map
 {
@@ -17,18 +19,18 @@ public:
 	Map();
 	~Map();
 
-	void Initialize(int stegNum);
+	void Initialize(int stageNumber, IGameMediator* pGameMediator);
 
 	void FunctionInitialize();
 
 	//Set
-	void SetMap(int stegNumber);
+	void SetMap(int stageNumber);
 
 	//Get
 
 	//Load
-	void LoadMap(int stegNumber);
-	void LoadObject(int stegNumber);
+	void LoadMap(int stageNumber);
+	void LoadObject(int stageNumber);
 
 	//Create
 	void CreateMap();
@@ -38,7 +40,7 @@ private:
 	static const int mapsizeX = 60;
 	static const int mapsizeY = 12;
 
-	//IGameMediator* pGameMeditor = this;
+	IGameMediator* m_pGameMediator;
 
 	int mapdata[mapsizeY][mapsizeX];
 	int object[mapsizeY][mapsizeX];
