@@ -14,6 +14,7 @@
 
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
+#include "Component/TestUI/TestUI.h"
 
 std::string HogeScene::nextScene()
 {
@@ -58,6 +59,8 @@ void HogeScene::start()
 	//Map map;
 	//map.Initialize(1, this);
 	//map.CreateMap();
+	GameObject* pTestUI = new GameObject(this);
+	pTestUI->addComponent<TestUI>();
 }
 
 void HogeScene::update()
