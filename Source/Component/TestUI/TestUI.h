@@ -49,9 +49,9 @@ private:
 	
 	//各UIの数値
 	//最大値
-    float MAX_HEALTH = 5;
+    float MAX_HEALTH = 5.0f;
     float MAX_ACCELERATION = 1.0f;
-    float MAX_FUEL = 100;
+    float MAX_FUEL = 5.0f;
 	//現在値
 	float health;
 	float acceleration;
