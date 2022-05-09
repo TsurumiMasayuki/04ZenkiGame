@@ -44,10 +44,10 @@ void PlayerMovement::onUpdate()
 	//入力に応じて移動方向をセット(マス目なので斜め移動はなし)
 	//上
 	if (input.isKey(DIK_UP))
-		moveDir = Vec3(0.0f, 1.0f, 0.0f);
+		moveDir = Vec3(0.0f, 0.0f, 1.0f);
 	//下
 	if (input.isKey(DIK_DOWN))
-		moveDir = Vec3(0.0f, -1.0f, 0.0f);
+		moveDir = Vec3(0.0f, 0.0f, -1.0f);
 	//右
 	if (input.isKey(DIK_RIGHT))
 		moveDir = Vec3(1.0f, 0.0f, 0.0f);
@@ -60,7 +60,7 @@ void PlayerMovement::onUpdate()
 		m_DashElapsedTime = 0.0f;
 
 	//移動量がゼロなら実行しない
-	if (moveDir.x == 0.0f && moveDir.y == 0.0f) 
+	if (moveDir.x == 0.0f && moveDir.z == 0.0f) 
 		return;
 
 	dash(moveDir);
