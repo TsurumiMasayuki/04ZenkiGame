@@ -12,6 +12,7 @@
 #include "Component/Utility/Action/Actions.h"
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
+#include "Component/TestUI/TestUI.h"
 
 std::string HogeScene::nextScene()
 {
@@ -48,6 +49,9 @@ void HogeScene::start()
 
 	auto pTestEnemy = pEnemy->addComponent<TestEnemy>();
 	pTestEnemy->SetTarget(pPlayer);
+
+	GameObject* pTestUI = new GameObject(this);
+	pTestUI->addComponent<TestUI>();
 }
 
 void HogeScene::update()
