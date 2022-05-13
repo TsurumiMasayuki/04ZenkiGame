@@ -173,6 +173,7 @@
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
+    <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
     <ClCompile Include="Source\Effect\TestEffect.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Effect\TestFlameEffect.h" />
+    <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Scene\HogeScene.h" />
     <ClInclude Include="Source\Effect\TestEffect.h" />
