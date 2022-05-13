@@ -8,6 +8,7 @@
 #include "Math/MathUtility.h"
 
 #include "Component/Player/PlayerAttack.h"
+#include "Component/Player/PlayerParamManager.h"
 
 #include "Utility/JsonFileManager.h"
 
@@ -20,9 +21,6 @@ void PlayerMovement::onStart()
 	m_pAudioSource = getUser().addComponent<AudioSource>();
 	m_pAudioSource->setAudio("Walk");
 	m_pAudioSource->setVolume(0.1f);
-
-	m_DashElapsedTime = 0.0f;
-	m_DashMaxTime = 3.0f;
 
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 }
@@ -44,10 +42,10 @@ void PlayerMovement::onUpdate()
 	//入力に応じて移動方向をセット(マス目なので斜め移動はなし)
 	//上
 	if (input.isKey(DIK_UP))
-		moveDir = Vec3(0.0f, 1.0f, 0.0f);
+		moveDir = Vec3(0.0f, 0.0f, 1.0f);
 	//下
 	if (input.isKey(DIK_DOWN))
-		moveDir = Vec3(0.0f, -1.0f, 0.0f);
+		moveDir = Vec3(0.0f, 0.0f, -1.0f);
 	//右
 	if (input.isKey(DIK_RIGHT))
 		moveDir = Vec3(1.0f, 0.0f, 0.0f);
@@ -55,16 +53,17 @@ void PlayerMovement::onUpdate()
 	if (input.isKey(DIK_LEFT))
 		moveDir = Vec3(-1.0f, 0.0f, 0.0f);
 
-	//ダッシュキーが押されていないならダッシュ経過時間をゼロにする
-	if (!input.isKey(DIK_SPACE))
-		m_DashElapsedTime = 0.0f;
-
 	//移動量がゼロなら実行しない
-	if (moveDir.x == 0.0f && moveDir.y == 0.0f) 
+	if (moveDir.x == 0.0f && moveDir.z == 0.0f)
 		return;
 
 	dash(moveDir);
 	move(moveDir);
+}
+
+void PlayerMovement::init(PlayerParamManager* pPlayerParam)
+{
+	m_pPlayerParam = pPlayerParam;
 }
 
 void PlayerMovement::move(const Vec3& moveDir)
@@ -90,14 +89,12 @@ void PlayerMovement::move(const Vec3& moveDir)
 
 void PlayerMovement::dash(const Vec3& moveDir)
 {
+	//燃料がゼロなら実行しない
+	if (m_pPlayerParam->isFuelZero())
+		return;
+
 	//デルタタイムを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
-
-	//ダッシュキーが押されているなら移動速度増加
-	if (GameDevice::getInput().isKey(DIK_SPACE))
-	{
-		m_DashElapsedTime += deltaTime;
-	}
 
 	//ダッシュキーが押されていないなら終了
 	if (!GameDevice::getInput().isKey(DIK_SPACE))
@@ -108,7 +105,7 @@ void PlayerMovement::dash(const Vec3& moveDir)
 		return;
 
 	//移動時間の割合を算出
-	float moveTimeRatio = std::fmaxf(0.25f, 1.0f - m_DashElapsedTime / m_DashMaxTime);
+	float moveTimeRatio = std::fmaxf(0.25f, 1.0f - m_pPlayerParam->getAcceleration());
 
 	const Vec3& position = getUser().getTransform().getLocalPosition();
 
