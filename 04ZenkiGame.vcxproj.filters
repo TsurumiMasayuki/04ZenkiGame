@@ -32,6 +32,7 @@
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Component\Floor\Floor.cpp" />
     <ClCompile Include="Source\Component\Map\Map.cpp" />
+    <ClCompile Include="Source\Device\GameInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerHealth.h" />
@@ -50,5 +51,6 @@
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Component\Floor\Floor.h" />
     <ClInclude Include="Source\Component\Map\Map.h" />
+    <ClInclude Include="Source\Device\GameInput.h" />
   </ItemGroup>
 </Project>
