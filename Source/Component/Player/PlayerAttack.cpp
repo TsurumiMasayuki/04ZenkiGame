@@ -61,8 +61,7 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 		return;
 
 	//カメラを揺らす
-	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(1.0f, 0.0f, 0.0f), 0.25f)));
-	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(-1.0f, 0.0f, 0.0f), 0.25f)));
+	m_pCameraActionManager->enqueueAction(new Action::TestVibrationEffect(m_pCameraActionManager));
 
 	//エネミーの被ダメージ音を鳴らす
 	m_pAudioSource->play();

@@ -7,15 +7,16 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 Action::TestVibrationEffect::TestVibrationEffect(ActionManager* actionManager)
-    : cameraShakeStrengthFirst(2.0f,0.0f,2.0f),
-    cameraShakeStrengthSecond(0.0f,0.0f,0.0f)
+	: cameraShakeStrengthFirst(0.1f, 0.0f, 0.0f),
+	cameraShakeStrengthSecond(-0.1f, 0.0f, 0.0f),
+	actionManager(actionManager)
 {
 }
 
 void Action::TestVibrationEffect::init()
 {
-    m_pCameraObj->getActionManager().enqueueAction(new Action::EaseInOutBounce(new Action::RotateTo(cameraShakeStrengthFirst, 1.0f)));
-    m_pCameraObj->getActionManager().enqueueAction(new Action::EaseInOutBounce(new Action::RotateTo(cameraShakeStrengthSecond, 1.0f)));
+	actionManager->enqueueAction(new Action::EaseInOutBounce(new Action::RotateBy(cameraShakeStrengthFirst, 0.1f)));
+	actionManager->enqueueAction(new Action::EaseInOutBounce(new Action::RotateBy(cameraShakeStrengthSecond, 0.1f)));
 }
 
 void Action::TestVibrationEffect::update(float time)
@@ -28,6 +29,6 @@ void Action::TestVibrationEffect::onSuspend()
 
 Action::AbstractAction* Action::TestVibrationEffect::clone()
 {
-    return nullptr;
+	return nullptr;
 }
 
