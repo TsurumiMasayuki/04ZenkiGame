@@ -18,7 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source\Component\Player\PlayerHealth.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
     <ClCompile Include="Source\Component\Enemy\LinearlyEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
@@ -29,13 +28,15 @@
     <ClCompile Include="Source\Effect\TestVibrationEffect.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
+    <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Component\Floor\Floor.cpp" />
     <ClCompile Include="Source\Component\Map\Map.cpp" />
     <ClCompile Include="Source\Device\GameInput.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
+    <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Component\Player\PlayerHealth.h" />
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
     <ClInclude Include="Source\Component\Enemy\LinearlyEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
@@ -48,9 +49,12 @@
     <ClInclude Include="Source\Utility\JsonFileManager.h" />
     <ClInclude Include="Source\Utility\SingletonTemplate.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
+    <ClInclude Include="Source\Component\TestUI\TestUI.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Component\Floor\Floor.h" />
     <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Device\GameInput.h" />
+    <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
+    <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 //シングルトンテンプレート
 template<typename T>
