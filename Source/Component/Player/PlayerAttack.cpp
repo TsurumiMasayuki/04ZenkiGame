@@ -27,7 +27,7 @@ void PlayerAttack::onStart()
 	//自身にActionManagerをアタッチ
 	auto pActionManager = getUser().addComponent<Action::ActionManager>();
 	//火炎エフェクトを実行
-	pActionManager->enqueueAction(new Action::TestFlameEffect());
+	pActionManager->enqueueAction(new Action::TestFlameEffect(pActionManager));
 
 	//生存時間を取得
 	float m_TimeUntilDestroy = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_FlameRemainTime;
