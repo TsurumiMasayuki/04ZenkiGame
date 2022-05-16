@@ -19,6 +19,8 @@
 #include "Effect/TestVibrationEffect.h"
 #include "Component/TestUI/TestUI.h"
 
+#include "Utility/CoordConverter.h"
+
 std::string HogeScene::nextScene()
 {
 	return std::string();
@@ -57,6 +59,27 @@ void HogeScene::start()
 
 	pPlayerMove->init(pPlayerParam);
 	pPlayerMove->setCylinderRadius(5.0f);
+
+	//面の数
+	const int faceCount = 12;
+	//角度
+	const float rad = DirectX::XM_PI / faceCount;
+	//円柱を生成
+	for (int i = 0; i < faceCount; i++)
+	{
+		Vec3 cylinder(4.0f, rad * i, 10.0f);
+
+		//ゲームオブジェクト生成
+		auto pFloor = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
+		pFloor->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(0.7f, 0.7f, 0.7f, 1.0f));
+
+		//座標設定
+		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
+		//サイズ設定
+		pFloor->getTransform().setLocalScale(Vec3(1.0f, 1.0f, 20.0f));
+		//回転設定
+		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
+	}
 }
 
 void HogeScene::update()
