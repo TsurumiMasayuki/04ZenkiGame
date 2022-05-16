@@ -9,7 +9,7 @@ namespace Action
 
 class AudioSource;
 
-//プレイヤー//攻撃判定用コンポーネント
+//プレイヤーの攻撃用コンポーネント
 class PlayerAttack
 	: public AbstractComponent
 {
@@ -21,6 +21,9 @@ protected:
 	virtual void onCollisionEnter(GameObject* pHit) override;
 
 private:
+	//プレイヤーモデルにアタッチされているActionManager
+	Action::ActionManager* m_pModelActionManager;
+
 	//カメラにアタッチされているActionManager
 	Action::ActionManager* m_pCameraActionManager;
 
