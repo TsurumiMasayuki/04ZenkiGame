@@ -1,15 +1,15 @@
 #include "HogeScene.h"
 #include "Actor/Base/GameObject.h"
 #include "Component/Physics/BoxColliderBt.h"
+#include "Component/Utility/Action/ActionManager.h"
+#include "Component/Utility/Action/Actions.h"
 #include "Device/GameDevice.h"
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/LinearlyEnemy.h"
 
-#include "Component/Utility/Action/ActionManager.h"
-#include "Component/Utility/Action/Actions.h"
-
+#include "Component/Follow/Follow.h"
 #include "Component/Map/Map.h"
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerMovement.h"
@@ -33,12 +33,6 @@ bool HogeScene::isEnd()
 
 void HogeScene::start()
 {
-	auto& cameraTransform = getMainCamera()->getUser().getTransform();
-	cameraTransform.setLocalPosition(Vec3(0.0f, 6.0f, 0.0f));
-	cameraTransform.setLocalAngles(Vec3(10.0f, 0.0f, 0.0f));
-
-	getMainCamera()->getUser().addComponent<Action::ActionManager>();
-
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	auto pPlayer = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
@@ -47,7 +41,7 @@ void HogeScene::start()
 	auto pModel = pPlayer->getChildren().at(0);
 	pModel->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 3.0f));
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
@@ -58,16 +52,30 @@ void HogeScene::start()
 	pPlayerAttack->init(pPlayerActionManager);
 
 	pPlayerMove->init(pPlayerParam);
-	pPlayerMove->setCylinderRadius(5.0f);
+	pPlayerMove->setCylinderRadius(11.0f);
+
+	//カメラ関係の設定
+	auto& cameraTransform = getMainCamera()->getUser().getTransform();
+	cameraTransform.setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
+	cameraTransform.setLocalAngles(Vec3(30.0f, 0.0f, 0.0f));
+
+	auto* pCameraObject = &getMainCamera()->getUser();
+	pCameraObject->addComponent<Action::ActionManager>();
+
+	auto pFollow = pCameraObject->addComponent<Follow>();
+	pFollow->SetGameObject(pPlayer);
+	pFollow->Setdistance(Vec3(0.0f, 8.0f, -8.0f));
 
 	//面の数
 	const int faceCount = 12;
 	//角度
-	const float rad = DirectX::XM_PI / faceCount;
+	const float rad = DirectX::XM_2PI / faceCount;
+	//円柱の半径
+	const float radius = 10.0f;
 	//円柱を生成
 	for (int i = 0; i < faceCount; i++)
 	{
-		Vec3 cylinder(4.0f, rad * i, 10.0f);
+		Vec3 cylinder(radius, rad * i, 100.0f);
 
 		//ゲームオブジェクト生成
 		auto pFloor = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
@@ -76,7 +84,7 @@ void HogeScene::start()
 		//座標設定
 		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
 		//サイズ設定
-		pFloor->getTransform().setLocalScale(Vec3(1.0f, 1.0f, 20.0f));
+		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.5f, 200.0f));
 		//回転設定
 		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
 	}
