@@ -11,7 +11,7 @@ PlayerStats::PlayerStats(const nlohmann::json& json)
 	: m_WalkTime((float)json["WalkTime"]),
 	m_DashTime((float)json["DashTime"]),
 	m_FlameRemainTime((float)json["FlameRemainTime"]),
-	m_WalkSpeed(5.0f),
-	m_DashSpeed(5.0f)
+	m_WalkSpeed(2.0f),
+	m_DashSpeed(2.0f)
 {
 }

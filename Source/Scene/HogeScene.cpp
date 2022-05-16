@@ -31,8 +31,8 @@ bool HogeScene::isEnd()
 void HogeScene::start()
 {
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
-	cameraTransform.setLocalPosition(Vec3(15.0f, 10.0f, 0.0f));
-	cameraTransform.setLocalAngles(Vec3(60.0f, 0.0f, 0.0f));
+	cameraTransform.setLocalPosition(Vec3(0.0f, 6.0f, 0.0f));
+	cameraTransform.setLocalAngles(Vec3(10.0f, 0.0f, 0.0f));
 
 	getMainCamera()->getUser().addComponent<Action::ActionManager>();
 
@@ -42,27 +42,12 @@ void HogeScene::start()
 
 	pPlayer->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	pPlayer->getTransform().setLocalPosition(Vec3(15.0f, 1.0f, 7.0f));
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 3.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
 	pPlayerMove->init(pPlayerParam);
-
-	auto pEnemy = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
-	pEnemy->setTag("Enemy");
-	pEnemy->getTransform().setLocalPosition(Vec3(10.0f, 0.0f, 10.0f));
-
-	auto pBoxCollider = pEnemy->addComponent<BoxColiiderBt>();
-	pBoxCollider->setMass(1.0f);
-	pBoxCollider->setTrigger(false);
-	pBoxCollider->setUseGravity(false);
-
-	auto pTestEnemy = pEnemy->addComponent<TestEnemy>();
-	pTestEnemy->SetTarget(pPlayer);
-
-	Map map;
-	map.Initialize(1, this);
-	map.CreateMap();
+	pPlayerMove->setCylinderRadius(5.0f);
 }
 
 void HogeScene::update()

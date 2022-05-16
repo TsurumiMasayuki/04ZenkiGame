@@ -15,7 +15,7 @@ Vec3 CoordConverter::cylinderToCartesian(const Vec3& cylinder)
 	float phi = cylinder.y;
 
 	float x = p * std::cosf(phi);
-	float y = p * std::sinf(p);
+	float y = p * std::sinf(phi);
 
 	return Vec3(x, y, cylinder.z);
 }

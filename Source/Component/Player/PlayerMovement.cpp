@@ -11,12 +11,15 @@
 #include "Component/Player/PlayerParamManager.h"
 
 #include "Utility/JsonFileManager.h"
+#include "Utility/CoordConverter.h"
 
 using namespace Action;
 
 void PlayerMovement::onStart()
 {
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
+
+	m_CylinderCoord.z = getTransform().getLocalPosition().z;
 }
 
 void PlayerMovement::onUpdate()
@@ -36,13 +39,13 @@ void PlayerMovement::onUpdate()
 	//入力に応じて移動方向をセット(マス目なので斜め移動はなし)
 	//上
 	if (input.isKey(DIK_UP))
-		moveDir = Vec3(0.0f, 0.0f, 1.0f);
+		moveDir += Vec3(0.0f, 0.0f, 1.0f);
 	//右
 	if (input.isKey(DIK_RIGHT))
-		moveDir = Vec3(1.0f, 0.0f, 0.0f);
+		moveDir += Vec3(1.0f, 0.0f, 0.0f);
 	//左
 	if (input.isKey(DIK_LEFT))
-		moveDir = Vec3(-1.0f, 0.0f, 0.0f);
+		moveDir += Vec3(-1.0f, 0.0f, 0.0f);
 
 	//移動量がゼロなら実行しない
 	if (moveDir.x == 0.0f && moveDir.z == 0.0f)
@@ -50,11 +53,17 @@ void PlayerMovement::onUpdate()
 
 	dash(moveDir);
 	move(moveDir);
+	convertCoord();
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
 {
 	m_pPlayerParam = pPlayerParam;
+}
+
+void PlayerMovement::setCylinderRadius(float radius)
+{
+	m_CylinderCoord.x = radius;
 }
 
 void PlayerMovement::move(const Vec3& moveDir)
@@ -67,10 +76,11 @@ void PlayerMovement::move(const Vec3& moveDir)
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
 	//移動量を算出
-	Vec3 move = moveDir * m_Stats.m_WalkSpeed * deltaTime;
+	float move = m_Stats.m_WalkSpeed * deltaTime;
 
 	//座標更新
-	getTransform().setLocalPosition(getTransform().getLocalPosition() + move);
+	m_CylinderCoord.y -= moveDir.x * deltaTime;
+	m_CylinderCoord.z += moveDir.z * move;
 }
 
 void PlayerMovement::dash(const Vec3& moveDir)
@@ -83,15 +93,25 @@ void PlayerMovement::dash(const Vec3& moveDir)
 	if (!GameDevice::getInput().isKey(DIK_SPACE))
 		return;
 
-	//加速度を取得
-	float accel = 1.0f + m_pPlayerParam->getAcceleration();
+	//現在の速度を計算
+	float speed = 1.0f + m_pPlayerParam->getAcceleration();
 
 	//deltaTimeを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
-	//移動量を算出
-	Vec3 move = moveDir * m_Stats.m_DashSpeed * accel * deltaTime;
-
 	//座標更新
-	getTransform().setLocalPosition(getTransform().getLocalPosition() + move);
+	m_CylinderCoord.y -= moveDir.x * deltaTime;
+	m_CylinderCoord.z += moveDir.z * speed * deltaTime;
+}
+
+void PlayerMovement::convertCoord()
+{
+	//円筒座標をデカルト座標に変換
+	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
+
+	//座標を適用
+	getTransform().setLocalPosition(cartCoord);
+
+	//回転(Z)
+	getTransform().setLocalAngleZ(MathUtility::toDegree(m_CylinderCoord.y));
 }
