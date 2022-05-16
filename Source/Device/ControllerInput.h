@@ -42,6 +42,9 @@ public:
 
 	void update();
 
+	// コントローラーが接続されているかの取得
+	bool isConnect() const { return m_IsPadConnected; }
+
 	//コントローラーのボタンが押し続けれているか判定
 	bool isPadButton(PAD_BUTTON button) const;
 	//コントローラーのボタンが離された瞬間か判定
