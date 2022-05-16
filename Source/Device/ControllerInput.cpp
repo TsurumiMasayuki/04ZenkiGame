@@ -67,7 +67,6 @@ StickInput ControllerInput::getLStickInput() const
 		return { 0.0f, 0.0f };
 
 	StickInput axis(0, 0);
-	//-JOYSTICK_CENTER ~ +JOYSTICK_CENTERÇÃä‘Ç…ílÇèCê≥
 	float x = m_CurPadInfo.Gamepad.sThumbLX;
 	float y = m_CurPadInfo.Gamepad.sThumbLY;
 
@@ -88,7 +87,6 @@ StickInput ControllerInput::getRStickInput() const
 		return { 0.0f, 0.0f };
 
 	StickInput axis(0, 0);
-	//-JOYSTICK_CENTER ~ +JOYSTICK_CENTERÇÃä‘Ç…ílÇèCê≥
 	float x = m_CurPadInfo.Gamepad.sThumbRX;
 	float y = m_CurPadInfo.Gamepad.sThumbRY;
 
