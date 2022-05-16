@@ -27,7 +27,7 @@ void PlayerAttack::onStart()
 	//自身にActionManagerをアタッチ
 	auto pActionManager = getUser().addComponent<Action::ActionManager>();
 	//火炎エフェクトを実行
-	pActionManager->enqueueAction(new Action::TestFlameEffect());
+	pActionManager->enqueueAction(new Action::TestFlameEffect(pActionManager));
 
 	//生存時間を取得
 	float m_TimeUntilDestroy = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_FlameRemainTime;
@@ -61,8 +61,7 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 		return;
 
 	//カメラを揺らす
-	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(1.0f, 0.0f, 0.0f), 0.25f)));
-	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(-1.0f, 0.0f, 0.0f), 0.25f)));
+	m_pCameraActionManager->enqueueAction(new Action::TestVibrationEffect(m_pCameraActionManager));
 
 	//エネミーの被ダメージ音を鳴らす
 	m_pAudioSource->play();
