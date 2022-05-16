@@ -36,6 +36,7 @@
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
     <ClCompile Include="Source\Component\Follow\Follow.cpp" />
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
+    <ClCompile Include="Source\Utility\CoordConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -58,5 +59,6 @@
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
     <ClInclude Include="Source\Component\Follow\Follow.h" />
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
+    <ClInclude Include="Source\Utility\CoordConverter.h" />
   </ItemGroup>
 </Project>

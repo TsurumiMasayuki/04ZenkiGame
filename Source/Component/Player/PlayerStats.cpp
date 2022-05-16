@@ -10,6 +10,8 @@ PlayerStats::PlayerStats()
 PlayerStats::PlayerStats(const nlohmann::json& json)
 	: m_WalkTime((float)json["WalkTime"]),
 	m_DashTime((float)json["DashTime"]),
-	m_FlameRemainTime((float)json["FlameRemainTime"])
+	m_FlameRemainTime((float)json["FlameRemainTime"]),
+	m_WalkSpeed((float)json["WalkSpeed"]),
+	m_DashSpeed((float)json["DashSpeed"])
 {
 }

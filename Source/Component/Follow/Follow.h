@@ -23,8 +23,6 @@ private:
 
 	GameObject* pObj;
 
-	Vec3 position;
 	Vec3 distance;
-
 };
 
