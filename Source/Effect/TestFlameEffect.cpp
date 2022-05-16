@@ -6,6 +6,10 @@
 #include "Device/GameDevice.h"
 #include "Utility/ModelGameObjectHelper.h"
 
+Action::TestFlameEffect::TestFlameEffect(ActionManager* actionManager)
+{
+}
+
 void Action::TestFlameEffect::init()
 {	
 	auto& random = GameDevice::getRandom();
@@ -31,7 +35,7 @@ void Action::TestFlameEffect::init()
 				}
 			)
 		);
-		
+
 		pObjParticle->getActionManager().enqueueAction(new Destroy(0.0f));
 	}
 }
@@ -46,5 +50,5 @@ void Action::TestFlameEffect::onSuspend()
 
 Action::AbstractAction* Action::TestFlameEffect::clone()
 {
-    return new TestFlameEffect;
+    return nullptr;
 }
