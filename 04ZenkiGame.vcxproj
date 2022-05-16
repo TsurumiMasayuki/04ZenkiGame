@@ -172,6 +172,7 @@
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
+    <ClCompile Include="Source\Device\GameInput.cpp" />
     <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />
+    <ClInclude Include="Source\Device\GameInput.h" />
     <ClInclude Include="Source\Effect\TestFlameEffect.h" />
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
     <ClInclude Include="Source\Game.h" />

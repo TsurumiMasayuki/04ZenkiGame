@@ -32,6 +32,7 @@
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Component\Floor\Floor.cpp" />
     <ClCompile Include="Source\Component\Map\Map.cpp" />
+    <ClCompile Include="Source\Device\GameInput.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Component\Floor\Floor.h" />
     <ClInclude Include="Source\Component\Map\Map.h" />
+    <ClInclude Include="Source\Device\GameInput.h" />
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
     <ClInclude Include="Source\Utility\CoordConverter.h" />
