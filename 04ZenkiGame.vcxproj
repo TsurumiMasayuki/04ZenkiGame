@@ -161,6 +161,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Component\Follow\Follow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\Component\Floor\Floor.cpp" />
     <ClCompile Include="Source\Component\Map\Map.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Component\Follow\Follow.h" />
     <ClInclude Include="Source\Component\Floor\Floor.h" />
     <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Component\Player\PlayerAttack.h" />
