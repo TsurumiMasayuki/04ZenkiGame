@@ -1,22 +1,25 @@
 #include "HogeScene.h"
 #include "Actor/Base/GameObject.h"
 #include "Component/Physics/BoxColliderBt.h"
+#include "Component/Utility/Action/ActionManager.h"
+#include "Component/Utility/Action/Actions.h"
 #include "Device/GameDevice.h"
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/LinearlyEnemy.h"
 
-#include "Component/Utility/Action/ActionManager.h"
-#include "Component/Utility/Action/Actions.h"
-
+#include "Component/Follow/Follow.h"
 #include "Component/Map/Map.h"
+#include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Player/PlayerParamManager.h"
 
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
 #include "Component/TestUI/TestUI.h"
+
+#include "Utility/CoordConverter.h"
 
 std::string HogeScene::nextScene()
 {
@@ -30,40 +33,61 @@ bool HogeScene::isEnd()
 
 void HogeScene::start()
 {
-	auto& cameraTransform = getMainCamera()->getUser().getTransform();
-	cameraTransform.setLocalPosition(Vec3(15.0f, 10.0f, 0.0f));
-	cameraTransform.setLocalAngles(Vec3(60.0f, 0.0f, 0.0f));
-
-	getMainCamera()->getUser().addComponent<Action::ActionManager>();
-	//getMainCamera()->getUser().addComponent<PlayerMovement>();
-
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	auto pPlayer = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
+	auto pPlayerActionManager = pPlayer->addComponent<Action::ActionManager>();
 
-	pPlayer->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+	auto pModel = pPlayer->getChildren().at(0);
+	pModel->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	pPlayer->getTransform().setLocalPosition(Vec3(15.0f, 1.0f, 7.0f));
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
+	auto pPlayerAttackObject = new GameObject(this);
+	pPlayerAttackObject->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 1.0f));
+	pPlayerAttackObject->setParent(pPlayer);
+	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
+	pPlayerAttack->init(pPlayerActionManager);
+
 	pPlayerMove->init(pPlayerParam);
+	pPlayerMove->setCylinderRadius(11.0f);
 
-	auto pEnemy = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
-	pEnemy->setTag("Enemy");
-	pEnemy->getTransform().setLocalPosition(Vec3(10.0f, 0.0f, 10.0f));
+	//カメラ関係の設定
+	auto& cameraTransform = getMainCamera()->getUser().getTransform();
+	cameraTransform.setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
+	cameraTransform.setLocalAngles(Vec3(30.0f, 0.0f, 0.0f));
 
-	auto pBoxCollider = pEnemy->addComponent<BoxColiiderBt>();
-	pBoxCollider->setMass(1.0f);
-	pBoxCollider->setTrigger(false);
-	pBoxCollider->setUseGravity(false);
+	auto* pCameraObject = &getMainCamera()->getUser();
+	pCameraObject->addComponent<Action::ActionManager>();
 
-	auto pTestEnemy = pEnemy->addComponent<TestEnemy>();
-	pTestEnemy->SetTarget(pPlayer);
+	auto pFollow = pCameraObject->addComponent<Follow>();
+	pFollow->SetGameObject(pPlayer);
+	pFollow->Setdistance(Vec3(0.0f, 8.0f, -8.0f));
 
-	Map map;
-	map.Initialize(1, this);
-	map.CreateMap();
+	//面の数
+	const int faceCount = 12;
+	//角度
+	const float rad = DirectX::XM_2PI / faceCount;
+	//円柱の半径
+	const float radius = 10.0f;
+	//円柱を生成
+	for (int i = 0; i < faceCount; i++)
+	{
+		Vec3 cylinder(radius, rad * i, 100.0f);
+
+		//ゲームオブジェクト生成
+		auto pFloor = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
+		pFloor->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(0.7f, 0.7f, 0.7f, 1.0f));
+
+		//座標設定
+		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
+		//サイズ設定
+		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.5f, 200.0f));
+		//回転設定
+		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
+	}
 }
 
 void HogeScene::update()
