@@ -34,6 +34,7 @@
     <ClCompile Include="Source\Component\Map\Map.cpp" />
     <ClCompile Include="Source\Device\GameInput.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
+    <ClCompile Include="Source\Component\Follow\Follow.cpp" />
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +56,7 @@
     <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Device\GameInput.h" />
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
+    <ClInclude Include="Source\Component\Follow\Follow.h" />
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
   </ItemGroup>
 </Project>
