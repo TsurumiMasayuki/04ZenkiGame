@@ -35,7 +35,6 @@ void HogeScene::start()
 	cameraTransform.setLocalAngles(Vec3(60.0f, 0.0f, 0.0f));
 
 	getMainCamera()->getUser().addComponent<Action::ActionManager>();
-	//getMainCamera()->getUser().addComponent<PlayerMovement>();
 
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 

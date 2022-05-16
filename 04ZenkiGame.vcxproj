@@ -178,6 +178,7 @@
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
     <ClCompile Include="Source\Effect\TestEffect.cpp" />
     <ClCompile Include="Source\Effect\TestVibrationEffect.cpp" />
+    <ClCompile Include="Source\Utility\CoordConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Floor\Floor.h" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Source\Scene\HogeScene.h" />
     <ClInclude Include="Source\Effect\TestEffect.h" />
     <ClInclude Include="Source\Effect\TestVibrationEffect.h" />
+    <ClInclude Include="Source\Utility\CoordConverter.h" />
     <ClInclude Include="Source\Utility\JsonFileManager.h" />
     <ClInclude Include="Source\Utility\SingletonTemplate.h" />
   </ItemGroup>
