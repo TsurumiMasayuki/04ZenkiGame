@@ -1,4 +1,5 @@
-#include "PlayerMovement.h"
+#include "PlayerMovementFree.h"
+
 #include "Actor/Base/GameObject.h"
 
 #include "Component/Audio/AudioSource.h"
@@ -12,39 +13,40 @@
 
 #include "Utility/JsonFileManager.h"
 
-using namespace Action;
-
-void PlayerMovement::onStart()
+void PlayerMovementFree::onStart()
 {
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 }
 
-void PlayerMovement::onUpdate()
+void PlayerMovementFree::onUpdate()
 {
-	//å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã‚’å–å¾—
+	//“ü—ÍƒfƒoƒCƒX‚ğæ“¾
 	const auto& input = GameDevice::getInput();
 
-	//è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ›ãƒƒãƒˆãƒªãƒ­ãƒ¼ãƒ‰
+	//İ’èƒtƒ@ƒCƒ‹‚ğƒzƒbƒgƒŠƒ[ƒh
 	if (input.isKeyDown(DIK_R))
 	{
 		m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 	}
 
-	//ç§»å‹•æ–¹å‘
+	//ˆÚ“®•ûŒü
 	Vec3 moveDir = Vec3::zero();
 
-	//å…¥åŠ›ã«å¿œã˜ã¦ç§»å‹•æ–¹å‘ã‚’ã‚»ãƒƒãƒˆ(ãƒã‚¹ç›®ãªã®ã§æ–œã‚ç§»å‹•ã¯ãªã—)
-	//ä¸Š
+	//“ü—Í‚É‰‚¶‚ÄˆÚ“®•ûŒü‚ğƒZƒbƒg(ƒ}ƒX–Ú‚È‚Ì‚ÅÎ‚ßˆÚ“®‚Í‚È‚µ)
+	//ã
 	if (input.isKey(DIK_UP))
 		moveDir = Vec3(0.0f, 0.0f, 1.0f);
-	//å³
+	//‰º
+	if (input.isKey(DIK_DOWN))
+		moveDir = Vec3(0.0f, 0.0f, -1.0f);
+	//‰E
 	if (input.isKey(DIK_RIGHT))
 		moveDir = Vec3(1.0f, 0.0f, 0.0f);
-	//å·¦
+	//¶
 	if (input.isKey(DIK_LEFT))
 		moveDir = Vec3(-1.0f, 0.0f, 0.0f);
 
-	//ç§»å‹•é‡ãŒã‚¼ãƒ­ãªã‚‰å®Ÿè¡Œã—ãªã„
+	//ˆÚ“®—Ê‚ªƒ[ƒ‚È‚çÀs‚µ‚È‚¢
 	if (moveDir.x == 0.0f && moveDir.z == 0.0f)
 		return;
 
@@ -52,46 +54,46 @@ void PlayerMovement::onUpdate()
 	move(moveDir);
 }
 
-void PlayerMovement::init(PlayerParamManager* pPlayerParam)
+void PlayerMovementFree::init(PlayerParamManager* pPlayerParam)
 {
 	m_pPlayerParam = pPlayerParam;
 }
 
-void PlayerMovement::move(const Vec3& moveDir)
+void PlayerMovementFree::move(const Vec3& moveDir)
 {
-	//ãƒ€ãƒƒã‚·ãƒ¥ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ãªã‚‰çµ‚äº†
+	//ƒ_ƒbƒVƒ…ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚È‚çI—¹
 	if (GameDevice::getInput().isKey(DIK_SPACE))
 		return;
 
-	//deltaTimeã‚’å–å¾—
+	//deltaTime‚ğæ“¾
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
-	//ç§»å‹•é‡ã‚’ç®—å‡º
+	//ˆÚ“®—Ê‚ğZo
 	Vec3 move = moveDir * m_Stats.m_WalkSpeed * deltaTime;
 
-	//åº§æ¨™æ›´æ–°
+	//À•WXV
 	getTransform().setLocalPosition(getTransform().getLocalPosition() + move);
 }
 
-void PlayerMovement::dash(const Vec3& moveDir)
+void PlayerMovementFree::dash(const Vec3& moveDir)
 {
-	//ç‡ƒæ–™ãŒã‚¼ãƒ­ãªã‚‰å®Ÿè¡Œã—ãªã„
+	//”R—¿‚ªƒ[ƒ‚È‚çÀs‚µ‚È‚¢
 	if (m_pPlayerParam->isFuelZero())
 		return;
 
-	//ãƒ€ãƒƒã‚·ãƒ¥ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãªã„ãªã‚‰çµ‚äº†
+	//ƒ_ƒbƒVƒ…ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢‚È‚çI—¹
 	if (!GameDevice::getInput().isKey(DIK_SPACE))
 		return;
 
-	//åŠ é€Ÿåº¦ã‚’å–å¾—
+	//‰Á‘¬“x‚ğæ“¾
 	float accel = 1.0f + m_pPlayerParam->getAcceleration();
 
-	//deltaTimeã‚’å–å¾—
+	//deltaTime‚ğæ“¾
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
-	//ç§»å‹•é‡ã‚’ç®—å‡º
+	//ˆÚ“®—Ê‚ğZo
 	Vec3 move = moveDir * m_Stats.m_DashSpeed * accel * deltaTime;
 
-	//åº§æ¨™æ›´æ–°
+	//À•WXV
 	getTransform().setLocalPosition(getTransform().getLocalPosition() + move);
 }
