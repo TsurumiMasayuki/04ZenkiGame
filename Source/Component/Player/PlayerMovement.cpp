@@ -10,6 +10,8 @@
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerParamManager.h"
 
+#include "Device/GameInput.h"
+
 #include "Utility/JsonFileManager.h"
 #include "Utility/CoordConverter.h"
 
@@ -34,22 +36,9 @@ void PlayerMovement::onUpdate()
 	}
 
 	//移動方向
-	Vec3 moveDir = Vec3::zero();
+	Vec3 moveDir = GameInput::getInstance().getPlayerMove();
 
-	//入力に応じて移動方向をセット(マス目なので斜め移動はなし)
-	//上
-	if (input.isKey(DIK_UP))
-		moveDir += Vec3(0.0f, 0.0f, 1.0f);
-	//右
-	if (input.isKey(DIK_RIGHT))
-		moveDir += Vec3(1.0f, 0.0f, 0.0f);
-	//左
-	if (input.isKey(DIK_LEFT))
-		moveDir += Vec3(-1.0f, 0.0f, 0.0f);
-
-	//移動量がゼロなら実行しない
-	if (moveDir.x == 0.0f && moveDir.z == 0.0f)
-		return;
+	moveDir.z = std::fmaxf(0.0f, moveDir.z);
 
 	dash(moveDir);
 	move(moveDir);
@@ -68,8 +57,8 @@ void PlayerMovement::setCylinderRadius(float radius)
 
 void PlayerMovement::move(const Vec3& moveDir)
 {
-	//ダッシュキーが押されているなら終了
-	if (GameDevice::getInput().isKey(DIK_SPACE))
+	//ダッシュボタンが押されているなら終了
+	if (GameInput::getInstance().getPlayerDash())
 		return;
 
 	//deltaTimeを取得
@@ -89,8 +78,8 @@ void PlayerMovement::dash(const Vec3& moveDir)
 	if (m_pPlayerParam->isFuelZero())
 		return;
 
-	//ダッシュキーが押されていないなら終了
-	if (!GameDevice::getInput().isKey(DIK_SPACE))
+	//ダッシュボタンが押されていないなら終了
+	if (!GameInput::getInstance().getPlayerDash())
 		return;
 
 	//現在の速度を計算

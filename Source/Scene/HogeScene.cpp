@@ -11,6 +11,7 @@
 #include "Component/Utility/Action/Actions.h"
 
 #include "Component/Map/Map.h"
+#include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Player/PlayerParamManager.h"
 
@@ -39,12 +40,20 @@ void HogeScene::start()
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	auto pPlayer = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
+	auto pPlayerActionManager = pPlayer->addComponent<Action::ActionManager>();
 
-	pPlayer->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+	auto pModel = pPlayer->getChildren().at(0);
+	pModel->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
 	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 3.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
+
+	auto pPlayerAttackObject = new GameObject(this);
+	pPlayerAttackObject->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 1.0f));
+	pPlayerAttackObject->setParent(pPlayer);
+	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
+	pPlayerAttack->init(pPlayerActionManager);
 
 	pPlayerMove->init(pPlayerParam);
 	pPlayerMove->setCylinderRadius(5.0f);

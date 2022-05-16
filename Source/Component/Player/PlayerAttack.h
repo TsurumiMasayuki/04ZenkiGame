@@ -7,6 +7,7 @@ namespace Action
 	class ActionManager;
 }
 
+class BoxColiiderBt;
 class AudioSource;
 
 //プレイヤーの攻撃用コンポーネント
@@ -17,12 +18,17 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
+	void init(Action::ActionManager* pPlayerActionManager);
+
 protected:
 	virtual void onCollisionEnter(GameObject* pHit) override;
 
 private:
-	//プレイヤーモデルにアタッチされているActionManager
-	Action::ActionManager* m_pModelActionManager;
+	//自身にアタッチされたBoxCollider
+	BoxColiiderBt* m_pBoxCollider;
+
+	//プレイヤーにアタッチされているActionManager
+	Action::ActionManager* m_pPlayerActionManager;
 
 	//カメラにアタッチされているActionManager
 	Action::ActionManager* m_pCameraActionManager;

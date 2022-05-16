@@ -5,6 +5,8 @@
 
 #include "Component/Player/PlayerStats.h"
 
+#include "Device/ControllerInput.h"
+
 Game::Game(HINSTANCE& hinstance, HWND& hwnd)
 	: AbstractGame(hinstance, hwnd)
 {
@@ -43,6 +45,8 @@ void Game::onUpdate()
 	//プレイヤーのステータスをホットリロード
 	if (GameDevice::getInput().isKeyDown(DIK_R))
 		JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
+
+	ControllerInput::getInstance().update();
 }
 
 void Game::onShutdown()
