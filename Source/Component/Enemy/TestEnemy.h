@@ -13,23 +13,11 @@ public:
 
 public:
 
-	void init(float angle, float speed = 1.0f, float radius = 11.0f, Vec3 centerPoint = Vec3(0, 0, 0));
+	void init(float speed, float rotateSpeed, float radius = 11.0f, Vec3 centerPoint = Vec3(0, 0, 0));
 
 	void setCenter(Vec3 centerPoint) { this->centerPoint = centerPoint; }
 
-	void setRadius(float radius) { this->rasius = radius; }
-
-	/// <summary>
-	/// 移動方向指定
-	/// </summary>
-	/// <param name="angle">角度(°)</param>
-	void setVecAngle(float angle) { this->angle = angle; }
-
-	/// <summary>
-	/// 移動方向取得
-	/// </summary>
-	/// <returns>角度(°)</returns>
-	float getVecAngle() { return angle; }
+	void setRadius(float radius) { this->radius = radius; }
 
 	/// <summary>
 	/// 速度セット
@@ -44,13 +32,14 @@ public:
 	float getspeed() { return speed; }
 
 private:
-	// 個体データ
-	float angle = 0;
-	Vec3 position{};
-	float speed = 1.0f;
-	Vec3 moveVec{};
+	//速度
+	float speed;
+	//回転速度
+	float rotateSpeed;
 
 	// ステージ情報
-	float rasius = 0;
+	float radius = 0.0f;
 	Vec3 centerPoint = Vec3(0, 0, 0);
+
+	Vec3 m_CylinderCoord;
 };

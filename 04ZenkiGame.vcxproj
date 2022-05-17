@@ -167,7 +167,6 @@
     <ClCompile Include="Source\Component\Map\Map.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
-    <ClCompile Include="Source\Component\Enemy\LinearlyEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
@@ -188,7 +187,6 @@
     <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Component\Player\PlayerAttack.h" />
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
-    <ClInclude Include="Source\Component\Enemy\LinearlyEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
