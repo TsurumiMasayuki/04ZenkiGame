@@ -181,6 +181,7 @@
     <ClCompile Include="Source\Effect\TestEffect.cpp" />
     <ClCompile Include="Source\Effect\TestVibrationEffect.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
+    <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Follow\Follow.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Source\Effect\TestEffect.h" />
     <ClInclude Include="Source\Effect\TestVibrationEffect.h" />
     <ClInclude Include="Source\Utility\CoordConverter.h" />
+    <ClInclude Include="Source\Utility\CylinderUtility.h" />
     <ClInclude Include="Source\Utility\JsonFileManager.h" />
     <ClInclude Include="Source\Utility\SingletonTemplate.h" />
   </ItemGroup>
