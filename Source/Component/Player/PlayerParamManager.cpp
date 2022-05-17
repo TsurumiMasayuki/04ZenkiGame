@@ -34,7 +34,7 @@ void PlayerParamManager::onUpdate()
 		m_Fuel = std::fminf(5.0f, m_Fuel);
 	}
 	
-	if (GameDevice::getInput().isKeyUp(DIK_SPACE))
+	if (!GameInput::getInstance().getPlayerDash())
 	{
 		//‰Á‘¬“x‚ð0‚É‚·‚é
 		m_Acceleration = 0.0f;
