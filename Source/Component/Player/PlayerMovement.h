@@ -35,6 +35,7 @@ private:
 	void convertCoord();
 
 private:
+	Action::ActionManager* m_pActionManager;
 	PlayerParamManager* m_pPlayerParam;
 	AudioSource* m_pAudioSource;
 	PlayerStats m_Stats;

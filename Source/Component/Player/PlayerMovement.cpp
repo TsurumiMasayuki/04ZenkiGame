@@ -12,6 +12,8 @@
 
 #include "Device/GameInput.h"
 
+#include "Effect/TestFlameEffect.h"
+
 #include "Utility/JsonFileManager.h"
 #include "Utility/CoordConverter.h"
 
@@ -22,6 +24,8 @@ void PlayerMovement::onStart()
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 
 	m_CylinderCoord.z = getTransform().getLocalPosition().z;
+
+	m_pActionManager = getUser().getComponent<Action::ActionManager>();
 }
 
 void PlayerMovement::onUpdate()
@@ -40,8 +44,34 @@ void PlayerMovement::onUpdate()
 
 	moveDir.z = std::fmaxf(0.0f, moveDir.z);
 
-	dash(moveDir);
-	move(moveDir);
+	//ダッシュボタンが押されているなら&燃料がゼロでないなら
+	if (GameInput::getInstance().getPlayerDash() &&
+		!m_pPlayerParam->isFuelZero())
+	{
+		if (m_pActionManager->actionCount() == 0)
+		{
+			//間隔を開けて火炎エフェクト
+			auto pSequence = new Action::Sequence(
+				{
+					new Action::TestFlameEffect(m_pActionManager),
+					new Action::WaitForSeconds(0.1f)
+				}
+			);
+
+			//リピート実行
+			auto pRepeat = new Action::RepeatForever(pSequence);
+
+			m_pActionManager->enqueueAction(pRepeat);
+		}
+		dash(moveDir);
+	}
+	else
+	{
+		//エフェクト停止
+		m_pActionManager->forceNext();
+		move(moveDir);
+	}
+
 	convertCoord();
 }
 
@@ -57,10 +87,6 @@ void PlayerMovement::setCylinderRadius(float radius)
 
 void PlayerMovement::move(const Vec3& moveDir)
 {
-	//ダッシュボタンが押されているなら終了
-	if (GameInput::getInstance().getPlayerDash())
-		return;
-
 	//deltaTimeを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
@@ -74,14 +100,6 @@ void PlayerMovement::move(const Vec3& moveDir)
 
 void PlayerMovement::dash(const Vec3& moveDir)
 {
-	//燃料がゼロなら実行しない
-	if (m_pPlayerParam->isFuelZero())
-		return;
-
-	//ダッシュボタンが押されていないなら終了
-	if (!GameInput::getInstance().getPlayerDash())
-		return;
-
 	//現在の速度を計算
 	float speed = 1.0f + m_pPlayerParam->getAcceleration();
 
