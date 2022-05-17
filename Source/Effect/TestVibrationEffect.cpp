@@ -7,8 +7,8 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 Action::TestVibrationEffect::TestVibrationEffect(ActionManager* actionManager)
-	: cameraShakeStrengthFirst(0.1f, 0.0f, 0.0f),
-	cameraShakeStrengthSecond(-0.1f, 0.0f, 0.0f),
+	: cameraShakeStrengthFirst(1.0f, 0.0f, 0.0f),
+	cameraShakeStrengthSecond(-1.0f, 0.0f, 0.0f),
 	actionManager(actionManager)
 {
 }

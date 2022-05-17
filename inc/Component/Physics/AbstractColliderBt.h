@@ -7,6 +7,8 @@ class btTransform;
 class btCollisionShape;
 class btRigidBody;
 
+class PhysicsManagerBt;
+
 class AbstractColliderBt
 	: public AbstractComponent
 {
@@ -23,6 +25,9 @@ public:
 	virtual void onLocalPositionChanged(const Vec3& newLocalPosition) override;
 	virtual void onLocalScaleChanged(const Vec3& newLocalScale) override;
 	virtual void onLocalAnglesChanged(const Vec3& newLocalAngle) override;
+
+	virtual void onEnable() override;
+	virtual void onDisable() override;
 
 	void applyForce(const Vec3& force);
 	void applyForceImpluse(const Vec3& force);
@@ -62,6 +67,8 @@ private:
 
 	std::vector<CollisionHit<AbstractColliderBt>*> m_PreviousHits;
 	std::vector<CollisionHit<AbstractColliderBt>*> m_CurrentHits;
+
+	PhysicsManagerBt* m_pPhysicsManager;
 
 	float m_Mass;
 	bool m_Initialized;

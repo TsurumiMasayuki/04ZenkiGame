@@ -21,7 +21,7 @@ public:
 	void init(Transform* pModelTransform);
 
 protected:
-	virtual void onCollisionEnter(GameObject* pHit) override;
+	virtual void onTriggerEnter(GameObject* pHit) override;
 
 private:
 	//自身にアタッチされたBoxCollider
@@ -29,6 +29,9 @@ private:
 
 	//プレイヤーのモデルの座標系
 	Transform* m_pModelTransform;
+
+	//モデルにアタッチされているActionManager
+	Action::ActionManager* m_pModelActionManager;
 
 	//カメラにアタッチされているActionManager
 	Action::ActionManager* m_pCameraActionManager;

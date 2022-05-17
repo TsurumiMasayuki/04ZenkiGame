@@ -24,7 +24,7 @@ void Action::TestFlameEffect::init()
 		pRenderer->setColor(Color(0.6f, 0.0f, 0.0f, 1.0f));
 
 		//ƒ‰ƒ“ƒ_ƒ€‚È•ûŒü‚ÉˆÚ“®+“§–¾‰»
-		pObjParticle->getActionManager().enqueueAction
+		pObjParticle->addComponent<Action::ActionManager>()->enqueueAction
 		(
 			new Spawn
 			(
@@ -36,7 +36,7 @@ void Action::TestFlameEffect::init()
 			)
 		);
 
-		pObjParticle->getActionManager().enqueueAction(new Destroy(0.0f));
+		pObjParticle->getComponent<Action::ActionManager>()->enqueueAction(new Destroy(0.0f));
 	}
 }
 
