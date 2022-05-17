@@ -49,7 +49,7 @@ void HogeScene::start()
 	pPlayerAttackObject->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 1.0f));
 	pPlayerAttackObject->setParent(pPlayer);
 	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
-	pPlayerAttack->init(pPlayerActionManager);
+	pPlayerAttack->init(&pModel->getTransform());
 
 	pPlayerMove->init(pPlayerParam);
 	pPlayerMove->setCylinderRadius(11.0f);
@@ -67,11 +67,12 @@ void HogeScene::start()
 	pFollow->Setdistance(Vec3(0.0f, 8.0f, -8.0f));
 
 	//–Ê‚Ì”
-	const int faceCount = 12;
+	const int faceCount = 24;
 	//Šp“x
 	const float rad = DirectX::XM_2PI / faceCount;
 	//‰~’Œ‚Ì”¼Œa
 	const float radius = 10.0f;
+
 	//‰~’Œ‚ğ¶¬
 	for (int i = 0; i < faceCount; i++)
 	{
