@@ -84,7 +84,7 @@ inline T * ComponentManager::addComponent()
 	pNewComponent->setUser(*m_pUser);
 
 	//最初のコンポーネント(Transform)でないなら
-	if (m_Components.getAddQueueVector().size() != 1)
+	if (m_Components.getAllEelements().size() > 1)
 		pNewComponent->getTransform().addListner(pNewComponent);
 
 	return pNewComponent;

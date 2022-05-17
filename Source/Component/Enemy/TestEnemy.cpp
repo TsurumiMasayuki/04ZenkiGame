@@ -1,4 +1,5 @@
 #include "TestEnemy.h"
+#include "Component/Physics/BoxColliderBt.h"
 #include "Device/GameDevice.h"
 #include "Utility/CoordConverter.h"
 #include "Math/MathUtility.h"
@@ -6,10 +7,13 @@
 void TestEnemy::onStart()
 {
 	m_CylinderCoord.z = getTransform().getLocalPosition().z;
+	getUser().setTag("Enemy");
 }
 
 void TestEnemy::onUpdate()
 {
+	return;
+
 	// Šî€À•Wæ“¾
 	Vec3 position = getUser().getTransform().getLocalPosition();
 

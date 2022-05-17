@@ -48,31 +48,37 @@ void PlayerMovement::onUpdate()
 	if (GameInput::getInstance().getPlayerDash() &&
 		!m_pPlayerParam->isFuelZero())
 	{
-		if (m_pActionManager->actionCount() == 0)
-		{
-			//間隔を開けて火炎エフェクト
-			auto pSequence = new Action::Sequence(
-				{
-					new Action::TestFlameEffect(m_pActionManager),
-					new Action::WaitForSeconds(0.1f)
-				}
-			);
+		//if (m_pActionManager->actionCount() == 0)
+		//{
+		//	//間隔を開けて火炎エフェクト
+		//	auto pSequence = new Action::Sequence(
+		//		{
+		//			new Action::TestFlameEffect(m_pActionManager),
+		//			new Action::WaitForSeconds(0.1f)
+		//		}
+		//	);
 
-			//リピート実行
-			auto pRepeat = new Action::RepeatForever(pSequence);
+		//	//リピート実行
+		//	auto pRepeat = new Action::RepeatForever(pSequence);
 
-			m_pActionManager->enqueueAction(pRepeat);
-		}
+		//	m_pActionManager->enqueueAction(pRepeat);
+		//}
 		dash(moveDir);
 	}
 	else
 	{
-		//エフェクト停止
-		m_pActionManager->forceNext();
+		////エフェクト停止
+		//m_pActionManager->forceNext();
 		move(moveDir);
 	}
 
 	convertCoord();
+
+	//回転を決める
+	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 60.0f - moveDir.z * 35.0f;
+
+	//回転
+	getTransform().setLocalAngles(Vec3(0.0f, yAngle, MathUtility::toDegree(m_CylinderCoord.y) - 90.0f));
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
@@ -108,7 +114,7 @@ void PlayerMovement::dash(const Vec3& moveDir)
 
 	//座標更新
 	m_CylinderCoord.y -= moveDir.x * deltaTime;
-	m_CylinderCoord.z += moveDir.z * speed * deltaTime;
+	m_CylinderCoord.z += moveDir.z * m_Stats.m_DashSpeed * speed * deltaTime;
 }
 
 void PlayerMovement::convertCoord()
@@ -118,7 +124,4 @@ void PlayerMovement::convertCoord()
 
 	//座標を適用
 	getTransform().setLocalPosition(cartCoord);
-
-	//回転(Z)
-	getTransform().setLocalAngleZ(MathUtility::toDegree(m_CylinderCoord.y));
 }
