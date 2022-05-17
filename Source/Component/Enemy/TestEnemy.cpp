@@ -3,10 +3,6 @@
 
 void TestEnemy::onStart()
 {
-	// それぞれ座標初期化
-	position = Vec3(0,0,0);
-	speed = 1.0f;
-	targetPos = Vec3(0,0,0);
 }
 
 void TestEnemy::onUpdate()
@@ -14,12 +10,7 @@ void TestEnemy::onUpdate()
 	// 基準座標取得
 	position = getUser().getTransform().getLocalPosition();
 
-	// 目標座標取得
-	targetPos = object->getTransform().getLocalPosition();
 
-	// 移動方向算出
-	moveVec = targetPos - position;
-	moveVec = moveVec.normalized();
 
 	// 座標更新
 	position += moveVec * speed * GameDevice::getGameTime().getDeltaTime();
@@ -27,7 +18,10 @@ void TestEnemy::onUpdate()
 	getUser().getTransform().setLocalPosition(position);
 }
 
-void TestEnemy::SetTarget(GameObject* object)
+void TestEnemy::init(float angle, float speed = 1.0f, float radius = 11.0f, Vec3 centerPoint = Vec3(0, 0, 0))
 {
-	this->object = object;
+	this->angle = angle;
+	this->speed = speed;
+	this->rasius = radius;
+	this->centerPoint = centerPoint;
 }
