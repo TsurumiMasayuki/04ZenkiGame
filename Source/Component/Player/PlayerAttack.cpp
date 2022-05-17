@@ -11,6 +11,7 @@
 
 #include "Device/GameDevice.h"
 
+#include "Component/Follow/Follow.h"
 #include "Component/Player/PlayerStats.h"
 
 #include "Device/GameInput.h"
@@ -39,6 +40,11 @@ void PlayerAttack::onStart()
 	m_pAudioSource = getUser().addComponent<AudioSource>();
 	m_pAudioSource->setAudio("EnemyHit");
 	m_pAudioSource->setVolume(0.1f);
+
+	//プレイヤーに追従する
+	auto pAttackFollow = getUser().addComponent<Follow>();
+	pAttackFollow->SetGameObject(m_pModelTransform->getUser().getParent());
+	pAttackFollow->Setdistance(Vec3(0.0f, 0.0f, 1.0f));
 }
 
 void PlayerAttack::onUpdate()
@@ -49,15 +55,15 @@ void PlayerAttack::onUpdate()
 	//入力されていたら
 	if (input.isPadButtonDown(ControllerInput::PAD_BUTTON::X))
 	{
-		//スケールを縮める
-		m_pModelTransform->setLocalScale(Vec3(0.5f, 1.0f, 1.0f));
+		//スケールを縮める&その分移動
+		m_pModelTransform->setLocalScale(Vec3(1.0f, 0.5f, 1.0f));
 		//コライダーを有効化
 		m_pBoxCollider->setActive(true);
 	}
 	
 	if (input.isPadButtonUp(ControllerInput::PAD_BUTTON::X))
 	{
-		//スケールを元に戻す
+		//座標とスケールを元に戻す
 		m_pModelTransform->setLocalScale(Vec3(1.0f));
 		//コライダーを無効化
 		m_pBoxCollider->setActive(false);
@@ -69,7 +75,7 @@ void PlayerAttack::init(Transform* pModelTransform)
 	m_pModelTransform = pModelTransform;
 }
 
-void PlayerAttack::onCollisionEnter(GameObject* pHit)
+void PlayerAttack::onTriggerEnter(GameObject* pHit)
 {
 	//敵でないならreturn
 	if (!pHit->compareTag("Enemy")) 

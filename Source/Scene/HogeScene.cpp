@@ -44,9 +44,8 @@ void HogeScene::start()
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
+	//攻撃用オブジェクト生成
 	auto pPlayerAttackObject = new GameObject(this);
-	pPlayerAttackObject->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 1.0f));
-	pPlayerAttackObject->setParent(pPlayer);
 	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
 	pPlayerAttack->init(&pModel->getTransform());
 
@@ -89,11 +88,20 @@ void HogeScene::start()
 		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
 	}
 
+	//テスト用敵生成
 	auto pTestEnemyObject = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
-	pTestEnemyObject->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 50.0f));
-	pTestEnemyObject->getTransform().setLocalScale(Vec3(1.0f, 1.0f, 0.25f));
+	pTestEnemyObject->getTransform().setLocalPosition(Vec3(11.0f, 0.0f, 50.0f));
+	pTestEnemyObject->getTransform().setLocalScale(Vec3(1.0f, 1.0f, 1.0f));
+
+	//コライダー追加
+	auto pEnemyCollider = pTestEnemyObject->addComponent<BoxColiiderBt>();
+	pEnemyCollider->setMass(1.0f);
+	pEnemyCollider->setTrigger(false);
+	pEnemyCollider->setUseGravity(false);
+	pEnemyCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -20.0f));
+
 	auto pTestEnemy = pTestEnemyObject->addComponent<TestEnemy>();
-	pTestEnemy->init(-5.0f, 5.0f);
+	pTestEnemy->init(-10.0f, 0.0f);
 }
 
 void HogeScene::update()
