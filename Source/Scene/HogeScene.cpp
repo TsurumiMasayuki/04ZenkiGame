@@ -7,7 +7,6 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Enemy/TestEnemy.h"
-#include "Component/Enemy/LinearlyEnemy.h"
 
 #include "Component/Follow/Follow.h"
 #include "Component/Map/Map.h"
@@ -88,6 +87,12 @@ void HogeScene::start()
 		//‰ñ“]Ý’è
 		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
 	}
+
+	auto pTestEnemyObject = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
+	pTestEnemyObject->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 50.0f));
+	pTestEnemyObject->getTransform().setLocalScale(Vec3(1.0f, 1.0f, 0.25f));
+	auto pTestEnemy = pTestEnemyObject->addComponent<TestEnemy>();
+	pTestEnemy->init(-5.0f, 5.0f);
 }
 
 void HogeScene::update()
