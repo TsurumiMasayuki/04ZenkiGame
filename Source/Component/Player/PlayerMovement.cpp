@@ -73,6 +73,12 @@ void PlayerMovement::onUpdate()
 	}
 
 	convertCoord();
+
+	//回転を決める
+	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 60.0f - moveDir.z * 35.0f;
+
+	//回転
+	getTransform().setLocalAngles(Vec3(0.0f, yAngle, MathUtility::toDegree(m_CylinderCoord.y) - 90.0f));
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
@@ -118,7 +124,4 @@ void PlayerMovement::convertCoord()
 
 	//座標を適用
 	getTransform().setLocalPosition(cartCoord);
-
-	//回転(Z)
-	getTransform().setLocalAngleZ(MathUtility::toDegree(m_CylinderCoord.y) - 90.0f);
 }

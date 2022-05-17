@@ -30,6 +30,9 @@ private:
 	//プレイヤーのモデルの座標系
 	Transform* m_pModelTransform;
 
+	//モデルにアタッチされているActionManager
+	Action::ActionManager* m_pModelActionManager;
+
 	//カメラにアタッチされているActionManager
 	Action::ActionManager* m_pCameraActionManager;
 
