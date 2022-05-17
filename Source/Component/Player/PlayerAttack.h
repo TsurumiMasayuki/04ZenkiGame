@@ -21,7 +21,7 @@ public:
 	void init(Transform* pModelTransform);
 
 protected:
-	virtual void onCollisionEnter(GameObject* pHit) override;
+	virtual void onTriggerEnter(GameObject* pHit) override;
 
 private:
 	//自身にアタッチされたBoxCollider
