@@ -9,11 +9,13 @@
 #include "Component/Utility/Action/Actions.h"
 #include "Component/Utility/Action/ActionManager.h"
 
+#include "Device/GameDevice.h"
+
 #include "Component/Player/PlayerStats.h"
 
 #include "Device/GameInput.h"
+#include "Device/ControllerInput.h"
 
-#include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
 
 #include "Utility/JsonFileManager.h"
@@ -42,42 +44,29 @@ void PlayerAttack::onStart()
 void PlayerAttack::onUpdate()
 {
 	//入力を取得
-	bool input = GameInput::getInstance().getPlayerDash();
+	auto& input = ControllerInput::getInstance();
 
 	//入力されていたら
-	if (input)
+	if (input.isPadButtonDown(ControllerInput::PAD_BUTTON::X))
 	{
-		if (m_pPlayerActionManager->actionCount() == 0)
-		{
-			//間隔を開けて火炎エフェクト
-			auto pSequence = new Action::Sequence(
-				{
-					new Action::TestFlameEffect(m_pPlayerActionManager),
-					new Action::WaitForSeconds(0.5f)
-				}
-			);
-
-			//リピート実行
-			auto pRepeat = new Action::RepeatForever(pSequence);
-
-			m_pPlayerActionManager->enqueueAction(pRepeat);
-		}
-
+		//スケールを縮める
+		m_pModelTransform->setLocalScale(Vec3(0.5f, 1.0f, 1.0f));
 		//コライダーを有効化
 		m_pBoxCollider->setActive(true);
 	}
-	else
+	
+	if (input.isPadButtonUp(ControllerInput::PAD_BUTTON::X))
 	{
-		//エフェクトを停止
-		m_pPlayerActionManager->forceNext();
+		//スケールを元に戻す
+		m_pModelTransform->setLocalScale(Vec3(1.0f));
 		//コライダーを無効化
 		m_pBoxCollider->setActive(false);
 	}
 }
 
-void PlayerAttack::init(Action::ActionManager* pPlayerActionManager)
+void PlayerAttack::init(Transform* pModelTransform)
 {
-	m_pPlayerActionManager = pPlayerActionManager;
+	m_pModelTransform = pModelTransform;
 }
 
 void PlayerAttack::onCollisionEnter(GameObject* pHit)

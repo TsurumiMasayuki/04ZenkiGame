@@ -18,7 +18,7 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	void init(Action::ActionManager* pPlayerActionManager);
+	void init(Transform* pModelTransform);
 
 protected:
 	virtual void onCollisionEnter(GameObject* pHit) override;
@@ -27,8 +27,8 @@ private:
 	//自身にアタッチされたBoxCollider
 	BoxColiiderBt* m_pBoxCollider;
 
-	//プレイヤーにアタッチされているActionManager
-	Action::ActionManager* m_pPlayerActionManager;
+	//プレイヤーのモデルの座標系
+	Transform* m_pModelTransform;
 
 	//カメラにアタッチされているActionManager
 	Action::ActionManager* m_pCameraActionManager;
