@@ -10,19 +10,22 @@
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerParamManager.h"
 
+#include "Device/GameInput.h"
+
+#include "Effect/TestFlameEffect.h"
+
 #include "Utility/JsonFileManager.h"
+#include "Utility/CoordConverter.h"
 
 using namespace Action;
 
 void PlayerMovement::onStart()
 {
-	m_pActionManager = getUser().addComponent<ActionManager>();
-
-	m_pAudioSource = getUser().addComponent<AudioSource>();
-	m_pAudioSource->setAudio("Walk");
-	m_pAudioSource->setVolume(0.1f);
-
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
+
+	m_CylinderCoord.z = getTransform().getLocalPosition().z;
+
+	m_pActionManager = getUser().getComponent<Action::ActionManager>();
 }
 
 void PlayerMovement::onUpdate()
@@ -37,28 +40,39 @@ void PlayerMovement::onUpdate()
 	}
 
 	//移動方向
-	Vec3 moveDir = Vec3::zero();
+	Vec3 moveDir = GameInput::getInstance().getPlayerMove();
 
-	//入力に応じて移動方向をセット(マス目なので斜め移動はなし)
-	//上
-	if (input.isKey(DIK_UP))
-		moveDir = Vec3(0.0f, 0.0f, 1.0f);
-	//下
-	if (input.isKey(DIK_DOWN))
-		moveDir = Vec3(0.0f, 0.0f, -1.0f);
-	//右
-	if (input.isKey(DIK_RIGHT))
-		moveDir = Vec3(1.0f, 0.0f, 0.0f);
-	//左
-	if (input.isKey(DIK_LEFT))
-		moveDir = Vec3(-1.0f, 0.0f, 0.0f);
+	moveDir.z = std::fmaxf(0.0f, moveDir.z);
 
-	//移動量がゼロなら実行しない
-	if (moveDir.x == 0.0f && moveDir.z == 0.0f)
-		return;
+	//ダッシュボタンが押されているなら&燃料がゼロでないなら
+	if (GameInput::getInstance().getPlayerDash() &&
+		!m_pPlayerParam->isFuelZero())
+	{
+		if (m_pActionManager->actionCount() == 0)
+		{
+			//間隔を開けて火炎エフェクト
+			auto pSequence = new Action::Sequence(
+				{
+					new Action::TestFlameEffect(m_pActionManager),
+					new Action::WaitForSeconds(0.1f)
+				}
+			);
 
-	dash(moveDir);
-	move(moveDir);
+			//リピート実行
+			auto pRepeat = new Action::RepeatForever(pSequence);
+
+			m_pActionManager->enqueueAction(pRepeat);
+		}
+		dash(moveDir);
+	}
+	else
+	{
+		//エフェクト停止
+		m_pActionManager->forceNext();
+		move(moveDir);
+	}
+
+	convertCoord();
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
@@ -66,68 +80,45 @@ void PlayerMovement::init(PlayerParamManager* pPlayerParam)
 	m_pPlayerParam = pPlayerParam;
 }
 
+void PlayerMovement::setCylinderRadius(float radius)
+{
+	m_CylinderCoord.x = radius;
+}
+
 void PlayerMovement::move(const Vec3& moveDir)
 {
-	//ダッシュキーが押されているなら終了
-	if (GameDevice::getInput().isKey(DIK_SPACE))
-		return;
+	//deltaTimeを取得
+	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
-	//アニメーションの途中なら終了
-	if (m_pActionManager->actionCount() > 0)
-		return;
+	//移動量を算出
+	float move = m_Stats.m_WalkSpeed * deltaTime;
 
-	//1マス移動
-	m_pActionManager->enqueueAction(new EaseOutCubic(new MoveBy(moveDir, m_Stats.m_WalkTime)));
-
-	//歩くサウンドを再生
-	m_pAudioSource->play();
-
-	//ランダムでピッチを設定
-	float pitch = GameDevice::getRandom().getRandom(1.0f, 1.1f);
-	m_pAudioSource->setPitch(pitch);
+	//座標更新
+	m_CylinderCoord.y -= moveDir.x * deltaTime;
+	m_CylinderCoord.z += moveDir.z * move;
 }
 
 void PlayerMovement::dash(const Vec3& moveDir)
 {
-	//燃料がゼロなら実行しない
-	if (m_pPlayerParam->isFuelZero())
-		return;
+	//現在の速度を計算
+	float speed = 1.0f + m_pPlayerParam->getAcceleration();
 
-	//デルタタイムを取得
+	//deltaTimeを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
-	//ダッシュキーが押されていないなら終了
-	if (!GameDevice::getInput().isKey(DIK_SPACE))
-		return;
+	//座標更新
+	m_CylinderCoord.y -= moveDir.x * deltaTime;
+	m_CylinderCoord.z += moveDir.z * speed * deltaTime;
+}
 
-	//アニメーションの途中なら終了
-	if (m_pActionManager->actionCount() > 0)
-		return;
+void PlayerMovement::convertCoord()
+{
+	//円筒座標をデカルト座標に変換
+	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
 
-	//移動時間の割合を算出
-	float moveTimeRatio = std::fmaxf(0.25f, 1.0f - m_pPlayerParam->getAcceleration());
+	//座標を適用
+	getTransform().setLocalPosition(cartCoord);
 
-	const Vec3& position = getUser().getTransform().getLocalPosition();
-
-	//移動
-	m_pActionManager->enqueueAction(new MoveBy(moveDir, m_Stats.m_DashTime * moveTimeRatio));
-
-	//歩くサウンドを再生
-	m_pAudioSource->play();
-
-	//ピッチを段々上げる
-	float pitch = Easing::easeOutCubic(1.0f - moveTimeRatio);
-	//ピッチ制限
-	pitch = std::fminf(pitch, 0.4f);
-	//ピッチをセット
-	m_pAudioSource->setPitch(pitch);
-
-	//攻撃用オブジェクトを生成
-	auto pAttackObject = new GameObject(getUser().getGameMediator());
-	//自身の座標を設定
-	pAttackObject->getTransform().setLocalPosition(getUser().getTransform().getLocalPosition());
-	//攻撃用コンポーネントをアタッチ
-	pAttackObject->addComponent<PlayerAttack>();
-
-	return;
+	//回転(Z)
+	getTransform().setLocalAngleZ(MathUtility::toDegree(m_CylinderCoord.y));
 }

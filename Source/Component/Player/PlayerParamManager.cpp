@@ -1,6 +1,8 @@
 #include "PlayerParamManager.h"
-#include "Component/TestUI/TestUI.h"
 #include "Device/GameDevice.h"
+#include "Device/GameInput.h"
+
+#include "Component/TestUI/TestUI.h"
 
 void PlayerParamManager::onStart()
 {
@@ -14,8 +16,8 @@ void PlayerParamManager::onUpdate()
 {
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
-	//ダッシュキーが押されているなら
-	if (GameDevice::getInput().isKey(DIK_SPACE))
+	//ダッシュボタンが押されているなら
+	if (GameInput::getInstance().getPlayerDash())
 	{
 		//加速
 		m_Acceleration += deltaTime * 0.25f;
@@ -32,7 +34,7 @@ void PlayerParamManager::onUpdate()
 		m_Fuel = std::fminf(5.0f, m_Fuel);
 	}
 	
-	if (GameDevice::getInput().isKeyUp(DIK_SPACE))
+	if (!GameInput::getInstance().getPlayerDash())
 	{
 		//加速度を0にする
 		m_Acceleration = 0.0f;
