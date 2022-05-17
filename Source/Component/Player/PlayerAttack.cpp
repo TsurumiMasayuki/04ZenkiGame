@@ -9,9 +9,13 @@
 #include "Component/Utility/Action/Actions.h"
 #include "Component/Utility/Action/ActionManager.h"
 
+#include "Device/GameDevice.h"
+
 #include "Component/Player/PlayerStats.h"
 
-#include "Effect/TestFlameEffect.h"
+#include "Device/GameInput.h"
+#include "Device/ControllerInput.h"
+
 #include "Effect/TestVibrationEffect.h"
 
 #include "Utility/JsonFileManager.h"
@@ -19,21 +23,11 @@
 void PlayerAttack::onStart()
 {
 	//自身にコライダーをアタッチ
-	auto pBoxCollider = getUser().addComponent<BoxColiiderBt>();
-	pBoxCollider->setMass(1.0f);
-	pBoxCollider->setTrigger(true);
-	pBoxCollider->setUseGravity(false);
-
-	//自身にActionManagerをアタッチ
-	auto pActionManager = getUser().addComponent<Action::ActionManager>();
-	//火炎エフェクトを実行
-	pActionManager->enqueueAction(new Action::TestFlameEffect());
-
-	//生存時間を取得
-	float m_TimeUntilDestroy = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_FlameRemainTime;
-
-	//自身を破棄
-	pActionManager->enqueueAction(new Action::Destroy(m_TimeUntilDestroy));
+	m_pBoxCollider = getUser().addComponent<BoxColiiderBt>();
+	m_pBoxCollider->setMass(1.0f);
+	m_pBoxCollider->setTrigger(true);
+	m_pBoxCollider->setUseGravity(false);
+	m_pBoxCollider->setActive(false);
 
 	//カメラがアタッチされているオブジェクトを取得
 	auto pCameraObject = &getUser().getGameMediator()->getMainCamera()->getUser();
@@ -49,6 +43,30 @@ void PlayerAttack::onStart()
 
 void PlayerAttack::onUpdate()
 {
+	//入力を取得
+	auto& input = ControllerInput::getInstance();
+
+	//入力されていたら
+	if (input.isPadButtonDown(ControllerInput::PAD_BUTTON::X))
+	{
+		//スケールを縮める
+		m_pModelTransform->setLocalScale(Vec3(0.5f, 1.0f, 1.0f));
+		//コライダーを有効化
+		m_pBoxCollider->setActive(true);
+	}
+	
+	if (input.isPadButtonUp(ControllerInput::PAD_BUTTON::X))
+	{
+		//スケールを元に戻す
+		m_pModelTransform->setLocalScale(Vec3(1.0f));
+		//コライダーを無効化
+		m_pBoxCollider->setActive(false);
+	}
+}
+
+void PlayerAttack::init(Transform* pModelTransform)
+{
+	m_pModelTransform = pModelTransform;
 }
 
 void PlayerAttack::onCollisionEnter(GameObject* pHit)
@@ -61,8 +79,7 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 		return;
 
 	//カメラを揺らす
-	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(1.0f, 0.0f, 0.0f), 0.25f)));
-	m_pCameraActionManager->enqueueAction(new Action::EaseInBounce(new Action::RotateBy(Vec3(-1.0f, 0.0f, 0.0f), 0.25f)));
+	m_pCameraActionManager->enqueueAction(new Action::TestVibrationEffect(m_pCameraActionManager));
 
 	//エネミーの被ダメージ音を鳴らす
 	m_pAudioSource->play();

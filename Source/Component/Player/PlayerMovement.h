@@ -22,6 +22,8 @@ public:
 
 	void init(PlayerParamManager* pPlayerParam);
 
+	void setCylinderRadius(float radius);
+
 private:
 	//移動
 	void move(const Vec3& moveDir);
@@ -29,12 +31,14 @@ private:
 	//ダッシュ
 	void dash(const Vec3& moveDir);
 
+	//円筒座標系から変換
+	void convertCoord();
+
 private:
-	PlayerParamManager* m_pPlayerParam;
-
 	Action::ActionManager* m_pActionManager;
-
+	PlayerParamManager* m_pPlayerParam;
 	AudioSource* m_pAudioSource;
-
 	PlayerStats m_Stats;
+	//円筒座標系
+	Vec3 m_CylinderCoord;
 };
