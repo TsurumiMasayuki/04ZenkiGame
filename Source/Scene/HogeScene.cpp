@@ -83,7 +83,7 @@ void HogeScene::start()
 		//座標設定
 		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
 		//サイズ設定
-		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.5f, 200.0f));
+		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.25f, 200.0f));
 		//回転設定
 		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
 	}
