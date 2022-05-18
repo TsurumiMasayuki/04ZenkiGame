@@ -32,7 +32,7 @@ void calcPosition(float radius, const nlohmann::json& json, std::vector<Vec3>& r
 		float endZPos = (float)json[4][0];
 		float endAngle = (float)json[4][1];
 
-		CalcPosLine(radius, startAngle, startZPos, endAngle, endZPos, (int)json[4], result);
+		CylinderUtility::CalcPosLine(radius, startAngle, startZPos, endAngle, endZPos, (int)json[5], result);
 	}
 }
 
@@ -76,7 +76,7 @@ StageInfo::StageInfo(const nlohmann::json& file)
 			objectPlaceInfo.m_CylinderCoord = cylinder;
 
 			//オブジェクトの角度
-			objectPlaceInfo.m_Angle = MathUtility::toRadian(cylinder.y);
+			objectPlaceInfo.m_Angle = MathUtility::toDegree(cylinder.y);
 
 			//オブジェクトの出現位置(Z)
 			objectPlaceInfo.m_SpawnPosZ = spawnPosZ;
