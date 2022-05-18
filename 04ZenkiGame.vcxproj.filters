@@ -19,7 +19,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
-    <ClCompile Include="Source\Component\Enemy\LinearlyEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
     <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
@@ -38,10 +37,11 @@
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
+    <ClCompile Include="Source\Stage\StageInfo.cpp" />
+    <ClCompile Include="Source\Stage\StageLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
-    <ClInclude Include="Source\Component\Enemy\LinearlyEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
     <ClInclude Include="Source\Effect\TestFlameEffect.h" />
     <ClInclude Include="Source\Game.h" />
@@ -62,5 +62,7 @@
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
     <ClInclude Include="Source\Utility\CoordConverter.h" />
     <ClInclude Include="Source\Utility\CylinderUtility.h" />
+    <ClInclude Include="Source\Stage\StageInfo.h" />
+    <ClInclude Include="Source\Stage\StageLoader.h" />
   </ItemGroup>
 </Project>
