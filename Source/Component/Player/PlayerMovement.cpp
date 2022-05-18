@@ -23,6 +23,7 @@ void PlayerMovement::onStart()
 {
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 
+	m_CylinderCoord.y = MathUtility::toRadian(90.0f);
 	m_CylinderCoord.z = getTransform().getLocalPosition().z;
 
 	m_pActionManager = getUser().getComponent<Action::ActionManager>();
@@ -78,7 +79,7 @@ void PlayerMovement::onUpdate()
 	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 60.0f - moveDir.z * 35.0f;
 
 	//回転
-	getTransform().setLocalAngles(Vec3(0.0f, yAngle, MathUtility::toDegree(m_CylinderCoord.y) - 90.0f));
+	getTransform().setLocalAngles(Vec3(0.0f, yAngle, MathUtility::toDegree(m_CylinderCoord.y)));
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
