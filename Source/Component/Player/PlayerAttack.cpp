@@ -53,10 +53,12 @@ void PlayerAttack::onStart()
 void PlayerAttack::onUpdate()
 {
 	//入力を取得
-	auto& input = ControllerInput::getInstance();
+	auto& gameInput = GameInput::getInstance();
+	auto& controllerInput = ControllerInput::getInstance();
 
 	//入力されていたら
-	if (input.isPadButtonDown(ControllerInput::PAD_BUTTON::X))
+	if (controllerInput.isPadButtonDown(ControllerInput::PAD_BUTTON::X) &&
+		gameInput.getPlayerDash())
 	{
 		//スケールを縮める&その分移動
 		m_pModelActionManager->enqueueAction(
@@ -65,14 +67,14 @@ void PlayerAttack::onUpdate()
 					//ちょっとジャンプする
 					new Action::Sequence(
 						{
-							new Action::EaseOutQuart(new Action::MoveTo(Vec3(0.0f, 1.0f, 0.0f), 0.25f)),
-							new Action::EaseInQuart(new Action::MoveTo(Vec3(0.0f, -0.25f, 0.0f), 0.4f))
+							new Action::EaseOutQuart(new Action::MoveTo(Vec3(1.0f, 0.0f, 0.0f), 0.25f)),
+							new Action::EaseInQuart(new Action::MoveTo(Vec3(-0.25f, 0.0f, 0.0f), 0.4f))
 						}
 					),
 					//スケールを縮める
-					new Action::EaseInBack(new Action::ScaleTo(Vec3(0.7f, 0.5f, 0.9f), 0.35f)),
+					new Action::EaseInBack(new Action::ScaleTo(Vec3(0.5f, 0.8f, 0.9f), 0.35f)),
 					//前転する
-					new Action::EaseOutSine(new Action::RotateBy(Vec3(380.0f, 0.0f, 0.0f), 0.5f))
+					new Action::EaseOutSine(new Action::RotateBy(Vec3(0.0f, -380.0f, 0.0f), 0.5f))
 				}
 			)
 		);
@@ -81,9 +83,9 @@ void PlayerAttack::onUpdate()
 		m_pBoxCollider->setActive(true);
 	}
 	
-	if (input.isPadButtonUp(ControllerInput::PAD_BUTTON::X))
+	if (controllerInput.isPadButtonUp(ControllerInput::PAD_BUTTON::X))
 	{
-		//座標とスケールを元に戻す
+		//座標、スケール、回転を元に戻す
 		m_pModelTransform->setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
 		m_pModelTransform->setLocalScale(Vec3(1.0f));
 		m_pModelTransform->setLocalAngles(Vec3::zero());

@@ -135,8 +135,13 @@ PS_OUT main(PS_IN input) : SV_TARGET
 {
 	PS_OUT result;
 	
-	float3 eyeDir = normalize(cameraPos.xyz - input.worldPos.xyz);
+	//法線とライト方向の内積
+	float NdotL = dot(normalize(float3(0.0, 0.5, 0.5)), input.normal);
+	NdotL += 0.3;
+	NdotL = saturate(NdotL);
+
 	float4 color = tex.Sample(smp, input.uv) * baseColor;
+	color.xyz *= NdotL;
 
 	result.target0 = color;
 
