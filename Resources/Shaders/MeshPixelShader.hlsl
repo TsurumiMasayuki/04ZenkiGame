@@ -137,7 +137,7 @@ PS_OUT main(PS_IN input) : SV_TARGET
 	
 	//法線とライト方向の内積
 	float NdotL = dot(normalize(float3(0.0, 0.5, 0.5)), input.normal);
-	NdotL += 0.3;
+	NdotL += 0.6;
 	NdotL = saturate(NdotL);
 
 	float4 color = tex.Sample(smp, input.uv) * baseColor;
