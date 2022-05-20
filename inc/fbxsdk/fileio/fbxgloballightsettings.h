@@ -56,7 +56,7 @@ public:
     //@{
 
     /** Activates or disables the fog.
-      * \param pEnable                  Set to \c true to activate the fog option or set to \c false to disable the fog option.
+      * \param pEnable                  Set to \c true to startAttack the fog option or set to \c false to disable the fog option.
       */
     void SetFogEnable(bool pEnable);
 

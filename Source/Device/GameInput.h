@@ -19,6 +19,9 @@ public:
 	// ダッシュ取得
 	bool getPlayerDash();
 
+	//スライディング取得
+	bool getSliding();
+
 protected:
 	GameInput() {}
 	~GameInput() {}

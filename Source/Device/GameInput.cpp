@@ -32,19 +32,19 @@ Vec3 GameInput::getPlayerMove()
 		//入力に応じて移動方向をセット(マス目なので斜め移動はなし)
 		//上
 		if (input.isKey(DIK_UP))
-			result = Vec3(0.0f, 0.0f, 1.0f);
+			result += Vec3(0.0f, 0.0f, 1.0f);
 		//下
 		if (input.isKey(DIK_DOWN))
-			result = Vec3(0.0f, 0.0f, -1.0f);
+			result += Vec3(0.0f, 0.0f, -1.0f);
 		//右
 		if (input.isKey(DIK_RIGHT))
-			result = Vec3(1.0f, 0.0f, 0.0f);
+			result += Vec3(1.0f, 0.0f, 0.0f);
 		//左
 		if (input.isKey(DIK_LEFT))
-			result = Vec3(-1.0f, 0.0f, 0.0f);
+			result += Vec3(-1.0f, 0.0f, 0.0f);
 	}
 
-	return result;
+	return result.normalized();
 }
 
 bool GameInput::getPlayerDash()
@@ -63,6 +63,27 @@ bool GameInput::getPlayerDash()
 		const auto& input = GameDevice::getInput();
 
 		result = input.isKey(DIK_SPACE);
+	}
+
+	return result;
+}
+
+bool GameInput::getSliding()
+{
+	bool result;
+
+	// コントローラー接続中
+	if (ControllerInput::getInstance().isConnect())
+	{
+		result = ControllerInput::getInstance().isPadButtonDown(ControllerInput::PAD_BUTTON::X);
+	}
+	// キーボード
+	else
+	{
+		//入力デバイスを取得
+		const auto& input = GameDevice::getInput();
+
+		result = input.isKeyDown(DIK_LCONTROL);
 	}
 
 	return result;

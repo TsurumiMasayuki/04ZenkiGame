@@ -40,6 +40,7 @@
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
     <ClCompile Include="Source\Stage\StageInfo.cpp" />
     <ClCompile Include="Source\Stage\StageLoader.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerSideAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -66,5 +67,6 @@
     <ClInclude Include="Source\Utility\CylinderUtility.h" />
     <ClInclude Include="Source\Stage\StageInfo.h" />
     <ClInclude Include="Source\Stage\StageLoader.h" />
+    <ClInclude Include="Source\Component\Player\PlayerSideAttack.h" />
   </ItemGroup>
 </Project>
