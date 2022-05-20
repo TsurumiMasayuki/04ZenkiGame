@@ -168,7 +168,6 @@
     <ClCompile Include="Source\Component\Map\Map.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
-    <ClCompile Include="Source\Component\Enemy\LinearlyEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
@@ -178,10 +177,13 @@
     <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\Stage\StageInfo.cpp" />
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
     <ClCompile Include="Source\Effect\TestEffect.cpp" />
     <ClCompile Include="Source\Effect\TestVibrationEffect.cpp" />
+    <ClCompile Include="Source\Stage\StageLoader.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
+    <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\DistanceActivater\DistanceActivater.h" />
@@ -190,7 +192,6 @@
     <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Component\Player\PlayerAttack.h" />
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
-    <ClInclude Include="Source\Component\Enemy\LinearlyEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
@@ -200,10 +201,13 @@
     <ClInclude Include="Source\Effect\TestFlameEffect.h" />
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\Stage\StageInfo.h" />
     <ClInclude Include="Source\Scene\HogeScene.h" />
     <ClInclude Include="Source\Effect\TestEffect.h" />
     <ClInclude Include="Source\Effect\TestVibrationEffect.h" />
+    <ClInclude Include="Source\Stage\StageLoader.h" />
     <ClInclude Include="Source\Utility\CoordConverter.h" />
+    <ClInclude Include="Source\Utility\CylinderUtility.h" />
     <ClInclude Include="Source\Utility\JsonFileManager.h" />
     <ClInclude Include="Source\Utility\SingletonTemplate.h" />
   </ItemGroup>

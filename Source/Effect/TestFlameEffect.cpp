@@ -15,7 +15,7 @@ void Action::TestFlameEffect::init()
 	auto& random = GameDevice::getRandom();
 	//エフェクト持続時間
 	const float effectDuration = 1.0f;
-	for (int i = 0; i < 15; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		pObjParticle = ModelGameObjectHelper::instantiateModel<int>(m_pUser->getGameMediator(), GameDevice::getModelManager().getModel("Cube"));
 		pObjParticle->getTransform().setLocalPosition(m_pUser->getTransform().getLocalPosition());
@@ -24,7 +24,7 @@ void Action::TestFlameEffect::init()
 		pRenderer->setColor(Color(0.6f, 0.0f, 0.0f, 1.0f));
 
 		//ランダムな方向に移動+透明化
-		pObjParticle->getActionManager().enqueueAction
+		pObjParticle->addComponent<Action::ActionManager>()->enqueueAction
 		(
 			new Spawn
 			(
@@ -36,7 +36,7 @@ void Action::TestFlameEffect::init()
 			)
 		);
 
-		pObjParticle->getActionManager().enqueueAction(new Destroy(0.0f));
+		pObjParticle->getComponent<Action::ActionManager>()->enqueueAction(new Destroy(0.0f));
 	}
 }
 
