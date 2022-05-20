@@ -9,6 +9,7 @@ namespace Action
 
 class BoxColiiderBt;
 class AudioSource;
+class PlayerParamManager;
 
 //プレイヤーの攻撃用コンポーネント
 class PlayerAttack
@@ -18,21 +19,30 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	void init(Action::ActionManager* pPlayerActionManager);
+	void init(Transform* pModelTransform, PlayerParamManager* pPlayerParam);
 
 protected:
-	virtual void onCollisionEnter(GameObject* pHit) override;
+	virtual void onTriggerEnter(GameObject* pHit) override;
 
 private:
 	//自身にアタッチされたBoxCollider
 	BoxColiiderBt* m_pBoxCollider;
 
-	//プレイヤーにアタッチされているActionManager
-	Action::ActionManager* m_pPlayerActionManager;
+	//プレイヤーのモデルの座標系
+	Transform* m_pModelTransform;
+
+	//モデルにアタッチされているActionManager
+	Action::ActionManager* m_pModelActionManager;
 
 	//カメラにアタッチされているActionManager
 	Action::ActionManager* m_pCameraActionManager;
 
 	//ダメージ用音声
 	AudioSource* m_pAudioSource;
+
+	//プレイヤーのパラメータ
+	PlayerParamManager* m_pPlayerParam;
+
+	//スライディングの時間
+	Timer m_SlidingTimer;
 };

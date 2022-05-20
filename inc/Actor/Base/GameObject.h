@@ -52,7 +52,6 @@ public:
 	IGameMediator* getGameMediator();
 
 	Transform& getTransform();
-	Action::ActionManager& getActionManager();
 
 	//コンポーネントの取得
 	template<typename T>
