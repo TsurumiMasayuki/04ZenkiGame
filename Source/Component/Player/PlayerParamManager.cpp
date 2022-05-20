@@ -6,10 +6,10 @@
 
 void PlayerParamManager::onStart()
 {
-	//UIオブジェクト生成
-	GameObject* pTestUIObj = new GameObject(getUser().getGameMediator());
-	//UI生成
-	m_pTestUI = pTestUIObj->addComponent<TestUI>();
+	////UIオブジェクト生成
+	//GameObject* pTestUIObj = new GameObject(getUser().getGameMediator());
+	////UI生成
+	//m_pTestUI = pTestUIObj->addComponent<TestUI>();
 }
 
 void PlayerParamManager::onUpdate()
@@ -20,7 +20,7 @@ void PlayerParamManager::onUpdate()
 	if (GameInput::getInstance().getPlayerDash())
 	{
 		//加速
-		m_Acceleration += deltaTime * 0.25f;
+		m_Acceleration += deltaTime * 0.1f;
 		m_Acceleration = std::fminf(1.0f, m_Acceleration);
 
 		//燃料減少
@@ -41,7 +41,7 @@ void PlayerParamManager::onUpdate()
 	}
 
 	//UIに設定
-	m_pTestUI->SetParam(m_Health, m_Acceleration, m_Fuel);
+	//m_pTestUI->SetParam(m_Health, m_Acceleration, m_Fuel);
 }
 
 bool PlayerParamManager::isFuelZero() const

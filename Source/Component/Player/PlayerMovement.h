@@ -11,6 +11,7 @@ namespace Action
 }
 
 class AudioSource;
+class BoxColiiderBt;
 class PlayerParamManager;
 
 class PlayerMovement
@@ -39,6 +40,12 @@ private:
 	PlayerParamManager* m_pPlayerParam;
 	AudioSource* m_pAudioSource;
 	PlayerStats m_Stats;
+	//コライダー
+	BoxColiiderBt* m_pBoxCollider;
+
+	//前フレームの座標
+	Vec3 m_PrePosition;
+
 	//円筒座標系
 	Vec3 m_CylinderCoord;
 };

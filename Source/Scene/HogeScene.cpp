@@ -6,20 +6,17 @@
 #include "Device/GameDevice.h"
 #include "Utility/ModelGameObjectHelper.h"
 
-#include "Component/Enemy/TestEnemy.h"
-#include "Component/Enemy/LinearlyEnemy.h"
-
 #include "Component/Follow/Follow.h"
-#include "Component/Map/Map.h"
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Player/PlayerParamManager.h"
 
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
-#include "Component/TestUI/TestUI.h"
 
-#include "Utility/CoordConverter.h"
+#include "Stage/StageLoader.h"
+
+#include "Utility/JsonFileManager.h"
 
 std::string HogeScene::nextScene()
 {
@@ -41,18 +38,23 @@ void HogeScene::start()
 	auto pModel = pPlayer->getChildren().at(0);
 	pModel->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 11.0f, 0.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
+	//攻撃用オブジェクト生成
 	auto pPlayerAttackObject = new GameObject(this);
-	pPlayerAttackObject->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 1.0f));
-	pPlayerAttackObject->setParent(pPlayer);
 	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
-	pPlayerAttack->init(&pModel->getTransform());
+	pPlayerAttack->init(&pModel->getTransform(), pPlayerParam);
 
 	pPlayerMove->init(pPlayerParam);
 	pPlayerMove->setCylinderRadius(11.0f);
+
+	//コライダー追加
+	auto pCollider = pPlayer->addComponent<BoxColiiderBt>();
+	pCollider->setMass(1.0f);
+	pCollider->setTrigger(false);
+	pCollider->setUseGravity(false);
 
 	//カメラ関係の設定
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
@@ -66,29 +68,10 @@ void HogeScene::start()
 	pFollow->SetGameObject(pPlayer);
 	pFollow->Setdistance(Vec3(0.0f, 8.0f, -8.0f));
 
-	//面の数
-	const int faceCount = 24;
-	//角度
-	const float rad = DirectX::XM_2PI / faceCount;
-	//円柱の半径
-	const float radius = 10.0f;
-
-	//円柱を生成
-	for (int i = 0; i < faceCount; i++)
-	{
-		Vec3 cylinder(radius, rad * i, 100.0f);
-
-		//ゲームオブジェクト生成
-		auto pFloor = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
-		pFloor->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(0.7f, 0.7f, 0.7f, 1.0f));
-
-		//座標設定
-		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
-		//サイズ設定
-		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.5f, 200.0f));
-		//回転設定
-		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
-	}
+	//ステージ読み込み
+	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
+	StageLoader stageLoader(this);
+	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
 }
 
 void HogeScene::update()
