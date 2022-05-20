@@ -20,7 +20,7 @@ void PlayerParamManager::onUpdate()
 	if (GameInput::getInstance().getPlayerDash())
 	{
 		//â¡ë¨
-		m_Acceleration += deltaTime * 0.25f;
+		m_Acceleration += deltaTime * 0.1f;
 		m_Acceleration = std::fminf(1.0f, m_Acceleration);
 
 		//îRóøå∏è≠

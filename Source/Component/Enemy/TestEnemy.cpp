@@ -4,6 +4,8 @@
 #include "Utility/CoordConverter.h"
 #include "Math/MathUtility.h"
 
+#include "btBulletDynamicsCommon.h"
+
 void TestEnemy::onStart()
 {
 	m_CylinderCoord.z = getTransform().getLocalPosition().z;

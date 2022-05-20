@@ -21,7 +21,7 @@ void StageLoader::createStageBase(const StageInfo& stageInfo)
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	//面の数
-	const int faceCount = 24;
+	const int faceCount = 36;
 	//角度
 	const float rad = DirectX::XM_2PI / faceCount;
 	//円柱の半径
@@ -58,16 +58,19 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 		//コライダー追加
 		auto pCollider = pObject->addComponent<BoxColiiderBt>();
-		pCollider->setMass(1.0f);
-		pCollider->setTrigger(false);
-		pCollider->setUseGravity(false);
 
 		if (objectPlaceInfo.m_ObjectName == "Wall")
 		{
-			//色設定
+			//スケール設定
 			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
+			//角度設定
 			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
+			//色設定
 			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
+
+			pCollider->setMass(0.0f);
+			pCollider->setUseGravity(false);
+			pCollider->setTrigger(false);
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
@@ -76,7 +79,10 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			auto pTestEnemy = pObject->addComponent<TestEnemy>();
 			pTestEnemy->init(-10.0f, 0.0f, stageInfo.m_Radius);
 
-			pCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -20.0f));
+			pCollider->setMass(1.0f);
+			pCollider->setUseGravity(false);
+			pCollider->setTrigger(true);
+			pCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -1.0f));
 		}
 	}
 }

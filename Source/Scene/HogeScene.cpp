@@ -38,17 +38,23 @@ void HogeScene::start()
 	auto pModel = pPlayer->getChildren().at(0);
 	pModel->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 11.0f, 0.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
 	//攻撃用オブジェクト生成
 	auto pPlayerAttackObject = new GameObject(this);
 	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
-	pPlayerAttack->init(&pModel->getTransform());
+	pPlayerAttack->init(&pModel->getTransform(), pPlayerParam);
 
 	pPlayerMove->init(pPlayerParam);
 	pPlayerMove->setCylinderRadius(11.0f);
+
+	//コライダー追加
+	auto pCollider = pPlayer->addComponent<BoxColiiderBt>();
+	pCollider->setMass(1.0f);
+	pCollider->setTrigger(false);
+	pCollider->setUseGravity(false);
 
 	//カメラ関係の設定
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();

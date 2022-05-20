@@ -15,7 +15,7 @@ void Action::TestFlameEffect::init()
 	auto& random = GameDevice::getRandom();
 	//エフェクト持続時間
 	const float effectDuration = 1.0f;
-	for (int i = 0; i < 15; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		pObjParticle = ModelGameObjectHelper::instantiateModel<int>(m_pUser->getGameMediator(), GameDevice::getModelManager().getModel("Cube"));
 		pObjParticle->getTransform().setLocalPosition(m_pUser->getTransform().getLocalPosition());
