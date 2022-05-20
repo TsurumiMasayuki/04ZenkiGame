@@ -9,10 +9,11 @@ class DistanceActivater :
 public:
 	// AbstractComponent ‚ð‰î‚µ‚ÄŒp³
 	virtual void onStart() override;
-	virtual void onUpdate(GameObject* player) override;
+	virtual void onUpdate() override;
 
 public:
 	void SetGameObject(GameObject* gameObject) { pObj = gameObject; }
+	void SetPlayer(GameObject* player) { this->player = player; }
 	void SetActivationPos(float z){ activationPos=z; }
 
 	GameObject* GetGameObject() { return pObj; }
@@ -20,6 +21,7 @@ public:
 
 private:
 
+	GameObject* player;
 	GameObject* pObj;
 	float activationPos;
 
