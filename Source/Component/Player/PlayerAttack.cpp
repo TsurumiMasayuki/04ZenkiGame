@@ -59,10 +59,12 @@ void PlayerAttack::onUpdate()
 {
 	//入力を取得
 	auto& gameInput = GameInput::getInstance();
+	auto& keyboardInput = GameDevice::getInput();
 	auto& controllerInput = ControllerInput::getInstance();
 
 	//入力されていたら
-	if (controllerInput.isPadButtonDown(ControllerInput::PAD_BUTTON::X) &&
+	if ((controllerInput.isPadButtonDown(ControllerInput::PAD_BUTTON::X) ||
+		keyboardInput.isKeyDown(DIK_LCONTROL)) &&
 		gameInput.getPlayerDash() &&
 		m_SlidingTimer.isTime())
 	{
@@ -124,4 +126,35 @@ void PlayerAttack::onTriggerEnter(GameObject* pHit)
 
 	//エネミーの被ダメージ音を鳴らす
 	m_pAudioSource->play();
+
+	//敵にAction設定
+	auto pActionManager = pHit->addComponent<Action::ActionManager>();
+
+	auto& random = GameDevice::getRandom();
+
+	float x = random.getRandom(-5.0f, 5.0f);
+	float z = random.getRandom(-5.0f, 5.0f);
+
+	auto pSpawn = new Action::Spawn(
+		{
+			new Action::Sequence(
+				{
+					new Action::EaseOutBack(
+						new Action::MoveBy(
+							Vec3(x, 3.0f, z),
+						0.6f)),
+					new Action::EaseInCirc(
+						new Action::MoveBy(
+						Vec3(x, -15.0f, z),
+						1.0f))
+				}
+			),
+			new Action::RotateBy(
+				Vec3(0.0f, 0.0f, 480.0f), 1.6f
+			)
+		}
+	);
+
+	//飛ばす
+	pActionManager->enqueueAction(pSpawn);
 }
