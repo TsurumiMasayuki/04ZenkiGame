@@ -1,6 +1,6 @@
 #include "DistanceActivater.h"
 
-void DistanceActivater::onUpdate(GameObject* player)
+void DistanceActivater::onUpdate()
 {
 	if (player->getTransform().getLocalPosition().z > activationPos)
 	{
