@@ -12,7 +12,8 @@ void TestUI::onStart() {
 	fuelGaugeObj = new GameObject(getUser().getGameMediator());
 	fuelGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	//体力ゲージ
-	healthGaugeObj->getTransform().setLocalPosition(Vec3{ 0,340,1 });
+	healthGaugeObj->getTransform().setLocalPosition(Vec3{ -500,340,1 });
+	startHealthPos = healthGaugeObj->getTransform().getLocalPosition();
 	healthGaugeObj->getTransform().setLocalScale(Vec3{ 1000,100,1 });
 	healthGaugeScale = healthGaugeObj->getTransform().getLocalScale().x;
 	healthGuiSpriteRenderer = healthGaugeObj->addComponent<GUISpriteRenderer>();
@@ -20,7 +21,8 @@ void TestUI::onStart() {
 	healthGuiSpriteRenderer->setColor({ 0,1,0,1 });
 	healthGuiSpriteRenderer->setActive(true);
 	//加速ゲージ
-	accelerationGaugeObj->getTransform().setLocalPosition(Vec3{ 540,-150,1 });
+	accelerationGaugeObj->getTransform().setLocalPosition(Vec3{ 540,-350,1 });
+	startAccelerationPos = accelerationGaugeObj->getTransform().getLocalPosition();
 	accelerationGaugeObj->getTransform().setLocalScale(Vec3{ 100,400,1 });
 	accelerationGaugeScale = accelerationGaugeObj->getTransform().getLocalScale().y;
 	accelerationGuiSpriteRenderer = accelerationGaugeObj->addComponent<GUISpriteRenderer>();
@@ -28,7 +30,8 @@ void TestUI::onStart() {
 	accelerationGuiSpriteRenderer->setColor({ 1,1,1,1 });
 	accelerationGuiSpriteRenderer->setActive(true);
 	//燃料ゲージ
-	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 440,-150,1 });
+	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 440,-350,1 });
+	startFuelPos = fuelGaugeObj->getTransform().getLocalPosition();
 	fuelGaugeObj->getTransform().setLocalScale(Vec3{ 100,400,1 });
 	fuelGaugeScale = fuelGaugeObj->getTransform().getLocalScale().y;
 	fuelGuiSpriteRenderer = fuelGaugeObj->addComponent<GUISpriteRenderer>();
@@ -40,10 +43,12 @@ void TestUI::onStart() {
 //初期座標からスケールの半分を引く
 void TestUI::onUpdate()
 {
-	float ScaleY = fuelGaugeObj->getTransform().getLocalScale().y;
-	float a = fuelGaugeObj->getTransform().getLocalPosition().y;
-	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 0,ScaleY / 2 - a,1 });
-
+	float healthScaleX = healthGaugeObj->getTransform().getLocalScale().x;
+	healthGaugeObj->getTransform().setLocalPosition(Vec3{ startHealthPos.x + (healthScaleX / 2),startHealthPos.y,startHealthPos.z });
+	float fuelScaleY = fuelGaugeObj->getTransform().getLocalScale().y;
+	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ startFuelPos.x,startFuelPos.y + (fuelScaleY / 2),startFuelPos.z });
+	float accelerationScaleY = accelerationGaugeObj->getTransform().getLocalScale().y;
+	accelerationGaugeObj->getTransform().setLocalPosition(Vec3{ startAccelerationPos.x,startAccelerationPos.y + (accelerationScaleY / 2),startAccelerationPos.z });
 	
 	/*if (!fuel)
 	{
