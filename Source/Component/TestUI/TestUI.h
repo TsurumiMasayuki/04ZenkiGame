@@ -56,6 +56,10 @@ private:
 	float health;
 	float acceleration;
 	float fuel;
+	//‰ŠúÀ•W
+	Vec3 startHealthPos;
+	Vec3 startAccelerationPos;
+	Vec3 startFuelPos;
 	//Š„‡
 	float perHealth;
 	float perAcceleration;
