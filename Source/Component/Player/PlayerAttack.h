@@ -9,6 +9,7 @@ namespace Action
 
 class BoxColiiderBt;
 class AudioSource;
+class PlayerParamManager;
 
 //プレイヤーの攻撃用コンポーネント
 class PlayerAttack
@@ -18,7 +19,7 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	void init(Transform* pModelTransform);
+	void init(Transform* pModelTransform, PlayerParamManager* pPlayerParam);
 
 protected:
 	virtual void onTriggerEnter(GameObject* pHit) override;
@@ -38,4 +39,10 @@ private:
 
 	//ダメージ用音声
 	AudioSource* m_pAudioSource;
+
+	//プレイヤーのパラメータ
+	PlayerParamManager* m_pPlayerParam;
+
+	//スライディングの時間
+	Timer m_SlidingTimer;
 };
