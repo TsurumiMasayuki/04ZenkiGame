@@ -72,6 +72,7 @@ void HogeScene::start()
 	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
 	StageLoader stageLoader(this);
 	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
+
 }
 
 void HogeScene::update()
