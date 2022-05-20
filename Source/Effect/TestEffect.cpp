@@ -20,7 +20,7 @@ void Action::TestEffect::init()
 		pRenderer->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
 		//ƒ‰ƒ“ƒ_ƒ€‚È•ûŒü‚ÉˆÚ“®
-		pObj->getActionManager().enqueueAction
+		pObj->addComponent<Action::ActionManager>()->enqueueAction
 		(
 			new Spawn
 			(
@@ -31,7 +31,7 @@ void Action::TestEffect::init()
 			)
 		);
 
-		pObj->getActionManager().enqueueAction(new Destroy(0.0f));
+		pObj->getComponent<Action::ActionManager>()->enqueueAction(new Destroy(0.0f));
 	}
 }
 

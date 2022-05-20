@@ -6,7 +6,6 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Enemy/TestEnemy.h"
-#include "Component/Enemy/LinearlyEnemy.h"
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Floor/Floor.h"
 
