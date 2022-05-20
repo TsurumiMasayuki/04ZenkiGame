@@ -32,10 +32,10 @@ Vec3 GameInput::getPlayerMove()
 		//入力に応じて移動方向をセット(マス目なので斜め移動はなし)
 		//上
 		if (input.isKey(DIK_UP))
-			result = Vec3(0.0f, 1.0f, 0.0f);
+			result = Vec3(0.0f, 0.0f, 1.0f);
 		//下
 		if (input.isKey(DIK_DOWN))
-			result = Vec3(0.0f, -1.0f, 0.0f);
+			result = Vec3(0.0f, 0.0f, -1.0f);
 		//右
 		if (input.isKey(DIK_RIGHT))
 			result = Vec3(1.0f, 0.0f, 0.0f);
