@@ -18,7 +18,7 @@ subject to the following restrictions:
 
 #include "BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"
 
-///This class is not enabled yet (work-in-progress) to more aggressively activate objects.
+///This class is not enabled yet (work-in-progress) to more aggressively startAttack objects.
 class btActivatingCollisionAlgorithm : public btCollisionAlgorithm
 {
 	//	btCollisionObject* m_colObj0;
