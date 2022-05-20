@@ -30,7 +30,7 @@ void StageLoader::createStageBase(const StageInfo& stageInfo)
 	//円柱を生成
 	for (int i = 0; i < faceCount; i++)
 	{
-		Vec3 cylinder(radius, rad * i, stageInfo.m_Length);
+		Vec3 cylinder(radius, rad * i, stageInfo.m_Length * 0.5f);
 
 		//ゲームオブジェクト生成
 		auto pFloor = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
@@ -39,7 +39,7 @@ void StageLoader::createStageBase(const StageInfo& stageInfo)
 		//座標設定
 		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
 		//サイズ設定
-		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.25f, 200.0f));
+		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.25f, stageInfo.m_Length));
 		//回転設定
 		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
 	}
