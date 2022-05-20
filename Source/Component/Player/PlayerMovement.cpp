@@ -2,6 +2,7 @@
 #include "Actor/Base/GameObject.h"
 
 #include "Component/Audio/AudioSource.h"
+#include "Component/Physics/BoxColliderBt.h"
 #include "Component/Utility/Action/Actions.h"
 #include "Component/Utility/Action/ActionManager.h"
 #include "Device/GameDevice.h"
@@ -12,8 +13,12 @@
 
 #include "Device/GameInput.h"
 
+#include "Effect/TestFlameEffect.h"
+
 #include "Utility/JsonFileManager.h"
 #include "Utility/CoordConverter.h"
+
+#include "btBulletDynamicsCommon.h"
 
 using namespace Action;
 
@@ -21,11 +26,19 @@ void PlayerMovement::onStart()
 {
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 
+	m_CylinderCoord.y = MathUtility::toRadian(90.0f);
 	m_CylinderCoord.z = getTransform().getLocalPosition().z;
+
+	m_pActionManager = getUser().getComponent<Action::ActionManager>();
+
+	m_pBoxCollider = getUser().getComponent<BoxColiiderBt>();
 }
 
 void PlayerMovement::onUpdate()
 {
+	m_PrePosition = getTransform().getLocalPosition();
+	m_CylinderCoord.z = m_PrePosition.z;
+
 	//入力デバイスを取得
 	const auto& input = GameDevice::getInput();
 
@@ -40,9 +53,44 @@ void PlayerMovement::onUpdate()
 
 	moveDir.z = std::fmaxf(0.0f, moveDir.z);
 
-	dash(moveDir);
-	move(moveDir);
+	//ダッシュボタンが押されているなら&燃料がゼロでないなら
+	if (GameInput::getInstance().getPlayerDash() &&
+		!m_pPlayerParam->isFuelZero())
+	{
+		if (m_pActionManager->actionCount() == 0)
+		{
+			//間隔を開けて火炎エフェクト
+			auto pSequence = new Action::Sequence(
+				{
+					new Action::TestFlameEffect(m_pActionManager),
+					new Action::WaitForSeconds(0.1f)
+				}
+			);
+
+			//リピート実行
+			auto pRepeat = new Action::RepeatForever(pSequence);
+
+			m_pActionManager->enqueueAction(pRepeat);
+		}
+
+		dash(moveDir);
+	}
+	else
+	{
+		//エフェクト停止
+		if (m_pActionManager->actionCount() == 1)
+			m_pActionManager->forceNext();
+
+		move(moveDir);
+	}
+
 	convertCoord();
+
+	//回転を決める
+	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 50.0f - moveDir.z * 35.0f;
+
+	//回転
+	getTransform().setLocalAngles(Vec3(0.0f, yAngle, MathUtility::toDegree(m_CylinderCoord.y)));
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
@@ -57,10 +105,6 @@ void PlayerMovement::setCylinderRadius(float radius)
 
 void PlayerMovement::move(const Vec3& moveDir)
 {
-	//ダッシュボタンが押されているなら終了
-	if (GameInput::getInstance().getPlayerDash())
-		return;
-
 	//deltaTimeを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
@@ -74,14 +118,6 @@ void PlayerMovement::move(const Vec3& moveDir)
 
 void PlayerMovement::dash(const Vec3& moveDir)
 {
-	//燃料がゼロなら実行しない
-	if (m_pPlayerParam->isFuelZero())
-		return;
-
-	//ダッシュボタンが押されていないなら終了
-	if (!GameInput::getInstance().getPlayerDash())
-		return;
-
 	//現在の速度を計算
 	float speed = 1.0f + m_pPlayerParam->getAcceleration();
 
@@ -90,7 +126,7 @@ void PlayerMovement::dash(const Vec3& moveDir)
 
 	//座標更新
 	m_CylinderCoord.y -= moveDir.x * deltaTime;
-	m_CylinderCoord.z += moveDir.z * speed * deltaTime;
+	m_CylinderCoord.z += moveDir.z * m_Stats.m_DashSpeed * speed * deltaTime;
 }
 
 void PlayerMovement::convertCoord()
@@ -98,9 +134,11 @@ void PlayerMovement::convertCoord()
 	//円筒座標をデカルト座標に変換
 	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
 
-	//座標を適用
-	getTransform().setLocalPosition(cartCoord);
+	//差を算出
+	Vec3 diff = cartCoord - m_PrePosition;
 
-	//回転(Z)
-	getTransform().setLocalAngleZ(MathUtility::toDegree(m_CylinderCoord.y));
+	//速度を設定
+	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3() * 4.0f);
+	m_pBoxCollider->getRigidBody()->setActivationState(ACTIVE_TAG);
+	//getTransform().setLocalPosition(cartCoord);
 }

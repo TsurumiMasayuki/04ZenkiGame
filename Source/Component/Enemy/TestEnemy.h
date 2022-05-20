@@ -12,34 +12,34 @@ public:
 	virtual void onUpdate() override;
 
 public:
-	/// <summary>
-	/// 目標オブジェクトセット
-	/// </summary>
-	/// <param name="object">目標オブジェクト</param>
-	void SetTarget(GameObject* object);
+
+	void init(float speed, float rotateSpeed, float radius = 11.0f, Vec3 centerPoint = Vec3(0, 0, 0));
+
+	void setCenter(Vec3 centerPoint) { this->centerPoint = centerPoint; }
+
+	void setRadius(float radius) { this->radius = radius; }
 
 	/// <summary>
 	/// 速度セット
 	/// </summary>
 	/// <param name="speed">速度</param>
-	void SetSpeed(float speed) { this->speed = speed; }
+	void setSpeed(float speed) { this->speed = speed; }
 
 	/// <summary>
 	/// 速度取得
 	/// </summary>
 	/// <returns>速度</returns>
-	float Getspeed() { return speed; }
+	float getspeed() { return speed; }
 
 private:
-	// 個体データ
-	Vec3 position{};
-	float speed = 1.0f;
-	Vec3 moveVec{};
+	//速度
+	float speed;
+	//回転速度
+	float rotateSpeed;
 
-	// 目標データ
-	GameObject* object = nullptr;
+	// ステージ情報
+	float radius = 0.0f;
+	Vec3 centerPoint = Vec3(0, 0, 0);
 
-	// 目標座標
-	Vec3 targetPos{};
-
+	Vec3 m_CylinderCoord;
 };

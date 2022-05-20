@@ -4,7 +4,7 @@
 Vec3 CoordConverter::cartesianToCylinder(const Vec3& coord)
 {
 	float p = std::sqrtf(coord.x * coord.x + coord.y * coord.y);
-	float phi = atan2f(coord.y, coord.x);
+	float phi = std::atan2f(coord.y, coord.x);
 
 	return Vec3(p, phi, coord.z);
 }
