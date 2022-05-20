@@ -59,12 +59,9 @@ void PlayerAttack::onUpdate()
 {
 	//入力を取得
 	auto& gameInput = GameInput::getInstance();
-	auto& keyboardInput = GameDevice::getInput();
-	auto& controllerInput = ControllerInput::getInstance();
 
 	//入力されていたら
-	if ((controllerInput.isPadButtonDown(ControllerInput::PAD_BUTTON::X) ||
-		keyboardInput.isKeyDown(DIK_LCONTROL)) &&
+	if (gameInput.getSliding() &&
 		gameInput.getPlayerDash() &&
 		m_SlidingTimer.isTime())
 	{
