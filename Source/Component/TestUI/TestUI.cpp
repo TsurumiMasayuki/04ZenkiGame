@@ -13,6 +13,7 @@ void TestUI::onStart() {
 	fuelGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	//‘Ì—ÍƒQ[ƒW
 	healthGaugeObj->getTransform().setLocalPosition(Vec3{ 0,340,1 });
+	startHealthPos = healthGaugeObj->getTransform().getLocalPosition();
 	healthGaugeObj->getTransform().setLocalScale(Vec3{ 1000,100,1 });
 	healthGaugeScale = healthGaugeObj->getTransform().getLocalScale().x;
 	healthGuiSpriteRenderer = healthGaugeObj->addComponent<GUISpriteRenderer>();
@@ -21,6 +22,7 @@ void TestUI::onStart() {
 	healthGuiSpriteRenderer->setActive(true);
 	//‰Á‘¬ƒQ[ƒW
 	accelerationGaugeObj->getTransform().setLocalPosition(Vec3{ 540,-150,1 });
+	startAccelerationPos = accelerationGaugeObj->getTransform().getLocalPosition();
 	accelerationGaugeObj->getTransform().setLocalScale(Vec3{ 100,400,1 });
 	accelerationGaugeScale = accelerationGaugeObj->getTransform().getLocalScale().y;
 	accelerationGuiSpriteRenderer = accelerationGaugeObj->addComponent<GUISpriteRenderer>();
@@ -29,6 +31,7 @@ void TestUI::onStart() {
 	accelerationGuiSpriteRenderer->setActive(true);
 	//”R—¿ƒQ[ƒW
 	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 440,-150,1 });
+	startFuelPos = fuelGaugeObj->getTransform().getLocalPosition();
 	fuelGaugeObj->getTransform().setLocalScale(Vec3{ 100,400,1 });
 	fuelGaugeScale = fuelGaugeObj->getTransform().getLocalScale().y;
 	fuelGuiSpriteRenderer = fuelGaugeObj->addComponent<GUISpriteRenderer>();
@@ -41,8 +44,7 @@ void TestUI::onStart() {
 void TestUI::onUpdate()
 {
 	float ScaleY = fuelGaugeObj->getTransform().getLocalScale().y;
-	float a = fuelGaugeObj->getTransform().getLocalPosition().y;
-	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 0,ScaleY / 2 - a,1 });
+	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 0,startFuelPos.y - (ScaleY / 2),1 });
 
 	
 	/*if (!fuel)
