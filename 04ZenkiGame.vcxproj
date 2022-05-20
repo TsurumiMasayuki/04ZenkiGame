@@ -169,6 +169,7 @@
     <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerSideAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
+    <ClInclude Include="Source\Component\Player\PlayerSideAttack.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />

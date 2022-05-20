@@ -14,6 +14,7 @@
 #include "Component/Follow/Follow.h"
 #include "Component/Player/PlayerStats.h"
 #include "Component/Player/PlayerParamManager.h"
+#include "Component/Player/PlayerSideAttack.h"
 
 #include "Device/GameInput.h"
 #include "Device/ControllerInput.h"
@@ -53,6 +54,18 @@ void PlayerAttack::onStart()
 	m_pModelActionManager = m_pModelTransform->getUser().addComponent<Action::ActionManager>();
 
 	m_SlidingTimer.setMaxTime(1.5f);
+
+	auto pRightSideObject = new GameObject(getUser().getGameMediator());
+	m_pRightSideAttack = pRightSideObject->addComponent<PlayerSideAttack>();
+	auto pRightFollow = pRightSideObject->addComponent<Follow>();
+	pRightFollow->SetGameObject(&getUser());
+	pRightFollow->Setdistance(Vec3(1.0f, 0.0f, 0.0f));
+
+	auto pLeftSideObject = new GameObject(getUser().getGameMediator());
+	m_pLeftSideAttack = pLeftSideObject->addComponent<PlayerSideAttack>();
+	auto pLeftFollow = pLeftSideObject->addComponent<Follow>();
+	pLeftFollow->SetGameObject(&getUser());
+	pLeftFollow->Setdistance(Vec3(-1.0f, 0.0f, 0.0f));
 }
 
 void PlayerAttack::onUpdate()
@@ -76,10 +89,10 @@ void PlayerAttack::onUpdate()
 							new Action::EaseInQuart(new Action::MoveTo(Vec3(-0.25f, 0.0f, 0.0f), 0.4f))
 						}
 					),
-				//スケールを縮める
-				new Action::EaseInBack(new Action::ScaleTo(Vec3(0.5f, 0.8f, 0.9f), 0.35f)),
-				//前転する
-				new Action::EaseOutSine(new Action::RotateBy(Vec3(0.0f, -380.0f, 0.0f), 0.5f))
+					//スケールを縮める
+					new Action::EaseInBack(new Action::ScaleTo(Vec3(0.5f, 0.8f, 0.9f), 0.35f)),
+					//前転する
+					new Action::EaseOutSine(new Action::RotateBy(Vec3(0.0f, -380.0f, 0.0f), 0.5f))
 				}
 			)
 		);
@@ -87,6 +100,9 @@ void PlayerAttack::onUpdate()
 		//コライダーを有効化
 		m_pBoxCollider->setActive(true);
 		m_SlidingTimer.reset();
+
+		m_pRightSideAttack->startAttack();
+		m_pLeftSideAttack->startAttack();
 	}
 
 	m_SlidingTimer.update();
@@ -102,6 +118,9 @@ void PlayerAttack::onUpdate()
 		//コライダーを無効化
 		if (m_pBoxCollider->isActive())
 			m_pBoxCollider->setActive(false);
+
+		m_pRightSideAttack->endAttack();
+		m_pLeftSideAttack->endAttack();
 	}
 }
 
