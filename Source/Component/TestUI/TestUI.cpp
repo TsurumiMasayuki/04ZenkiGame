@@ -11,6 +11,8 @@ void TestUI::onStart() {
 	accelerationGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	fuelGaugeObj = new GameObject(getUser().getGameMediator());
 	fuelGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
+	accelerationEffect = new GameObject(getUser().getGameMediator());
+	accelerationEffect->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	//体力ゲージ
 	healthGaugeObj->getTransform().setLocalPosition(Vec3{ -500,340,1 });
 	startHealthPos = healthGaugeObj->getTransform().getLocalPosition();
@@ -38,6 +40,12 @@ void TestUI::onStart() {
 	fuelGuiSpriteRenderer->setTextureByName("BoxFill");
 	fuelGuiSpriteRenderer->setColor({ 1,1,0,1 });
 	fuelGuiSpriteRenderer->setActive(true);	
+	//加速エフェクト
+	accelerationEffect->getTransform().setLocalPosition(Vec3{ 0,0,100 });
+	accelerationEffect->getTransform().setLocalScale(Vec3{ 1280,720,1 });
+	accelerationEffectSpriteRenderer = accelerationEffect->addComponent<GUISpriteRenderer>();
+	accelerationEffectSpriteRenderer->setTextureByName("accelerationEffect");
+	accelerationEffectSpriteRenderer->setActive(true);
 }
 
 //初期座標からスケールの半分を引く
@@ -48,8 +56,7 @@ void TestUI::onUpdate()
 	float fuelScaleY = fuelGaugeObj->getTransform().getLocalScale().y;
 	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ startFuelPos.x,startFuelPos.y + (fuelScaleY / 2),startFuelPos.z });
 	float accelerationScaleY = accelerationGaugeObj->getTransform().getLocalScale().y;
-	accelerationGaugeObj->getTransform().setLocalPosition(Vec3{ startAccelerationPos.x,startAccelerationPos.y + (accelerationScaleY / 2),startAccelerationPos.z });
-	
+
 	/*if (!fuel)
 	{
 		assert(0);
@@ -79,12 +86,14 @@ void TestUI::onUpdate()
 	perAcceleration = acceleration / MAX_ACCELERATION;
 	perFuel = fuel / MAX_FUEL;
 	//割合から現在のゲージのサイズを計算
-	float healthGaugeSize =  healthGaugeScale * perHealth;
+	float healthGaugeSize = healthGaugeScale * perHealth;
 	float accelerationGaugeSize = accelerationGaugeScale * perAcceleration;
 	float fuelGaugeSize = fuelGaugeScale * perFuel;
 	//オブジェクトに反映
 	healthGaugeObj->getTransform().setLocalScale(Vec3{ healthGaugeSize,100,1 });
 	accelerationGaugeObj->getTransform().setLocalScale(Vec3{ 100,accelerationGaugeSize,1 });
 	fuelGaugeObj->getTransform().setLocalScale(Vec3{ 100,fuelGaugeSize,1 });
+	//加速エフェクトの更新
+	accelerationEffectSpriteRenderer->setColor({1,1,1,1.0f});
 }
 

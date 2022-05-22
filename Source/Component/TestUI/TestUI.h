@@ -46,7 +46,10 @@ private:
 	GUISpriteRenderer* healthGuiSpriteRenderer=nullptr;
 	GUISpriteRenderer* accelerationGuiSpriteRenderer = nullptr;
 	GUISpriteRenderer* fuelGuiSpriteRenderer = nullptr;
-	
+	//UIエフェクト
+	GameObject* accelerationEffect = nullptr;
+	GUISpriteRenderer* accelerationEffectSpriteRenderer = nullptr;
+
 	//各UIの数値
 	//最大値
     float MAX_HEALTH = 5.0f;
