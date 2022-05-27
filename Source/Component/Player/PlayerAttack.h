@@ -10,6 +10,7 @@ namespace Action
 class BoxColiiderBt;
 class AudioSource;
 class PlayerParamManager;
+class PlayerSideAttack;
 
 //プレイヤーの攻撃用コンポーネント
 class PlayerAttack
@@ -45,4 +46,10 @@ private:
 
 	//スライディングの時間
 	Timer m_SlidingTimer;
+
+	//右の攻撃判定
+	PlayerSideAttack* m_pRightSideAttack;
+
+	//左の攻撃判定
+	PlayerSideAttack* m_pLeftSideAttack;
 };
