@@ -42,11 +42,18 @@ public:
 private:
 	//各UIのデータ
 	GameObject* healthGaugeObj = nullptr;
+	GameObject* healthStocks[5];
+	GameObject* healthSticksBlack[5];
 	GameObject* accelerationGaugeObj = nullptr;
 	GameObject* fuelGaugeObj = nullptr;
+	GameObject* accelerationGaugeFlame = nullptr;
+	GameObject* accelerationGaugeCore = nullptr;
+
 	GUISpriteRenderer* healthGuiSpriteRenderer=nullptr;
 	GUISpriteRenderer* accelerationGuiSpriteRenderer = nullptr;
 	GUISpriteRenderer* fuelGuiSpriteRenderer = nullptr;
+	GUISpriteRenderer* accelerationGaugeFlameRenderer = nullptr;
+	GUISpriteRenderer* accelerationGaugeCoreRenderer = nullptr;
 	//UIエフェクト
 	GameObject* accelerationEffect = nullptr;
 	GUISpriteRenderer* accelerationEffectSpriteRenderer = nullptr;
@@ -73,5 +80,7 @@ private:
 	float healthGaugeScale;
 	float accelerationGaugeScale;
 	float fuelGaugeScale;
+	//加速ゲージ計算用変数
+	float accAdjustNum = 180;
 };
 

@@ -24,6 +24,9 @@ void Game::onStart()
 	//‰æ‘œ“Ç‚İ‚İ
 	GameDevice::getTextureManager().load("white100x100", L"Resources/white100x100.png");
 	GameDevice::getTextureManager().load("accelerationEffect", L"Resources/textures/accelerationEffect.png");
+	GameDevice::getTextureManager().load("accelerationGaugeFlame", L"Resources/textures/accelerationGaugeFlame.png");
+	GameDevice::getTextureManager().load("accelerationGaugeCore", L"Resources/textures/accelerationGaugeCore.png");
+
 	//ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	GameDevice::getModelManager().startLoading();
 	GameDevice::getModelManager().load("Cube", "Resources/Models/cube/", "cube");
