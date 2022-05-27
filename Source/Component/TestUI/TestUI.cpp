@@ -13,6 +13,11 @@ void TestUI::onStart() {
 	fuelGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	accelerationEffect = new GameObject(getUser().getGameMediator());
 	accelerationEffect->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
+	for (int i = 0; i < 100; i++)
+	{
+		accEffect.push_back(new GameObject(getUser().getGameMediator()));
+		accEffect[i]->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
+	}
 	//体力ゲージ
 	healthGaugeObj->getTransform().setLocalPosition(Vec3{ -500,340,1 });
 	startHealthPos = healthGaugeObj->getTransform().getLocalPosition();
@@ -41,11 +46,27 @@ void TestUI::onStart() {
 	fuelGuiSpriteRenderer->setColor({ 1,1,0,1 });
 	fuelGuiSpriteRenderer->setActive(true);	
 	//加速エフェクト
-	accelerationEffect->getTransform().setLocalPosition(Vec3{ 0,0,100 });
+	accelerationEffect->getTransform().setLocalPosition(Vec3{ 0,0,50 });
 	accelerationEffect->getTransform().setLocalScale(Vec3{ 1280,720,1 });
 	accelerationEffectSpriteRenderer = accelerationEffect->addComponent<GUISpriteRenderer>();
 	accelerationEffectSpriteRenderer->setTextureByName("accelerationEffect");
 	accelerationEffectSpriteRenderer->setActive(true);
+	for (int i = 0; i < 0; i++)
+	{
+		static int cnt = 0;
+		if (i != 0)
+		{
+			accEffect[i]->getTransform().setLocalPosition(Vec3{ -360 + 64 * (i - cnt),0,0 });
+			cnt += 1;
+		}
+		else
+		{
+			accEffect[i]->getTransform().setLocalPosition(Vec3{ -360,0,0 });
+		}
+		accEffectSpriteRenderer.push_back(accEffect[i]->addComponent<GUISpriteRenderer>());
+		accEffectSpriteRenderer[i]->setActive(true);
+		
+	}
 }
 
 //初期座標からスケールの半分を引く

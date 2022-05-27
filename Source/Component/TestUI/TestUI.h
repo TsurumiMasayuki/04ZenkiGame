@@ -2,6 +2,7 @@
 #include "Component/Base/AbstractComponent.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Actor/Base/GameObject.h"
+#include <vector>
 class TestUI
 	:public AbstractComponent
 {
@@ -49,7 +50,8 @@ private:
 	//UIエフェクト
 	GameObject* accelerationEffect = nullptr;
 	GUISpriteRenderer* accelerationEffectSpriteRenderer = nullptr;
-
+	std::vector<GameObject*> accEffect;
+	std::vector<GUISpriteRenderer*>accEffectSpriteRenderer;
 	//各UIの数値
 	//最大値
     float MAX_HEALTH = 5.0f;
