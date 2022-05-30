@@ -57,16 +57,13 @@ void HogeScene::start()
 	pCollider->setUseGravity(false);
 
 	//カメラ関係の設定
-	auto& cameraTransform = getMainCamera()->getUser().getTransform();
-	cameraTransform.setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
-	cameraTransform.setLocalAngles(Vec3(30.0f, 0.0f, 0.0f));
-
-	auto* pCameraObject = &getMainCamera()->getUser();
+	auto pCameraObject = &getMainCamera()->getUser();
 	pCameraObject->addComponent<Action::ActionManager>();
+	pCameraObject->setParent(pPlayer);
 
-	auto pFollow = pCameraObject->addComponent<Follow>();
-	pFollow->SetGameObject(pPlayer);
-	pFollow->Setdistance(Vec3(0.0f, 8.0f, -8.0f));
+	auto& cameraTransform = getMainCamera()->getUser().getTransform();
+	cameraTransform.setLocalPosition(Vec3(10.0f, 0.0f, -10.0f));
+	cameraTransform.setLocalAngles(Vec3(0.0f, -30.0f, -90.0f));
 
 	//ステージ読み込み
 	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");

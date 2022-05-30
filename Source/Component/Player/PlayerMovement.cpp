@@ -89,8 +89,10 @@ void PlayerMovement::onUpdate()
 	//回転を決める
 	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 50.0f - moveDir.z * 35.0f;
 
+	getUser().getChildren().at(0)->getTransform().setLocalAngles(Vec3(yAngle, 0.0f, 0.0f));
+
 	//回転
-	getTransform().setLocalAngles(Vec3(0.0f, yAngle, MathUtility::toDegree(m_CylinderCoord.y)));
+	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(m_CylinderCoord.y)));
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)

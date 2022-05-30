@@ -24,6 +24,9 @@ public:
 	virtual void onLocalPositionChanged(const Vec3& newLocalPosition) override { updateCameraMatrix(); }
 	virtual void onLocalAnglesChanged(const Vec3& newLocalAngles) override { updateCameraMatrix(); }
 
+	float getFOV() const { return m_Fov; }
+	void setFOV(float fov) { m_Fov = fov; updateCameraMatrix(); }
+
 	int getDrawOrder();
 	void setRenderTarget(DX12RenderTarget* pRenderTarget);
 	DX12RenderTarget* getRenderTarget();
