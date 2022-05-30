@@ -59,11 +59,12 @@ void HogeScene::start()
 	//カメラ関係の設定
 	auto pCameraObject = &getMainCamera()->getUser();
 	pCameraObject->addComponent<Action::ActionManager>();
-	pCameraObject->setParent(pPlayer);
+	auto pFollow = pCameraObject->addComponent<Follow>();
+	pFollow->Setdistance(Vec3(10.0f, 0.0f, -10.0f));
+	pFollow->SetGameObject(pPlayer);
 
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
-	cameraTransform.setLocalPosition(Vec3(10.0f, 0.0f, -10.0f));
-	cameraTransform.setLocalAngles(Vec3(0.0f, -30.0f, -90.0f));
+	cameraTransform.setLocalAngles(Vec3(30.0f, 0.0f, 0.0f));
 
 	//ステージ読み込み
 	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");

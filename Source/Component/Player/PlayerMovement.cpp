@@ -51,8 +51,6 @@ void PlayerMovement::onUpdate()
 	//移動方向
 	Vec3 moveDir = GameInput::getInstance().getPlayerMove();
 
-	moveDir.z = std::fmaxf(0.0f, moveDir.z);
-
 	//ダッシュボタンが押されているなら&燃料がゼロでないなら
 	if (GameInput::getInstance().getPlayerDash() &&
 		!m_pPlayerParam->isFuelZero())
