@@ -43,12 +43,14 @@ private:
 	//各UIのデータ
 	GameObject* healthGaugeObj = nullptr;
 	GameObject* healthStocks[5];
-	GameObject* healthSticksBlack[5];
+	GameObject* healthStocksBlack[5];
 	GameObject* accelerationGaugeObj = nullptr;
 	GameObject* fuelGaugeObj = nullptr;
 	GameObject* accelerationGaugeFlame = nullptr;
 	GameObject* accelerationGaugeCore = nullptr;
 
+	GUISpriteRenderer* healthStocksRenderer[5];
+	GUISpriteRenderer* healthStocksBlackRenderer[5];
 	GUISpriteRenderer* healthGuiSpriteRenderer=nullptr;
 	GUISpriteRenderer* accelerationGuiSpriteRenderer = nullptr;
 	GUISpriteRenderer* fuelGuiSpriteRenderer = nullptr;
