@@ -18,6 +18,8 @@
 
 #include "Utility/JsonFileManager.h"
 
+#include "Component/Map/GoalObject.h"
+
 std::string HogeScene::nextScene()
 {
 	return std::string();
@@ -73,6 +75,12 @@ void HogeScene::start()
 	StageLoader stageLoader(this);
 	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
 
+	//ゴールを設定
+	//ゴールオブジェクト生成
+	auto pGoalObject = new GameObject(this);
+	//UI生成
+	goalObject = pGoalObject->addComponent<GoalObject>();
+	goalObject->Initialize(100, pPlayer);
 }
 
 void HogeScene::update()
