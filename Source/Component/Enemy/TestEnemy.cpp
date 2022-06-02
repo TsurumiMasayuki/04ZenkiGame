@@ -13,6 +13,7 @@ void TestEnemy::onStart()
 
 	// コライダー付与
 	auto x = getUser().addComponent<BoxColiiderBt>();
+	x->setTrigger(false);
 	// 重力の無効化
 	x->setUseGravity(false);
 
