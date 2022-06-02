@@ -11,13 +11,14 @@ void PhalanxEnemy::onStart()
 
 void PhalanxEnemy::onUpdate()
 {
+	// 基準座標取得
+	//Vec3 position = vec_object[i]->getTransform().getLocalPosition();
+
+	//deltaTimeを取得
+	float deltaTime = GameDevice::getGameTime().getDeltaTime();
+
 	for (int i = 0; i < vec_object.size(); i++)
 	{
-		// 基準座標取得
-		Vec3 position = vec_object[i]->getTransform().getLocalPosition();
-
-		//deltaTimeを取得
-		float deltaTime = GameDevice::getGameTime().getDeltaTime();
 		//回転速度をラジアンに変換
 		float radRotateSpeed = MathUtility::toRadian(swingWidth * sinf(swingCnt - (1 / vec_object.size() * i)));
 
@@ -52,7 +53,7 @@ void PhalanxEnemy::onUpdate()
 	}
 
 	// 反復用
-	swingCnt += 0.01f;
+	swingCnt += deltaTime;
 }
 
 void PhalanxEnemy::init(Vec3 position, int length, int mainUnit, float radius, float speedZ)
