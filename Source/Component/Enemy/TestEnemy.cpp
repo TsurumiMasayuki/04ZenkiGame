@@ -10,10 +10,29 @@ void TestEnemy::onStart()
 {
 	m_CylinderCoord.z = getTransform().getLocalPosition().z;
 	getUser().setTag("Enemy");
+
+	// コライダー付与
+	auto x = getUser().addComponent<BoxColiiderBt>();
+	// 重力の無効化
+	x->setUseGravity(false);
+
+	testTimer.setMaxTime(5.0f);
 }
 
 void TestEnemy::onUpdate()
 {
+	// 死んでいたら一定時間後に蘇生
+	if (isDead && testTimer.isTime())
+	{
+		isDead = false;
+
+		// 当たり判定のON
+		getUser().getComponent<BoxColiiderBt>()->setActive(true);
+	}
+
+	// タイマーの更新
+	testTimer.update();
+
 	return;
 
 	// 基準座標取得
@@ -49,4 +68,14 @@ void TestEnemy::init(float speed, float rotateSpeed, float radius, Vec3 centerPo
 	this->rotateSpeed = rotateSpeed;
 	this->radius = radius;
 	this->centerPoint = centerPoint;
+}
+
+void TestEnemy::setDead(bool isDead)
+{
+	this->isDead = isDead;
+
+	// 当たり判定のOFF
+	getUser().getComponent<BoxColiiderBt>()->setActive(false);
+
+	testTimer.reset();
 }
