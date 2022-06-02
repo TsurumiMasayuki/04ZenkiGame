@@ -23,6 +23,9 @@ void Game::onStart()
 
 	//‰æ‘œ“Ç‚İ‚İ
 	GameDevice::getTextureManager().load("white100x100", L"Resources/white100x100.png");
+	GameDevice::getTextureManager().load("OptionBotton", L"Resources/button_A.png");
+	GameDevice::getTextureManager().load("OptionCurBotton", L"Resources/button_B.png");
+	GameDevice::getTextureManager().load("OptionBackGround", L"Resources/background.png");
 
 	//ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	GameDevice::getModelManager().startLoading();
