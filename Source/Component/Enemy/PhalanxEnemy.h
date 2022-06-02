@@ -27,7 +27,7 @@ public:
 	/// U‚ê•İ’è
 	/// </summary>
 	/// <param name="width">•</param>
-	void setSwing(float width, float time) { swingWidth = width; turnaroundTime = time; }
+	void setSwing(float width, float time = 1.0f) { swingWidth = width; turnaroundTime = time; }
 	
 private:
 	std::vector<GameObject*> vec_object;
