@@ -33,6 +33,7 @@ void HogeScene::start()
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	auto pPlayer = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
+	pPlayer->getTransform().setLocalScale(Vec3(1.0f));
 	auto pPlayerActionManager = pPlayer->addComponent<Action::ActionManager>();
 
 	auto pModel = pPlayer->getChildren().at(0);
@@ -64,7 +65,7 @@ void HogeScene::start()
 	pFollow->SetGameObject(pPlayer);
 
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
-	cameraTransform.setLocalAngles(Vec3(30.0f, 0.0f, 0.0f));
+	getMainCamera()->setTarget(pPlayer);
 
 	//ステージ読み込み
 	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");

@@ -27,6 +27,9 @@ public:
 	float getFOV() const { return m_Fov; }
 	void setFOV(float fov) { m_Fov = fov; updateCameraMatrix(); }
 
+	//íçéãÇ∑ÇÈëŒè€Çê›íË
+	void setTarget(GameObject* pTarget);
+
 	int getDrawOrder();
 	void setRenderTarget(DX12RenderTarget* pRenderTarget);
 	DX12RenderTarget* getRenderTarget();
@@ -34,6 +37,7 @@ public:
 	void setDrawMode(DrawMode drawMode);
 
 	const DirectX::XMMATRIX& getViewMatrix() { return m_ViewMatrix; };
+	const DirectX::XMMATRIX& getUIViewMatrix() { return m_UIViewMatrix; };
 	const DirectX::XMMATRIX& getProjMatrix() { return m_ProjMatrix; };
 	const DirectX::XMMATRIX& getBillboardMatrix() { return m_Billboard; }
 
@@ -47,6 +51,9 @@ private:
 	DX12RenderTarget* m_pRenderTarget;
 
 	DirectX::XMMATRIX m_ViewMatrix;
+	DirectX::XMMATRIX m_UIViewMatrix;
 	DirectX::XMMATRIX m_ProjMatrix;
 	DirectX::XMMATRIX m_Billboard;
+
+	GameObject* m_pTarget;
 };
