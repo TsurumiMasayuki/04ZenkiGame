@@ -8,22 +8,15 @@ void TestUI::onStart() {
 	for (int i = 0; i < 5; i++)
 	{
 		healthStocks[i] = new GameObject(getUser().getGameMediator());
-		healthStocks[i]->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 		healthStocksBlack[i] = new GameObject(getUser().getGameMediator());
-		healthStocksBlack[i]->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	}
 	accelerationGaugeFlame = new GameObject(getUser().getGameMediator());
-	accelerationGaugeFlame->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	accelerationGaugeCore = new GameObject(getUser().getGameMediator());
-	accelerationGaugeCore->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	fuelGaugeObj = new GameObject(getUser().getGameMediator());
-	fuelGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	accelerationEffect = new GameObject(getUser().getGameMediator());
-	accelerationEffect->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	for (int i = 0; i < 100; i++)
 	{
 		accEffect.push_back(new GameObject(getUser().getGameMediator()));
-		accEffect[i]->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	}
 	//‘Ì—ÍƒQ[ƒW
 	for (int i = 0; i < 5; i++)
