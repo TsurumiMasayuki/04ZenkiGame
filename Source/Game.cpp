@@ -23,6 +23,12 @@ void Game::onStart()
 
 	//âÊëúì«Ç›çûÇ›
 	GameDevice::getTextureManager().load("white100x100", L"Resources/white100x100.png");
+	GameDevice::getTextureManager().load("healthStock", L"Resources/textures/healthStock.png");
+	GameDevice::getTextureManager().load("healthStockBlack", L"Resources/textures/healthStockBlack.png");
+	GameDevice::getTextureManager().load("accelerationEffect", L"Resources/textures/accelerationEffect.png");
+	GameDevice::getTextureManager().load("accelerationGaugeFlame", L"Resources/textures/accelerationGaugeFlame.png");
+	GameDevice::getTextureManager().load("accelerationGaugeCore", L"Resources/textures/accelerationGaugeCore.png");
+	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png");
 
 	//ÉÇÉfÉãì«Ç›çûÇ›
 	GameDevice::getModelManager().startLoading();
