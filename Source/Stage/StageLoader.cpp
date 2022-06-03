@@ -3,6 +3,7 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Enemy/TestEnemy.h"
+#include "Component/Enemy/PhalanxEnemy.h"
 #include "Utility/CoordConverter.h"
 
 StageLoader::StageLoader(IGameMediator* pGameMediator)
@@ -56,9 +57,6 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 		auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
 		pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 
-		//コライダー追加
-		auto pCollider = pObject->addComponent<BoxColiiderBt>();
-
 		if (objectPlaceInfo.m_ObjectName == "Wall")
 		{
 			//スケール設定
@@ -68,6 +66,8 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			//色設定
 			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
 
+			//コライダー追加
+			auto pCollider = pObject->addComponent<BoxColiiderBt>();
 			pCollider->setMass(0.0f);
 			pCollider->setUseGravity(false);
 			pCollider->setTrigger(false);
@@ -79,10 +79,22 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			auto pTestEnemy = pObject->addComponent<TestEnemy>();
 			pTestEnemy->init(-10.0f, 0.0f, stageInfo.m_Radius);
 
+			//コライダー追加
+			auto pCollider = pObject->addComponent<BoxColiiderBt>();
 			pCollider->setMass(1.0f);
 			pCollider->setUseGravity(false);
 			pCollider->setTrigger(true);
 			pCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -1.0f));
+		}
+
+		if (objectPlaceInfo.m_ObjectName == "PhalanxEnemy")
+		{
+			//敵用コンポーネント追加
+			auto pPhalanxEnemy = pObject->addComponent<PhalanxEnemy>();
+			pPhalanxEnemy->init(pObject->getTransform().getLocalPosition(),
+				6, 0, 11.0f, -1.0f);
+
+			pPhalanxEnemy->setSwing(5.0f);
 		}
 	}
 }

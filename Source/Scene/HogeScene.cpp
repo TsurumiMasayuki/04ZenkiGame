@@ -60,15 +60,15 @@ void HogeScene::start()
 
 	//カメラ関係の設定
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
-	cameraTransform.setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
-	cameraTransform.setLocalAngles(Vec3(30.0f, 0.0f, 0.0f));
+
+	getMainCamera()->setTarget(pPlayer);
 
 	auto* pCameraObject = &getMainCamera()->getUser();
 	pCameraObject->addComponent<Action::ActionManager>();
 
 	auto pFollow = pCameraObject->addComponent<Follow>();
 	pFollow->SetGameObject(pPlayer);
-	pFollow->Setdistance(Vec3(0.0f, 8.0f, -8.0f));
+	pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
 
 	//ステージ読み込み
 	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
@@ -80,7 +80,7 @@ void HogeScene::start()
 	auto pGoalObject = new GameObject(this);
 	//UI生成
 	goalObject = pGoalObject->addComponent<GoalObject>();
-	goalObject->Initialize(100, pPlayer);
+	goalObject->Initialize(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage").m_Length, pPlayer);
 }
 
 void HogeScene::update()
