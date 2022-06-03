@@ -51,8 +51,6 @@ void PlayerMovement::onUpdate()
 	//移動方向
 	Vec3 moveDir = GameInput::getInstance().getPlayerMove();
 
-	moveDir.z = std::fmaxf(0.0f, moveDir.z);
-
 	//ダッシュボタンが押されているなら&燃料がゼロでないなら
 	if (GameInput::getInstance().getPlayerDash() &&
 		!m_pPlayerParam->isFuelZero())
@@ -89,8 +87,10 @@ void PlayerMovement::onUpdate()
 	//回転を決める
 	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 50.0f - moveDir.z * 35.0f;
 
+	getUser().getChildren().at(0)->getTransform().setLocalAngles(Vec3(yAngle, 0.0f, 0.0f));
+
 	//回転
-	getTransform().setLocalAngles(Vec3(0.0f, yAngle, MathUtility::toDegree(m_CylinderCoord.y)));
+	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(m_CylinderCoord.y)));
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
@@ -140,5 +140,4 @@ void PlayerMovement::convertCoord()
 	//速度を設定
 	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3() * 4.0f);
 	m_pBoxCollider->getRigidBody()->setActivationState(ACTIVE_TAG);
-	//getTransform().setLocalPosition(cartCoord);
 }

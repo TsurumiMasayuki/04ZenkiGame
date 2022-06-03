@@ -2,6 +2,7 @@
 #include "Component/Base/AbstractComponent.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Actor/Base/GameObject.h"
+#include <vector>
 class TestUI
 	:public AbstractComponent
 {
@@ -41,12 +42,25 @@ public:
 private:
 	//各UIのデータ
 	GameObject* healthGaugeObj = nullptr;
+	GameObject* healthStocks[5];
+	GameObject* healthStocksBlack[5];
 	GameObject* accelerationGaugeObj = nullptr;
 	GameObject* fuelGaugeObj = nullptr;
+	GameObject* accelerationGaugeFlame = nullptr;
+	GameObject* accelerationGaugeCore = nullptr;
+
+	GUISpriteRenderer* healthStocksRenderer[5];
+	GUISpriteRenderer* healthStocksBlackRenderer[5];
 	GUISpriteRenderer* healthGuiSpriteRenderer=nullptr;
 	GUISpriteRenderer* accelerationGuiSpriteRenderer = nullptr;
 	GUISpriteRenderer* fuelGuiSpriteRenderer = nullptr;
-	
+	GUISpriteRenderer* accelerationGaugeFlameRenderer = nullptr;
+	GUISpriteRenderer* accelerationGaugeCoreRenderer = nullptr;
+	//UIエフェクト
+	GameObject* accelerationEffect = nullptr;
+	GUISpriteRenderer* accelerationEffectSpriteRenderer = nullptr;
+	std::vector<GameObject*> accEffect;
+	std::vector<GUISpriteRenderer*>accEffectSpriteRenderer;
 	//各UIの数値
 	//最大値
     float MAX_HEALTH = 5.0f;
@@ -68,5 +82,7 @@ private:
 	float healthGaugeScale;
 	float accelerationGaugeScale;
 	float fuelGaugeScale;
+	//加速ゲージ計算用変数
+	float accAdjustNum = 180;
 };
 

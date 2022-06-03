@@ -5,32 +5,44 @@
 void TestUI::onStart() {
 	
 	//オブジェクト生成
-	healthGaugeObj = new GameObject(getUser().getGameMediator());
-	healthGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
-	accelerationGaugeObj = new GameObject(getUser().getGameMediator());
-	accelerationGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
+	for (int i = 0; i < 5; i++)
+	{
+		healthStocks[i] = new GameObject(getUser().getGameMediator());
+		healthStocksBlack[i] = new GameObject(getUser().getGameMediator());
+	}
+	accelerationGaugeFlame = new GameObject(getUser().getGameMediator());
+	accelerationGaugeCore = new GameObject(getUser().getGameMediator());
 	fuelGaugeObj = new GameObject(getUser().getGameMediator());
-	fuelGaugeObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
+	accelerationEffect = new GameObject(getUser().getGameMediator());
+	for (int i = 0; i < 100; i++)
+	{
+		accEffect.push_back(new GameObject(getUser().getGameMediator()));
+	}
 	//体力ゲージ
-	healthGaugeObj->getTransform().setLocalPosition(Vec3{ -500,340,1 });
-	startHealthPos = healthGaugeObj->getTransform().getLocalPosition();
-	healthGaugeObj->getTransform().setLocalScale(Vec3{ 1000,100,1 });
-	healthGaugeScale = healthGaugeObj->getTransform().getLocalScale().x;
-	healthGuiSpriteRenderer = healthGaugeObj->addComponent<GUISpriteRenderer>();
-	healthGuiSpriteRenderer->setTextureByName("BoxFill");
-	healthGuiSpriteRenderer->setColor({ 0,1,0,1 });
-	healthGuiSpriteRenderer->setActive(true);
+	for (int i = 0; i < 5; i++)
+	{
+		healthStocks[i]->getTransform().setLocalPosition(Vec3{ -600.0f+(100.0f*i),340,1 });
+		healthStocksBlack[i]->getTransform().setLocalPosition(Vec3{ -600.0f + (100.0f * i),340,2 });
+		healthStocksRenderer[i] = healthStocks[i]->addComponent<GUISpriteRenderer>();
+		healthStocksBlackRenderer[i] = healthStocksBlack[i]->addComponent<GUISpriteRenderer>();
+		healthStocksRenderer[i]->setTextureByName("healthStock");
+		healthStocksBlackRenderer[i]->setTextureByName("healthStockBlack");
+		healthStocks[i]->getTransform().setLocalScale(Vec3{64,64,1});
+		healthStocksBlack[i]->getTransform().setLocalScale(Vec3{ 64,64,1 });
+		healthStocksRenderer[i]->setActive(true);
+		healthStocksBlackRenderer[i]->setActive(true);
+	}
 	//加速ゲージ
-	accelerationGaugeObj->getTransform().setLocalPosition(Vec3{ 540,-350,1 });
-	startAccelerationPos = accelerationGaugeObj->getTransform().getLocalPosition();
-	accelerationGaugeObj->getTransform().setLocalScale(Vec3{ 100,400,1 });
-	accelerationGaugeScale = accelerationGaugeObj->getTransform().getLocalScale().y;
-	accelerationGuiSpriteRenderer = accelerationGaugeObj->addComponent<GUISpriteRenderer>();
-	accelerationGuiSpriteRenderer->setTextureByName("BoxFill");
-	accelerationGuiSpriteRenderer->setColor({ 1,1,1,1 });
-	accelerationGuiSpriteRenderer->setActive(true);
+	accelerationGaugeFlame->getTransform().setLocalPosition(Vec3{ 350,-250,2 });
+	accelerationGaugeFlame->getTransform().setLocalScale(Vec3{ 200,200,1 });
+	accelerationGaugeFlameRenderer = accelerationGaugeFlame->addComponent<GUISpriteRenderer>();
+	accelerationGaugeFlameRenderer->setTextureByName("accelerationGaugeFlame");
+	accelerationGaugeCore->getTransform().setLocalPosition(Vec3{ 350,-350,1 });
+	accelerationGaugeCore->getTransform().setLocalScale(Vec3{ 200,200,1 });
+	accelerationGaugeCoreRenderer = accelerationGaugeCore->addComponent<GUISpriteRenderer>();
+	accelerationGaugeCoreRenderer->setTextureByName("accelerationGaugeCore");
 	//燃料ゲージ
-	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 440,-350,1 });
+	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 540,-350,1 });
 	startFuelPos = fuelGaugeObj->getTransform().getLocalPosition();
 	fuelGaugeObj->getTransform().setLocalScale(Vec3{ 100,400,1 });
 	fuelGaugeScale = fuelGaugeObj->getTransform().getLocalScale().y;
@@ -38,24 +50,25 @@ void TestUI::onStart() {
 	fuelGuiSpriteRenderer->setTextureByName("BoxFill");
 	fuelGuiSpriteRenderer->setColor({ 1,1,0,1 });
 	fuelGuiSpriteRenderer->setActive(true);	
+	
 }
 
-//初期座標からスケールの半分を引く
+
 void TestUI::onUpdate()
 {
-	float healthScaleX = healthGaugeObj->getTransform().getLocalScale().x;
-	healthGaugeObj->getTransform().setLocalPosition(Vec3{ startHealthPos.x + (healthScaleX / 2),startHealthPos.y,startHealthPos.z });
+	accAdjustNum = 180.0f;
+	//初期座標からスケールの半分を引く
 	float fuelScaleY = fuelGaugeObj->getTransform().getLocalScale().y;
 	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ startFuelPos.x,startFuelPos.y + (fuelScaleY / 2),startFuelPos.z });
-	float accelerationScaleY = accelerationGaugeObj->getTransform().getLocalScale().y;
-	accelerationGaugeObj->getTransform().setLocalPosition(Vec3{ startAccelerationPos.x,startAccelerationPos.y + (accelerationScaleY / 2),startAccelerationPos.z });
 	
+
 	/*if (!fuel)
 	{
 		assert(0);
 	}
 	if (!acceleration)
 	{
+
 		assert(0);
 	}
 	if (!health)
@@ -74,17 +87,20 @@ void TestUI::onUpdate()
 	{
 		health = 5;
 	}*/
+	//体力ストック描画管理
+	for (int i = health+1; i <= MAX_HEALTH; i++)
+	{
+		healthStocksRenderer[i]->setActive(false);
+	}
 	//割合割り出し
-	perHealth = health / MAX_HEALTH;
 	perAcceleration = acceleration / MAX_ACCELERATION;
 	perFuel = fuel / MAX_FUEL;
 	//割合から現在のゲージのサイズを計算
-	float healthGaugeSize =  healthGaugeScale * perHealth;
-	float accelerationGaugeSize = accelerationGaugeScale * perAcceleration;
 	float fuelGaugeSize = fuelGaugeScale * perFuel;
+	//加速ゲージの角度計算
+	accAdjustNum *= perAcceleration;
 	//オブジェクトに反映
-	healthGaugeObj->getTransform().setLocalScale(Vec3{ healthGaugeSize,100,1 });
-	accelerationGaugeObj->getTransform().setLocalScale(Vec3{ 100,accelerationGaugeSize,1 });
 	fuelGaugeObj->getTransform().setLocalScale(Vec3{ 100,fuelGaugeSize,1 });
+	accelerationGaugeCore->getTransform().setLocalAngles(Vec3{ 0,0,90-accAdjustNum });
 }
 
