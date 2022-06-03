@@ -72,11 +72,11 @@ StickInput ControllerInput::getLStickInput() const
 
 	//-1 ~ 1‚ÌŠÔ‚É•ÏŠ·
 	if (x != 0)
-		axis.x = MathUtility::clamp(x / JOYSTICK_CENTER, -1.0f, 1.0f);
+		axis.x = MathUtility::clamp(x / (float)JOYSTICK_CENTER, -1.0f, 1.0f);
 
 	//-1 ~ 1‚ÌŠÔ‚É•ÏŠ·(Y‚Ìê‡‚Í•„†‚ğ‹t‚É‚·‚é)
 	if (y != 0)
-		axis.y = MathUtility::clamp(y / JOYSTICK_CENTER, -1.0f, 1.0f);
+		axis.y = MathUtility::clamp(y / (float)JOYSTICK_CENTER, -1.0f, 1.0f);
 
 	return axis;
 }

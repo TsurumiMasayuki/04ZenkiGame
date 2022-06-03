@@ -140,5 +140,4 @@ void PlayerMovement::convertCoord()
 	//速度を設定
 	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3() * 4.0f);
 	m_pBoxCollider->getRigidBody()->setActivationState(ACTIVE_TAG);
-	//getTransform().setLocalPosition(cartCoord);
 }
