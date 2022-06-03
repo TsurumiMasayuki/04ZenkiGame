@@ -44,7 +44,7 @@ void HogeScene::start()
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
-	//UŒ‚—pƒIƒuƒWƒFƒNƒg¶¬
+	//æ”»æ’ƒç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	auto pPlayerAttackObject = new GameObject(this);
 	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
 	pPlayerAttack->init(&pModel->getTransform(), pPlayerParam);
@@ -52,13 +52,13 @@ void HogeScene::start()
 	pPlayerMove->init(pPlayerParam);
 	pPlayerMove->setCylinderRadius(11.0f);
 
-	//ƒRƒ‰ƒCƒ_[’Ç‰Á
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
 	auto pCollider = pPlayer->addComponent<BoxColiiderBt>();
 	pCollider->setMass(1.0f);
 	pCollider->setTrigger(false);
 	pCollider->setUseGravity(false);
 
-	//ƒJƒƒ‰ŠÖŒW‚Ìİ’è
+	//ã‚«ãƒ¡ãƒ©é–¢ä¿‚ã®è¨­å®š
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
 
 	getMainCamera()->setTarget(pPlayer);
@@ -70,15 +70,15 @@ void HogeScene::start()
 	pFollow->SetGameObject(pPlayer);
 	pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
 
-	//ƒXƒe[ƒW“Ç‚İ‚İ
+	//ã‚¹ãƒ†ãƒ¼ã‚¸èª­ã¿è¾¼ã¿
 	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
 	StageLoader stageLoader(this);
 	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
-
-	//ƒS[ƒ‹‚ğİ’è
-	//ƒS[ƒ‹ƒIƒuƒWƒFƒNƒg¶¬
+  
+	//ã‚´ãƒ¼ãƒ«ã‚’è¨­å®š
+	//ã‚´ãƒ¼ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	auto pGoalObject = new GameObject(this);
-	//UI¶¬
+	//UIç”Ÿæˆ
 	goalObject = pGoalObject->addComponent<GoalObject>();
 	goalObject->Initialize(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage").m_Length, pPlayer);
 }

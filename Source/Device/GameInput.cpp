@@ -88,3 +88,66 @@ bool GameInput::getSliding()
 
 	return result;
 }
+
+bool GameInput::getOption()
+{
+	bool result;
+
+	// コントローラー接続中
+	if (ControllerInput::getInstance().isConnect())
+	{
+		result = ControllerInput::getInstance().isPadButtonDown(ControllerInput::PAD_BUTTON::START);
+	}
+	// キーボード
+	else
+	{
+		//入力デバイスを取得
+		const auto& input = GameDevice::getInput();
+
+		result = input.isKeyDown(DIK_O);
+	}
+
+	return result;
+}
+
+bool GameInput::getOptionSelectUp()
+{
+	bool result{};
+
+	// コントローラー接続中
+	if (ControllerInput::getInstance().isConnect())
+	{
+
+	}
+	// キーボード
+	else
+	{
+		//入力デバイスを取得
+		const auto& input = GameDevice::getInput();
+
+		result = input.isKeyDown(DIK_UP);
+	}
+
+	return result;
+}
+
+bool GameInput::getOptionSelectDown()
+{
+	bool result{};
+
+	// コントローラー接続中
+	if (ControllerInput::getInstance().isConnect())
+	{
+	
+	}
+	// キーボード
+	else
+	{
+		//入力デバイスを取得
+		const auto& input = GameDevice::getInput();
+
+		result = input.isKeyDown(DIK_DOWN);
+	}
+
+	return result;
+}
