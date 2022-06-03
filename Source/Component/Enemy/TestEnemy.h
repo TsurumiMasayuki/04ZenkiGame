@@ -2,6 +2,7 @@
 #include "Component/Base/AbstractComponent.h"
 #include "Component/Graphics/MeshRenderer.h"
 #include "Actor/Base/GameObject.h"
+#include "Utility/Timer.h"
 
 class TestEnemy
 	: public AbstractComponent
@@ -31,6 +32,18 @@ public:
 	/// <returns>‘¬“x</returns>
 	float getspeed() { return speed; }
 
+	/// <summary>
+	/// ¶‚«€‚Éİ’è
+	/// </summary>
+	/// <param name="isDead">¶‚«€‚É</param>
+	void setDead(bool isDead);
+
+	/// <summary>
+	/// ¶‚«€‚Éæ“¾
+	/// </summary>
+	/// <returns>¶‚«€‚É</returns>
+	bool getDead() { return isDead; }
+
 private:
 	//‘¬“x
 	float speed;
@@ -42,4 +55,8 @@ private:
 	Vec3 centerPoint = Vec3(0, 0, 0);
 
 	Vec3 m_CylinderCoord;
+
+	bool isDead = false;
+
+	Timer testTimer;
 };

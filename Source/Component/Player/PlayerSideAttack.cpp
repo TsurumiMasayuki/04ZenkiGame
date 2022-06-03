@@ -116,9 +116,6 @@ void PlayerSideAttack::cameraCutIn()
 	auto& gameTime = GameDevice::getGameTime();
 	gameTime.m_TimeScale = 0.1f;
 
-	auto pFollow = pActionManager->getUser().getComponent<Follow>();
-	pFollow->setActive(false);
-
 	const float effectTime = 0.1f;
 
 	auto pSpawn = new Action::Spawn(
@@ -150,10 +147,9 @@ void PlayerSideAttack::cameraCutIn()
 
 	pActionManager->enqueueAction(
 		new Action::CallFunc(
-			[pFollow, &gameTime, pActionManager]()
+			[&gameTime, pActionManager]()
 			{
 				pActionManager->setUseUnscaledTime(false);
-				pFollow->setActive(true);
 				gameTime.m_TimeScale = 1.0f;
 			}
 		)

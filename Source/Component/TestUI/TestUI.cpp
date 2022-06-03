@@ -4,7 +4,7 @@
 
 void TestUI::onStart() {
 	
-	//ƒIƒuƒWƒFƒNƒg¶¬
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	for (int i = 0; i < 5; i++)
 	{
 		healthStocks[i] = new GameObject(getUser().getGameMediator());
@@ -25,7 +25,7 @@ void TestUI::onStart() {
 		accEffect.push_back(new GameObject(getUser().getGameMediator()));
 		accEffect[i]->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	}
-	//‘Ì—ÍƒQ[ƒW
+	//ä½“åŠ›ã‚²ãƒ¼ã‚¸
 	for (int i = 0; i < 5; i++)
 	{
 		healthStocks[i]->getTransform().setLocalPosition(Vec3{ -600.0f+(100.0f*i),340,1 });
@@ -39,7 +39,7 @@ void TestUI::onStart() {
 		healthStocksRenderer[i]->setActive(true);
 		healthStocksBlackRenderer[i]->setActive(true);
 	}
-	//‰Á‘¬ƒQ[ƒW
+	//åŠ é€Ÿã‚²ãƒ¼ã‚¸
 	accelerationGaugeFlame->getTransform().setLocalPosition(Vec3{ 350,-250,2 });
 	accelerationGaugeFlame->getTransform().setLocalScale(Vec3{ 200,200,1 });
 	accelerationGaugeFlameRenderer = accelerationGaugeFlame->addComponent<GUISpriteRenderer>();
@@ -48,7 +48,7 @@ void TestUI::onStart() {
 	accelerationGaugeCore->getTransform().setLocalScale(Vec3{ 200,200,1 });
 	accelerationGaugeCoreRenderer = accelerationGaugeCore->addComponent<GUISpriteRenderer>();
 	accelerationGaugeCoreRenderer->setTextureByName("accelerationGaugeCore");
-	//”R—¿ƒQ[ƒW
+	//ç‡ƒæ–™ã‚²ãƒ¼ã‚¸
 	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ 540,-350,1 });
 	startFuelPos = fuelGaugeObj->getTransform().getLocalPosition();
 	fuelGaugeObj->getTransform().setLocalScale(Vec3{ 100,400,1 });
@@ -64,10 +64,9 @@ void TestUI::onStart() {
 void TestUI::onUpdate()
 {
 	accAdjustNum = 180.0f;
-	//‰ŠúÀ•W‚©‚çƒXƒP[ƒ‹‚Ì”¼•ª‚ğˆø‚­
+	//åˆæœŸåº§æ¨™ã‹ã‚‰ã‚¹ã‚±ãƒ¼ãƒ«ã®åŠåˆ†ã‚’å¼•ã
 	float fuelScaleY = fuelGaugeObj->getTransform().getLocalScale().y;
 	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ startFuelPos.x,startFuelPos.y + (fuelScaleY / 2),startFuelPos.z });
-	
 
 	/*if (!fuel)
 	{
@@ -94,19 +93,19 @@ void TestUI::onUpdate()
 	{
 		health = 5;
 	}*/
-	//‘Ì—ÍƒXƒgƒbƒN•`‰æŠÇ—
+	//ä½“åŠ›ã‚¹ãƒˆãƒƒã‚¯æç”»ç®¡ç†
 	for (int i = health+1; i <= MAX_HEALTH; i++)
 	{
 		healthStocksRenderer[i]->setActive(false);
 	}
-	//Š„‡Š„‚èo‚µ
+	//å‰²åˆå‰²ã‚Šå‡ºã—
 	perAcceleration = acceleration / MAX_ACCELERATION;
 	perFuel = fuel / MAX_FUEL;
-	//Š„‡‚©‚çŒ»İ‚ÌƒQ[ƒW‚ÌƒTƒCƒY‚ğŒvZ
+	//å‰²åˆã‹ã‚‰ç¾åœ¨ã®ã‚²ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚ºã‚’è¨ˆç®—
 	float fuelGaugeSize = fuelGaugeScale * perFuel;
-	//‰Á‘¬ƒQ[ƒW‚ÌŠp“xŒvZ
+	//åŠ é€Ÿã‚²ãƒ¼ã‚¸ã®è§’åº¦è¨ˆç®—
 	accAdjustNum *= perAcceleration;
-	//ƒIƒuƒWƒFƒNƒg‚É”½‰f
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«åæ˜ 
 	fuelGaugeObj->getTransform().setLocalScale(Vec3{ 100,fuelGaugeSize,1 });
 	accelerationGaugeCore->getTransform().setLocalAngles(Vec3{ 0,0,90-accAdjustNum });
 }

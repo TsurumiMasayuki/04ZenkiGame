@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene/Base/AbstractScene.h"
-
+#include "Component/Map/GoalObject.h"
 class DX12Mesh;
 
 class HogeScene
@@ -15,4 +15,5 @@ public:
 
 private:
 	DX12Mesh* m_pCube;
+	GoalObject* goalObject= nullptr;
 };
