@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Device/GameDevice.h"
 #include "Scene\HogeScene.h"
+#include "Scene\EnemyTestScene.h"
 #include "Utility\JsonFileManager.h"
 
 #include "Component/Player/PlayerStats.h"
@@ -31,7 +32,7 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("accelerationEffect", L"Resources/textures/accelerationEffect.png");
 	GameDevice::getTextureManager().load("accelerationGaugeFlame", L"Resources/textures/accelerationGaugeFlame.png");
 	GameDevice::getTextureManager().load("accelerationGaugeCore", L"Resources/textures/accelerationGaugeCore.png");
-	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png")
+	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png");
 
 	//モデル読み込み
 	GameDevice::getModelManager().startLoading();
@@ -46,7 +47,10 @@ void Game::onStart()
 	JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
 
 	m_SceneManager.addScene("Hoge", new HogeScene());
-	m_SceneManager.changeScene("Hoge");
+	m_SceneManager.addScene("EnemyTest", new EnemyTestScene());
+
+	//m_SceneManager.changeScene("Hoge");
+	m_SceneManager.changeScene("EnemyTest");
 }
 
 void Game::onUpdate()
