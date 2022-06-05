@@ -28,6 +28,12 @@ public:
 	/// </summary>
 	/// <param name="width">幅</param>
 	void setSwing(float width, float time = 1.0f) { swingWidth = width; turnaroundTime = time; }
+
+	/// <summary>
+	/// 目標設定
+	/// </summary>
+	/// <param name="targetobject">目標オブジェクト</param>
+	void setTarget(GameObject* targetobject) { target = targetobject; }
 	
 private:
 	std::vector<GameObject*> vec_object;
@@ -43,4 +49,6 @@ private:
 	float swingWidth = 10.0f;	// ふり幅
 	float turnaroundTime = 1.0f;	// 往復時間
 	float swingCnt = 0;
+
+	GameObject* target = nullptr;	// 目標オブジェクト
 };

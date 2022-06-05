@@ -54,11 +54,11 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 	for (auto& objectPlaceInfo : stageInfo.m_ObjectPlaceInfoList)
 	{
 		//オブジェクト生成
-		auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
-		pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 
 		if (objectPlaceInfo.m_ObjectName == "Wall")
 		{
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 			//スケール設定
 			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
 			//角度設定
@@ -75,6 +75,8 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
 		{
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 			//敵用コンポーネント追加
 			auto pTestEnemy = pObject->addComponent<TestEnemy>();
 			pTestEnemy->init(-10.0f, 0.0f, stageInfo.m_Radius);
@@ -89,6 +91,8 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 		if (objectPlaceInfo.m_ObjectName == "PhalanxEnemy")
 		{
+			auto pObject = new GameObject(m_pGameMediator);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 			//敵用コンポーネント追加
 			auto pPhalanxEnemy = pObject->addComponent<PhalanxEnemy>();
 			pPhalanxEnemy->init(pObject->getTransform().getLocalPosition(),
