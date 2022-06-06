@@ -4,8 +4,8 @@
 #include "Actor/Base/GameObject.h"
 #include "Math/Vec3.h"
 
-class Follow :
-    public AbstractComponent
+class LerpFollow :
+	public AbstractComponent
 {
 public:
 	// AbstractComponent ‚ğ‰î‚µ‚ÄŒp³

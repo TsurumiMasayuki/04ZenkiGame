@@ -17,7 +17,7 @@ void PlayerParamManager::onUpdate()
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
 	//ダッシュボタンが押されているなら
-	if (GameInput::getInstance().getPlayerDash())
+	if (GameInput::getInstance().getPlayerDash() && m_Fuel > 0.0f)
 	{
 		//加速
 		m_Acceleration += deltaTime * 0.1f;

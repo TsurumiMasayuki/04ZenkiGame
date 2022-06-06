@@ -4,8 +4,6 @@
 #include "Utility/CoordConverter.h"
 #include "Math/MathUtility.h"
 
-#include "btBulletDynamicsCommon.h"
-
 void TestEnemy::onStart()
 {
 	m_CylinderCoord.z = getTransform().getLocalPosition().z;
@@ -13,7 +11,7 @@ void TestEnemy::onStart()
 
 	// コライダー付与
 	auto x = getUser().addComponent<BoxColiiderBt>();
-	x->setTrigger(true);
+	x->setTrigger(false);
 	// 重力の無効化
 	x->setUseGravity(false);
 

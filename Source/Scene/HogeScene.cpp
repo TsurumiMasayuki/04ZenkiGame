@@ -7,6 +7,7 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Follow/Follow.h"
+#include "Component/Follow/LerpFollow.h"
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Player/PlayerParamManager.h"
@@ -20,6 +21,9 @@
 
 #include "Component/Map/GoalObject.h"
 
+#include "btBulletCollisionCommon.h"
+#include "btBulletDynamicsCommon.h"
+
 std::string HogeScene::nextScene()
 {
 	return std::string();
@@ -32,6 +36,11 @@ bool HogeScene::isEnd()
 
 void HogeScene::start()
 {
+	//ステージ読み込み
+	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
+	StageLoader stageLoader(this);
+	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
+
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	auto pPlayer = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
@@ -40,7 +49,6 @@ void HogeScene::start()
 	auto pModel = pPlayer->getChildren().at(0);
 	pModel->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 11.0f, 0.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
@@ -54,9 +62,10 @@ void HogeScene::start()
 
 	//コライダー追加
 	auto pCollider = pPlayer->addComponent<BoxColiiderBt>();
-	pCollider->setMass(1.0f);
-	pCollider->setTrigger(false);
 	pCollider->setUseGravity(false);
+	pCollider->setTrigger(false);
+	pCollider->setMass(1.0f);
+	pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_DYNAMIC_OBJECT);
 
 	//カメラ関係の設定
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
@@ -66,14 +75,9 @@ void HogeScene::start()
 	auto* pCameraObject = &getMainCamera()->getUser();
 	pCameraObject->addComponent<Action::ActionManager>();
 
-	auto pFollow = pCameraObject->addComponent<Follow>();
+	auto pFollow = pCameraObject->addComponent<LerpFollow>();
 	pFollow->SetGameObject(pPlayer);
 	pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
-
-	//ステージ読み込み
-	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
-	StageLoader stageLoader(this);
-	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
 
 	//ゴールを設定
 	//ゴールオブジェクト生成

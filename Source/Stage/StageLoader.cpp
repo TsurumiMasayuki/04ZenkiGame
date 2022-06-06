@@ -6,6 +6,9 @@
 #include "Component/Enemy/PhalanxEnemy.h"
 #include "Utility/CoordConverter.h"
 
+#include "btBulletCollisionCommon.h"
+#include "btBulletDynamicsCommon.h"
+
 StageLoader::StageLoader(IGameMediator* pGameMediator)
 	: m_pGameMediator(pGameMediator)
 {
@@ -55,22 +58,19 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 	{
 		//オブジェクト生成
 		auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
-		pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 
 		if (objectPlaceInfo.m_ObjectName == "Wall")
 		{
-			//スケール設定
-			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
-			//角度設定
-			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
-			//色設定
-			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
-
 			//コライダー追加
 			auto pCollider = pObject->addComponent<BoxColiiderBt>();
-			pCollider->setMass(0.0f);
 			pCollider->setUseGravity(false);
-			pCollider->setTrigger(false);
+			pCollider->setMass(0.0f);
+			pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
+
+			//角度設定
+			pObject->getTransform().setLocalAngleZ(-objectPlaceInfo.m_Angle);
+			//色設定
+			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
@@ -78,23 +78,18 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			//敵用コンポーネント追加
 			auto pTestEnemy = pObject->addComponent<TestEnemy>();
 			pTestEnemy->init(-10.0f, 0.0f, stageInfo.m_Radius);
-
-			//コライダー追加
-			auto pCollider = pObject->addComponent<BoxColiiderBt>();
-			pCollider->setMass(1.0f);
-			pCollider->setUseGravity(false);
-			pCollider->setTrigger(true);
-			pCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "PhalanxEnemy")
 		{
 			//敵用コンポーネント追加
 			auto pPhalanxEnemy = pObject->addComponent<PhalanxEnemy>();
-			pPhalanxEnemy->init(pObject->getTransform().getLocalPosition(),
+			pPhalanxEnemy->init(objectPlaceInfo.m_Position,
 				6, 0, 11.0f, -1.0f);
 
 			pPhalanxEnemy->setSwing(5.0f);
 		}
+
+		pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 	}
 }
