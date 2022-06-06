@@ -101,7 +101,5 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 			pPhalanxEnemy->setSwing(5.0f);
 		}
-
-		pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 	}
 }
