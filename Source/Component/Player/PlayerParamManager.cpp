@@ -3,6 +3,7 @@
 #include "Device/GameInput.h"
 
 #include "Component/TestUI/TestUI.h"
+#include "Option/Option.h"
 
 void PlayerParamManager::onStart()
 {
@@ -10,6 +11,9 @@ void PlayerParamManager::onStart()
 	GameObject* pTestUIObj = new GameObject(getUser().getGameMediator());
 	//UI¶¬
 	m_pTestUI = pTestUIObj->addComponent<TestUI>();
+
+	GameObject* optionObj = new GameObject(getUser().getGameMediator());
+	m_Option = optionObj->addComponent<Option>();
 }
 
 void PlayerParamManager::onUpdate()

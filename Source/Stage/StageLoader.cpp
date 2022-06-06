@@ -24,27 +24,27 @@ void StageLoader::createStageBase(const StageInfo& stageInfo)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
-	//–Ê‚Ì”
+	//é¢ã®æ•°
 	const int faceCount = 36;
-	//Šp“x
+	//è§’åº¦
 	const float rad = DirectX::XM_2PI / faceCount;
-	//‰~’Œ‚Ì”¼Œa
+	//å††æŸ±ã®åŠå¾„
 	const float radius = stageInfo.m_Radius - 1.0f;
 
-	//‰~’Œ‚ğ¶¬
+	//å††æŸ±ã‚’ç”Ÿæˆ
 	for (int i = 0; i < faceCount; i++)
 	{
 		Vec3 cylinder(radius, rad * i, stageInfo.m_Length * 0.5f);
 
-		//ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg¶¬
+		//ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 		auto pFloor = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
 		pFloor->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(0.7f, 0.7f, 0.7f, 1.0f));
 
-		//À•Wİ’è
+		//åº§æ¨™è¨­å®š
 		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
-		//ƒTƒCƒYİ’è
+		//ã‚µã‚¤ã‚ºè¨­å®š
 		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.25f, stageInfo.m_Length));
-		//‰ñ“]İ’è
+		//å›è»¢è¨­å®š
 		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
 	}
 }
@@ -53,36 +53,48 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
-	//ƒIƒuƒWƒFƒNƒg”z’uî•ñ‚ğ‘–¸
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…ç½®æƒ…å ±ã‚’èµ°æŸ»
 	for (auto& objectPlaceInfo : stageInfo.m_ObjectPlaceInfoList)
 	{
-		//ƒIƒuƒWƒFƒNƒg¶¬
-		auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 
 		if (objectPlaceInfo.m_ObjectName == "Wall")
 		{
-			//ƒRƒ‰ƒCƒ_[’Ç‰Á
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
+			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
+			//è§’åº¦è¨­å®š
+			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
+			//è‰²è¨­å®š
+			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
+
+			//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
 			auto pCollider = pObject->addComponent<BoxColiiderBt>();
 			pCollider->setUseGravity(false);
 			pCollider->setMass(0.0f);
 			pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
 
-			//Šp“xİ’è
+			//è§’åº¦è¨­å®š
 			pObject->getTransform().setLocalAngleZ(-objectPlaceInfo.m_Angle);
-			//Fİ’è
+			//è‰²è¨­å®š
 			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
 		{
-			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//æ•µç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆè¿½åŠ 
 			auto pTestEnemy = pObject->addComponent<TestEnemy>();
 			pTestEnemy->init(-10.0f, 0.0f, stageInfo.m_Radius);
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "PhalanxEnemy")
 		{
-			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
+			auto pObject = new GameObject(m_pGameMediator);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//æ•µç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆè¿½åŠ 
 			auto pPhalanxEnemy = pObject->addComponent<PhalanxEnemy>();
 			pPhalanxEnemy->init(objectPlaceInfo.m_Position,
 				6, 0, 11.0f, -1.0f);
