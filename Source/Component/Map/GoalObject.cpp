@@ -13,7 +13,7 @@ void GoalObject::onStart()
 
 void GoalObject::onUpdate()
 {
-	if (pPlayer->getTransform().getLocalPosition().z >goalPos->getTransform().getLocalPosition().z)
+	if (m_pPlayer->getTransform().getLocalPosition().z >goalPos->getTransform().getLocalPosition().z)
 	{
 		GameDevice::getGameTime().m_TimeScale = 0;
 		GameInput::getInstance().setLock(true);
@@ -25,5 +25,5 @@ void GoalObject::Initialize(float Zpos,GameObject* player)
 {
 	goalPos = new GameObject(getUser().getGameMediator());
 	goalPos->getTransform().setLocalPosition(Vec3(0, 0, Zpos));
-	pPlayer = player;
+	m_pPlayer = player;
 }

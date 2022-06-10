@@ -35,6 +35,10 @@ private:
 
 template<typename T>
 inline InstancedRendererHelper<T>::InstancedRendererHelper(const BlockbenchModel* pModel, InstancedRenderer<T>* pInstancedRenderer)
+	: m_pInstancedRenderer(pInstancedRenderer),
+	m_PreviousObjectCount(-1),
+	m_pBBModel(pModel),
+	m_pMaterial(new BBModelMaterial())
 {
 	m_pMaterial->init(DX12GraphicsCore::g_pDevice.Get());
 	m_pMaterial->setBBModel(*pModel);

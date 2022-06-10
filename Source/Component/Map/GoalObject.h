@@ -12,7 +12,7 @@ public:
 	void Initialize(float Zpos, GameObject* player);
 private:
 	GameObject* goalPos = nullptr;
-	GameObject* pPlayer = nullptr;
+	GameObject* m_pPlayer = nullptr;
 	GameObject* goalObj = nullptr;
 	GUISpriteRenderer* goalObjSprite = nullptr;
 };

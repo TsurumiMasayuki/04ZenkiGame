@@ -92,7 +92,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
 
 			//角度設定
-			pObject->getTransform().setLocalAngleZ(-objectPlaceInfo.m_Angle);
+			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
