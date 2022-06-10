@@ -43,6 +43,12 @@
     <ClCompile Include="Source\Component\Player\PlayerSideAttack.cpp" />
     <ClCompile Include="Source\Component\Enemy\PhalanxEnemy.cpp" />
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
+    <ClCompile Include="Source\Option\Option.cpp" />
+    <ClCompile Include="Source\Component\Enemy\PhalanxEnemy.cpp" />
+    <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
+    <ClCompile Include="Source\Component\Follow\LerpFollow.cpp" />
+    <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
+    <ClCompile Include="Source\Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -72,5 +78,11 @@
     <ClInclude Include="Source\Component\Player\PlayerSideAttack.h" />
     <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
+    <ClInclude Include="Source\Option\Option.h" />
+    <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
+    <ClInclude Include="Source\Component\Map\GoalObject.h" />
+    <ClInclude Include="Source\Component\Follow\LerpFollow.h" />
+    <ClInclude Include="Source\Scene\EnemyTestScene.h" />
+    <ClInclude Include="Source\Scene\TitleScene.h" />
   </ItemGroup>
 </Project>

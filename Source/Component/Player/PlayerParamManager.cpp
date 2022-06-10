@@ -3,6 +3,7 @@
 #include "Device/GameInput.h"
 
 #include "Component/TestUI/TestUI.h"
+#include "Option/Option.h"
 
 void PlayerParamManager::onStart()
 {
@@ -10,6 +11,9 @@ void PlayerParamManager::onStart()
 	GameObject* pTestUIObj = new GameObject(getUser().getGameMediator());
 	//UI生成
 	m_pTestUI = pTestUIObj->addComponent<TestUI>();
+
+	GameObject* optionObj = new GameObject(getUser().getGameMediator());
+	m_Option = optionObj->addComponent<Option>();
 }
 
 void PlayerParamManager::onUpdate()
@@ -17,7 +21,7 @@ void PlayerParamManager::onUpdate()
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
 	//ダッシュボタンが押されているなら
-	if (GameInput::getInstance().getPlayerDash())
+	if (GameInput::getInstance().getPlayerDash() && m_Fuel > 0.0f)
 	{
 		//加速
 		m_Acceleration += deltaTime * 0.1f;

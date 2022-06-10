@@ -22,6 +22,15 @@ public:
 	//スライディング取得
 	bool getSliding();
 
+	//オプション取得
+	bool getOption();
+
+	//オプション上選択取得
+	bool getOptionSelectUp();
+
+	//オプション下選択取得
+	bool getOptionSelectDown();
+
 protected:
 	GameInput() {}
 	~GameInput() {}

@@ -166,6 +166,7 @@
     <ClCompile Include="Source\Component\Follow\Follow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\Component\Floor\Floor.cpp" />
+    <ClCompile Include="Source\Component\Follow\LerpFollow.cpp" />
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
     <ClCompile Include="Source\Component\Map\Map.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerAttack.cpp" />
@@ -180,6 +181,9 @@
     <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\Option\Option.cpp" />
+    <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
+    <ClCompile Include="Source\Scene\TitleScene.cpp" />
     <ClCompile Include="Source\Stage\StageInfo.cpp" />
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
     <ClCompile Include="Source\Effect\TestEffect.cpp" />
@@ -193,6 +197,7 @@
     <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
     <ClInclude Include="Source\Component\Follow\Follow.h" />
     <ClInclude Include="Source\Component\Floor\Floor.h" />
+    <ClInclude Include="Source\Component\Follow\LerpFollow.h" />
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
     <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Component\Player\PlayerAttack.h" />
@@ -207,6 +212,9 @@
     <ClInclude Include="Source\Effect\TestFlameEffect.h" />
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\Option\Option.h" />
+    <ClInclude Include="Source\Scene\EnemyTestScene.h" />
+    <ClInclude Include="Source\Scene\TitleScene.h" />
     <ClInclude Include="Source\Stage\StageInfo.h" />
     <ClInclude Include="Source\Scene\HogeScene.h" />
     <ClInclude Include="Source\Effect\TestEffect.h" />
