@@ -1,7 +1,8 @@
 #pragma once
 #include "Scene/Base/AbstractScene.h"
 #include "Component/Map/GoalObject.h"
-class DX12Mesh;
+
+class StageLoader;
 
 class HogeScene
 	: public AbstractScene
@@ -14,6 +15,6 @@ public:
 	virtual void shutdown() override;
 
 private:
-	DX12Mesh* m_pCube;
 	GoalObject* goalObject= nullptr;
+	StageLoader* m_pStageLoader;
 };

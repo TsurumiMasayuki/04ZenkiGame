@@ -160,6 +160,5 @@ void PlayerMovement::convertCoord()
 	}
 
 	getTransform().setLocalPosition(cartCoord);
-	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3());
 	m_pBoxCollider->getRigidBody()->activate(true);
 }

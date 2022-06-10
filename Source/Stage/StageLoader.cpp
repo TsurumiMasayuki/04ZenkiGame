@@ -2,6 +2,8 @@
 #include "Component/Physics/BoxColliderBt.h"
 #include "Utility/ModelGameObjectHelper.h"
 
+#include "Graphics/DX12/Material/DefaultMaterials.h"
+
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/PhalanxEnemy.h"
 #include "Utility/CoordConverter.h"
@@ -10,8 +12,15 @@
 #include "btBulletDynamicsCommon.h"
 
 StageLoader::StageLoader(IGameMediator* pGameMediator)
-	: m_pGameMediator(pGameMediator)
+	: m_pGameMediator(pGameMediator),
+	m_pMaterial(new InstancingMaterial())
 {
+	m_pMaterial->init(DX12GraphicsCore::g_pDevice.Get());
+}
+
+StageLoader::~StageLoader()
+{
+	delete m_pMaterial;
 }
 
 void StageLoader::loadStage(const StageInfo& stageInfo)
@@ -53,21 +62,28 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
+	auto pWallInstanceObject = ModelGameObjectHelper::instantiateModel<InstanceInfo>(m_pGameMediator, pCube, true);
+	auto pWallInstancedRenderer = pWallInstanceObject->getChildren().at(0)->getComponent<InstancedRenderer<InstanceInfo>>();
+
+	std::vector<InstanceInfo> instanceInfo;
+
 	//オブジェクト配置情報を走査
 	for (auto& objectPlaceInfo : stageInfo.m_ObjectPlaceInfoList)
 	{
 		//オブジェクト生成
-
 		if (objectPlaceInfo.m_ObjectName == "Wall")
 		{
-			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			auto pObject = new GameObject(m_pGameMediator);
 			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 			//スケール設定
 			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
 			//角度設定
 			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
-			//色設定
-			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
+
+			auto& info = instanceInfo.emplace_back();
+
+			DirectX::XMStoreFloat4x4(&info.m_InstanceMatrix, DirectX::XMMatrixTranspose(pObject->getTransform().getWorldMatrix()));
+			DirectX::XMStoreFloat4(&info.m_InstanceColor, DirectX::Colors::LawnGreen);
 
 			//コライダー追加
 			auto pCollider = pObject->addComponent<BoxColiiderBt>();
@@ -77,8 +93,6 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 			//角度設定
 			pObject->getTransform().setLocalAngleZ(-objectPlaceInfo.m_Angle);
-			//色設定
-			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
@@ -102,4 +116,9 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			pPhalanxEnemy->setSwing(5.0f);
 		}
 	}
+
+	m_pMaterial->setMainTexture(GameDevice::getTextureManager().getTexture("BoxFill"));
+	pWallInstancedRenderer->setMaterial(m_pMaterial);
+	pWallInstancedRenderer->setInstanceInfo(instanceInfo);
+	pWallInstancedRenderer->setInstanceCount(instanceInfo.size());
 }

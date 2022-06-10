@@ -4,6 +4,7 @@
 #include "Component/Utility/Action/ActionManager.h"
 #include "Component/Utility/Action/Actions.h"
 #include "Device/GameDevice.h"
+#include "Graphics/DX12/Material/DefaultMaterials.h"
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Follow/Follow.h"
@@ -36,10 +37,10 @@ bool HogeScene::isEnd()
 
 void HogeScene::start()
 {
-	//�X�e�[�W�ǂݍ���
+	//ステージ生成
 	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
-	StageLoader stageLoader(this);
-	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
+	m_pStageLoader = new StageLoader(this);
+	m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
 
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
@@ -93,4 +94,5 @@ void HogeScene::update()
 
 void HogeScene::shutdown()
 {
+	delete m_pStageLoader;
 }
