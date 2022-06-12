@@ -140,7 +140,7 @@
     ],
 
     [
-      "PhalanxEnemy",
+      "SlidingThrough",
       "Line",
       30,
       [ 20.0, 90.0 ],

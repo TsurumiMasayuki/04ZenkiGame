@@ -31,7 +31,7 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("accelerationEffect", L"Resources/textures/accelerationEffect.png");
 	GameDevice::getTextureManager().load("accelerationGaugeFlame", L"Resources/textures/accelerationGaugeFlame.png");
 	GameDevice::getTextureManager().load("accelerationGaugeCore", L"Resources/textures/accelerationGaugeCore.png");
-	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png")
+	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png");
 
 	//モデル読み込み
 	GameDevice::getModelManager().startLoading();

@@ -4,6 +4,7 @@
 
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/PhalanxEnemy.h"
+#include "Obstacle/SlidingThrough.h"
 #include "Utility/CoordConverter.h"
 
 StageLoader::StageLoader(IGameMediator* pGameMediator)
@@ -96,5 +97,25 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 			pPhalanxEnemy->setSwing(5.0f);
 		}
+
+		if (objectPlaceInfo.m_ObjectName == "SlidingThrough")
+		{
+			//スケール設定
+			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
+			//角度設定
+			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
+			//色設定
+			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Red, 1.0f));
+			//敵用コンポーネント追加
+			auto pSlidingThrough = pObject->addComponent<SlidingThrough>();
+			
+			//コライダー追加
+			auto pCollider = pObject->addComponent<BoxColiiderBt>();
+			pCollider->setMass(0.0f);
+			pCollider->setUseGravity(false);
+			pCollider->setTrigger(false);
+			pCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -1.0f));
+		}
+
 	}
 }

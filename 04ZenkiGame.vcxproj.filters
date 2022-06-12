@@ -44,6 +44,7 @@
     <ClCompile Include="Source\Option\Option.cpp" />
     <ClCompile Include="Source\Component\Enemy\PhalanxEnemy.cpp" />
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
+    <ClCompile Include="Source\Obstacle\SlidingThrough.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -74,5 +75,6 @@
     <ClInclude Include="Source\Option\Option.h" />
     <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
+    <ClInclude Include="Source\Obstacle\SlidingThrough.h" />
   </ItemGroup>
 </Project>
