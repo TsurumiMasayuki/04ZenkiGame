@@ -8,6 +8,8 @@
 #include "Device/GameDevice.h"
 #include "Math/MathUtility.h"
 
+#include "Physics/IPhysicsManager.h"
+
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerParamManager.h"
 
@@ -32,6 +34,9 @@ void PlayerMovement::onStart()
 	m_pActionManager = getUser().getComponent<Action::ActionManager>();
 
 	m_pBoxCollider = getUser().getComponent<BoxColiiderBt>();
+
+	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
+	getTransform().setLocalPosition(cartCoord);
 }
 
 void PlayerMovement::onUpdate()
@@ -136,8 +141,25 @@ void PlayerMovement::convertCoord()
 
 	//差を算出
 	Vec3 diff = cartCoord - m_PrePosition;
+	float sqrLength = diff.sqrLength();
 
-	//速度を設定
-	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3() * 4.0f);
-	m_pBoxCollider->getRigidBody()->setActivationState(ACTIVE_TAG);
+	if (sqrLength > 0.0f)
+	{
+		RayHitResult result;
+		if (getUser().getGameMediator()->getPhysicsManager()->raycastSingle(m_PrePosition, cartCoord, result))
+		{
+			if (!result.pHitObject->compareTag("Enemy"))
+			{
+				float distance = m_PrePosition.distance(result.hitPoint);
+				if (distance < 0.1f)
+					getTransform().setLocalPosition(m_PrePosition);
+
+				return;
+			}
+		}
+	}
+
+	getTransform().setLocalPosition(cartCoord);
+	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3());
+	m_pBoxCollider->getRigidBody()->activate(true);
 }

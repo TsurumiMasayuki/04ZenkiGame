@@ -13,16 +13,37 @@ void PhalanxEnemy::onStart()
 
 void PhalanxEnemy::onUpdate()
 {
-	// 基準座標取得
-	//Vec3 position = vec_object[i]->getTransform().getLocalPosition();
+	// 目標座標取得
+	Vec3 targetPos;
+	if (target)
+	{
+		targetPos = target->getTransform().getLocalPosition();
+	}
 
 	//deltaTimeを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
 	for (int i = 0; i < vec_object.size(); i++)
 	{
+		// 基準座標取得
+		Vec3 objectPos = vec_object[i]->getTransform().getLocalPosition();
+
+		// 回転速度計算
+		float rotSpeed = 0;
+		// ターゲット指定 かつ 一定範囲内にいたら
+		if (target && targetPos.distance(objectPos) <= 20.0f)
+		{
+			// ターゲットを追う動き
+			rotSpeed = (targetPos.y - objectPos.y) / 60;
+		}
+		else
+		{
+			// 単振動の動き
+			rotSpeed = swingWidth * cosf(swingCnt - (0.6f * i));
+		}
+
 		//回転速度をラジアンに変換
-		float radRotateSpeed = MathUtility::toRadian(swingWidth * sinf(swingCnt - (10 / vec_object.size() * i)));
+		float radRotateSpeed = MathUtility::toRadian(rotSpeed);
 
 		Vec3 tmp_position = vec_object[i]->getTransform().getLocalPosition();
 		tmp_position = CoordConverter::cartesianToCylinder(tmp_position);

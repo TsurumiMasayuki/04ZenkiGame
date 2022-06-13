@@ -1,4 +1,4 @@
-#include "HogeScene.h"
+#include "EnemyTestScene.h"
 #include "Actor/Base/GameObject.h"
 #include "Component/Physics/BoxColliderBt.h"
 #include "Component/Utility/Action/ActionManager.h"
@@ -7,7 +7,6 @@
 #include "Utility/ModelGameObjectHelper.h"
 
 #include "Component/Follow/Follow.h"
-#include "Component/Follow/LerpFollow.h"
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Player/PlayerParamManager.h"
@@ -21,26 +20,20 @@
 
 #include "Component/Map/GoalObject.h"
 
-#include "btBulletCollisionCommon.h"
-#include "btBulletDynamicsCommon.h"
+#include "Component/Enemy/JumpingEnemy.h"
 
-std::string HogeScene::nextScene()
+std::string EnemyTestScene::nextScene()
 {
 	return std::string();
 }
 
-bool HogeScene::isEnd()
+bool EnemyTestScene::isEnd()
 {
 	return false;
 }
 
-void HogeScene::start()
+void EnemyTestScene::start()
 {
-	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ç‚İï¿½ï¿½ï¿½
-	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
-	StageLoader stageLoader(this);
-	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
-
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	auto pPlayer = ModelGameObjectHelper::instantiateModel<int>(this, pCube);
@@ -49,10 +42,11 @@ void HogeScene::start()
 	auto pModel = pPlayer->getChildren().at(0);
 	pModel->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 11.0f, 0.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
-	//æ”»æ’ƒç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
+	//UŒ‚—pƒIƒuƒWƒFƒNƒg¶¬
 	auto pPlayerAttackObject = new GameObject(this);
 	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
 	pPlayerAttack->init(&pModel->getTransform(), pPlayerParam);
@@ -60,14 +54,13 @@ void HogeScene::start()
 	pPlayerMove->init(pPlayerParam);
 	pPlayerMove->setCylinderRadius(11.0f);
 
-	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
+	//ƒRƒ‰ƒCƒ_[’Ç‰Á
 	auto pCollider = pPlayer->addComponent<BoxColiiderBt>();
-	pCollider->setUseGravity(false);
-	pCollider->setTrigger(false);
 	pCollider->setMass(1.0f);
-	pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_DYNAMIC_OBJECT);
+	pCollider->setTrigger(false);
+	pCollider->setUseGravity(false);
 
-	//ã‚«ãƒ¡ãƒ©é–¢ä¿‚ã®è¨­å®š
+	//ƒJƒƒ‰ŠÖŒW‚Ìİ’è
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
 
 	getMainCamera()->setTarget(pPlayer);
@@ -75,22 +68,27 @@ void HogeScene::start()
 	auto* pCameraObject = &getMainCamera()->getUser();
 	pCameraObject->addComponent<Action::ActionManager>();
 
-	auto pFollow = pCameraObject->addComponent<LerpFollow>();
+	auto pFollow = pCameraObject->addComponent<Follow>();
 	pFollow->SetGameObject(pPlayer);
 	pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
 
-	//ã‚´ãƒ¼ãƒ«ã‚’è¨­å®š
-	//ã‚´ãƒ¼ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
+	//ƒXƒe[ƒW“Ç‚İ‚İ
+	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/EnemyTestStage.json");
+	StageLoader stageLoader(this);
+	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
+
+	//ƒS[ƒ‹‚ğİ’è
+	//ƒS[ƒ‹ƒIƒuƒWƒFƒNƒg¶¬
 	auto pGoalObject = new GameObject(this);
-	//UIç”Ÿæˆ
+	//UI¶¬
 	goalObject = pGoalObject->addComponent<GoalObject>();
 	goalObject->Initialize(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage").m_Length, pPlayer);
 }
 
-void HogeScene::update()
+void EnemyTestScene::update()
 {
 }
 
-void HogeScene::shutdown()
+void EnemyTestScene::shutdown()
 {
 }

@@ -5,7 +5,11 @@
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/PhalanxEnemy.h"
 #include "Obstacle/SlidingThrough.h"
+#include "Component/Enemy/JumpingEnemy.h"
 #include "Utility/CoordConverter.h"
+
+#include "btBulletCollisionCommon.h"
+#include "btBulletDynamicsCommon.h"
 
 StageLoader::StageLoader(IGameMediator* pGameMediator)
 	: m_pGameMediator(pGameMediator)
@@ -22,27 +26,27 @@ void StageLoader::createStageBase(const StageInfo& stageInfo)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
-	//�ʂ̐�
+	//é¢ã®æ•°
 	const int faceCount = 36;
-	//�p�x
+	//è§’åº¦
 	const float rad = DirectX::XM_2PI / faceCount;
-	//�~���̔��a
+	//å††æŸ±ã®åŠå¾„
 	const float radius = stageInfo.m_Radius - 1.0f;
 
-	//�~���𐶐�
+	//å††æŸ±ã‚’ç”Ÿæˆ
 	for (int i = 0; i < faceCount; i++)
 	{
 		Vec3 cylinder(radius, rad * i, stageInfo.m_Length * 0.5f);
 
-		//�Q�[���I�u�W�F�N�g����
+		//ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 		auto pFloor = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
 		pFloor->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(0.7f, 0.7f, 0.7f, 1.0f));
 
-		//���W�ݒ�
+		//åº§æ¨™è¨­å®š
 		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
-		//�T�C�Y�ݒ�
+		//ã‚µã‚¤ã‚ºè¨­å®š
 		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.25f, stageInfo.m_Length));
-		//��]�ݒ�
+		//å›žè»¢è¨­å®š
 		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
 	}
 }
@@ -51,48 +55,50 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
-	//�I�u�W�F�N�g�z�u���𑖍�
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…ç½®æƒ…å ±ã‚’èµ°æŸ»
 	for (auto& objectPlaceInfo : stageInfo.m_ObjectPlaceInfoList)
 	{
-		//�I�u�W�F�N�g����
-		auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
-		pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 
 		if (objectPlaceInfo.m_ObjectName == "Wall")
 		{
-			//�X�P�[���ݒ�
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
 			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
-			//�p�x�ݒ�
+			//è§’åº¦è¨­å®š
 			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
-			//�F�ݒ�
+			//è‰²è¨­å®š
 			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
 
-			//�R���C�_�[�ǉ�
+			//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
 			auto pCollider = pObject->addComponent<BoxColiiderBt>();
-			pCollider->setMass(0.0f);
 			pCollider->setUseGravity(false);
-			pCollider->setTrigger(false);
+			pCollider->setMass(0.0f);
+			pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
+
+			//è§’åº¦è¨­å®š
+			pObject->getTransform().setLocalAngleZ(-objectPlaceInfo.m_Angle);
+			//è‰²è¨­å®š
+			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
 		{
-			//�G�p�R���|�[�l���g�ǉ�
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//æ•µç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆè¿½åŠ 
 			auto pTestEnemy = pObject->addComponent<TestEnemy>();
 			pTestEnemy->init(-10.0f, 0.0f, stageInfo.m_Radius);
-
-			//�R���C�_�[�ǉ�
-			auto pCollider = pObject->addComponent<BoxColiiderBt>();
-			pCollider->setMass(1.0f);
-			pCollider->setUseGravity(false);
-			pCollider->setTrigger(true);
-			pCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "PhalanxEnemy")
 		{
-			//�G�p�R���|�[�l���g�ǉ�
+			auto pObject = new GameObject(m_pGameMediator);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//æ•µç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆè¿½åŠ 
 			auto pPhalanxEnemy = pObject->addComponent<PhalanxEnemy>();
-			pPhalanxEnemy->init(pObject->getTransform().getLocalPosition(),
+			pPhalanxEnemy->init(objectPlaceInfo.m_Position,
 				6, 0, 11.0f, -1.0f);
 
 			pPhalanxEnemy->setSwing(5.0f);
@@ -100,16 +106,16 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 		if (objectPlaceInfo.m_ObjectName == "SlidingThrough")
 		{
-			//�X�P�[���ݒ�
+			//ƒXƒP[ƒ‹Ý’è
 			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
-			//�p�x�ݒ�
+			//Šp“xÝ’è
 			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
-			//�F�ݒ�
+			//FÝ’è
 			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Red, 1.0f));
-			//�G�p�R���|�[�l���g�ǉ�
+			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
 			auto pSlidingThrough = pObject->addComponent<SlidingThrough>();
 			
-			//�R���C�_�[�ǉ�
+			//ƒRƒ‰ƒCƒ_[’Ç‰Á
 			auto pCollider = pObject->addComponent<BoxColiiderBt>();
 			pCollider->setMass(0.0f);
 			pCollider->setUseGravity(false);
@@ -117,5 +123,14 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			pCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -1.0f));
 		}
 
+		if (objectPlaceInfo.m_ObjectName == "JumpingEnemy")
+		{
+			auto pObject = new GameObject(m_pGameMediator);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
+			auto pJumpingEnemy = pObject->addComponent<JumpingEnemy>();
+			pJumpingEnemy->init(pObject->getTransform().getLocalPosition(),
+				1.0f, 0, 11.0f);
+		}
 	}
 }
