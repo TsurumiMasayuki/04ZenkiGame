@@ -1,8 +1,9 @@
 #include "Game.h"
 #include "Device/GameDevice.h"
-#include "Scene\HogeScene.h"
-#include "Scene\EnemyTestScene.h"
-#include "Utility\JsonFileManager.h"
+#include "Scene/TitleScene.h"
+#include "Scene/HogeScene.h"
+#include "Scene/EnemyTestScene.h"
+#include "Utility/JsonFileManager.h"
 
 #include "Component/Player/PlayerStats.h"
 
@@ -46,11 +47,12 @@ void Game::onStart()
 	//プレイヤー設定ファイル読み込み
 	JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
 
+	m_SceneManager.addScene("Title", new TitleScene());
 	m_SceneManager.addScene("Hoge", new HogeScene());
 	m_SceneManager.addScene("EnemyTest", new EnemyTestScene());
 
-	//m_SceneManager.changeScene("Hoge");
-	m_SceneManager.changeScene("EnemyTest");
+	m_SceneManager.changeScene("Hoge");
+	//m_SceneManager.changeScene("EnemyTest");
 }
 
 void Game::onUpdate()
