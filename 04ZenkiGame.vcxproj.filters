@@ -46,6 +46,7 @@
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
     <ClCompile Include="Source\Component\Follow\LerpFollow.cpp" />
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
+    <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,7 @@
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
     <ClInclude Include="Source\Component\Follow\LerpFollow.h" />
     <ClInclude Include="Source\Scene\EnemyTestScene.h" />
+    <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
   </ItemGroup>
 </Project>

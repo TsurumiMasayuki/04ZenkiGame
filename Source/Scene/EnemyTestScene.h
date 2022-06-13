@@ -1,6 +1,9 @@
 #pragma once
-#include "Scene/Base/AbstractScene.h"
+#include "Scene/Base/AbstractScene.h" 
 #include "Component/Map/GoalObject.h"
+
+#include "Component/Enemy/JumpingEnemy.h"
+
 class DX12Mesh;
 
 class EnemyTestScene
