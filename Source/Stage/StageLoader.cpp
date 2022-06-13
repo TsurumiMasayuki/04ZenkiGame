@@ -4,6 +4,7 @@
 
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/PhalanxEnemy.h"
+#include "Component/Enemy/JumpingEnemy.h"
 #include "Utility/CoordConverter.h"
 
 StageLoader::StageLoader(IGameMediator* pGameMediator)
@@ -99,6 +100,16 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 				6, 0, 11.0f, -1.0f);
 
 			pPhalanxEnemy->setSwing(5.0f);
+		}
+
+		if (objectPlaceInfo.m_ObjectName == "JumpingEnemy")
+		{
+			auto pObject = new GameObject(m_pGameMediator);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//敵用コンポーネント追加
+			auto pJumpingEnemy = pObject->addComponent<JumpingEnemy>();
+			pJumpingEnemy->init(pObject->getTransform().getLocalPosition(),
+				1.0f, 0, 11.0f);
 		}
 	}
 }

@@ -45,6 +45,7 @@
     <ClCompile Include="Source\Component\Enemy\PhalanxEnemy.cpp" />
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
+    <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -76,5 +77,6 @@
     <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
     <ClInclude Include="Source\Scene\EnemyTestScene.h" />
+    <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
   </ItemGroup>
 </Project>

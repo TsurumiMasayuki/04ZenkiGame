@@ -20,6 +20,8 @@
 
 #include "Component/Map/GoalObject.h"
 
+#include "Component/Enemy/JumpingEnemy.h"
+
 std::string EnemyTestScene::nextScene()
 {
 	return std::string();
@@ -71,7 +73,7 @@ void EnemyTestScene::start()
 	pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
 
 	//ステージ読み込み
-	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
+	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/EnemyTestStage.json");
 	StageLoader stageLoader(this);
 	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
 
