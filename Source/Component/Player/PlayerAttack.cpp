@@ -72,7 +72,7 @@ void PlayerAttack::onUpdate()
 {
 	//入力を取得
 	auto& gameInput = GameInput::getInstance();
-
+	
 	//入力されていたら
 	if (gameInput.getSliding() &&
 		gameInput.getPlayerDash() &&
@@ -145,7 +145,7 @@ void PlayerAttack::onTriggerEnter(GameObject* pHit)
 
 	//敵にAction設定
 	auto pActionManager = pHit->addComponent<Action::ActionManager>();
-
+	
 	auto& random = GameDevice::getRandom();
 
 	float x = random.getRandom(-5.0f, 5.0f);

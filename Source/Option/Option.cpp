@@ -10,7 +10,6 @@ void Option::onStart()
 	offOptionPos = Vec3{-800.0f,-800.0f,1.0f};
 	onOptionPos = Vec3{ 0,-20,1.0f };
 	optionScreenObj = new GameObject(getUser().getGameMediator());
-	optionScreenObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	optionScreenObj->getTransform().setLocalPosition(Vec3{offOptionPos});
 	optionScreenObj->getTransform().setLocalAngleZ(100);
 	optionScreenSpriteRenderer = optionScreenObj->addComponent<GUISpriteRenderer>();
@@ -26,7 +25,6 @@ void Option::onStart()
 
 	//Œ»Ý‘I‘ð‚µ‚Ä‚¢‚éƒ{ƒ^ƒ“
 	optionCurBottonObj = new GameObject(getUser().getGameMediator());
-	optionCurBottonObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	optionCurBottonObj->getTransform().setLocalPosition(Vec3{ offBottonPos.at(options.size()-1)});
 	optionCurBottonObj->getTransform().setLocalScale(Vec3{ 384,96,1 });
 	optionCurBottonSpriteRenderer = optionCurBottonObj->addComponent<GUISpriteRenderer>();
@@ -159,7 +157,6 @@ void Option::createBotton(float bottonNum)
 	Vec3 bottonOffPos = Vec3{ -800.0f,-800.0f + (bottonNum * 100),0.9f };
 	Vec3 bottonOnPos = Vec3{ 0,-200 + (bottonNum * 100) ,0.9f };
 
-	botton->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	botton->getTransform().setLocalScale(Vec3{ 384,96,1 });
 	botton->getTransform().setLocalPosition(Vec3{bottonOffPos});
 	bottonSprite->setTextureByName("OptionBotton");

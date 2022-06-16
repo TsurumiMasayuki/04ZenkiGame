@@ -88,7 +88,7 @@ void PlayerMovement::onUpdate()
 	}
 
 	convertCoord();
-
+		
 	//回転を決める
 	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 50.0f - moveDir.z * 35.0f;
 
