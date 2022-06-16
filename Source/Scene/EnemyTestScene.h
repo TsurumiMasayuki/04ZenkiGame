@@ -1,10 +1,12 @@
 #pragma once
-#include "Scene/Base/AbstractScene.h"
+#include "Scene/Base/AbstractScene.h" 
 #include "Component/Map/GoalObject.h"
+
+#include "Component/Enemy/JumpingEnemy.h"
 
 class DX12Mesh;
 
-class HogeScene
+class EnemyTestScene
 	: public AbstractScene
 {
 public:
@@ -16,5 +18,5 @@ public:
 
 private:
 	DX12Mesh* m_pCube;
-	GoalObject* goalObject= nullptr;
+	GoalObject* goalObject = nullptr;
 };

@@ -8,6 +8,8 @@
 #include "Device/GameDevice.h"
 #include "Math/MathUtility.h"
 
+#include "Physics/IPhysicsManager.h"
+
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerParamManager.h"
 
@@ -32,6 +34,9 @@ void PlayerMovement::onStart()
 	m_pActionManager = getUser().getComponent<Action::ActionManager>();
 
 	m_pBoxCollider = getUser().getComponent<BoxColiiderBt>();
+
+	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
+	getTransform().setLocalPosition(cartCoord);
 }
 
 void PlayerMovement::onUpdate()
@@ -50,8 +55,6 @@ void PlayerMovement::onUpdate()
 
 	//移動方向
 	Vec3 moveDir = GameInput::getInstance().getPlayerMove();
-
-	moveDir.z = std::fmaxf(0.0f, moveDir.z);
 
 	//ダッシュボタンが押されているなら&燃料がゼロでないなら
 	if (GameInput::getInstance().getPlayerDash() &&
@@ -85,12 +88,14 @@ void PlayerMovement::onUpdate()
 	}
 
 	convertCoord();
-
+		
 	//回転を決める
 	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 50.0f - moveDir.z * 35.0f;
 
+	getUser().getChildren().at(0)->getTransform().setLocalAngles(Vec3(yAngle, 0.0f, 0.0f));
+
 	//回転
-	getTransform().setLocalAngles(Vec3(0.0f, yAngle, MathUtility::toDegree(m_CylinderCoord.y)));
+	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(m_CylinderCoord.y)));
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
@@ -136,9 +141,25 @@ void PlayerMovement::convertCoord()
 
 	//差を算出
 	Vec3 diff = cartCoord - m_PrePosition;
+	float sqrLength = diff.sqrLength();
 
-	//速度を設定
-	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3() * 4.0f);
-	m_pBoxCollider->getRigidBody()->setActivationState(ACTIVE_TAG);
-	//getTransform().setLocalPosition(cartCoord);
+	if (sqrLength > 0.0f)
+	{
+		RayHitResult result;
+		if (getUser().getGameMediator()->getPhysicsManager()->raycastSingle(m_PrePosition, cartCoord, result))
+		{
+			if (!result.pHitObject->compareTag("Enemy"))
+			{
+				float distance = m_PrePosition.distance(result.hitPoint);
+				if (distance < 0.1f)
+					getTransform().setLocalPosition(m_PrePosition);
+
+				return;
+			}
+		}
+	}
+
+	getTransform().setLocalPosition(cartCoord);
+	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3());
+	m_pBoxCollider->getRigidBody()->activate(true);
 }

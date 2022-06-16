@@ -1,7 +1,9 @@
 #include "Game.h"
 #include "Device/GameDevice.h"
-#include "Scene\HogeScene.h"
-#include "Utility\JsonFileManager.h"
+#include "Scene/TitleScene.h"
+#include "Scene/HogeScene.h"
+#include "Scene/EnemyTestScene.h"
+#include "Utility/JsonFileManager.h"
 
 #include "Component/Player/PlayerStats.h"
 
@@ -18,11 +20,14 @@ Game::~Game()
 
 void Game::onStart()
 {
-	//lŠpŒ`‰æ‘œ“Ç‚İ‚İ
+	//å››è§’å½¢ç”»åƒèª­ã¿è¾¼ã¿
 	GameDevice::getTextureManager().load("BoxFill", L"Resources/BoxFill.png");
 
-	//‰æ‘œ“Ç‚İ‚İ
+	//ç”»åƒèª­ã¿è¾¼ã¿
 	GameDevice::getTextureManager().load("white100x100", L"Resources/white100x100.png");
+	GameDevice::getTextureManager().load("OptionBotton", L"Resources/button_A.png");
+	GameDevice::getTextureManager().load("OptionCurBotton", L"Resources/button_B.png");
+	GameDevice::getTextureManager().load("OptionBackGround", L"Resources/background.png");
 	GameDevice::getTextureManager().load("healthStock", L"Resources/textures/healthStock.png");
 	GameDevice::getTextureManager().load("healthStockBlack", L"Resources/textures/healthStockBlack.png");
 	GameDevice::getTextureManager().load("accelerationEffect", L"Resources/textures/accelerationEffect.png");
@@ -30,25 +35,29 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("accelerationGaugeCore", L"Resources/textures/accelerationGaugeCore.png");
 	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png");
 
-	//ƒ‚ƒfƒ‹“Ç‚İ‚İ
+	//ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	GameDevice::getModelManager().startLoading();
 	GameDevice::getModelManager().load("Cube", "Resources/Models/cube/", "cube");
 	GameDevice::getModelManager().load("Sphere", "Resources/Models/sphere/", "sphere");
 
-	//ƒTƒEƒ“ƒh“Ç‚İ‚İ
+	//ã‚µã‚¦ãƒ³ãƒ‰èª­ã¿è¾¼ã¿
 	GameDevice::getAudioManager().loadWavFile("Walk", L"Resources/Sounds/Player/Walk.wav");
 	GameDevice::getAudioManager().loadWavFile("EnemyHit", L"Resources/Sounds/Enemy/Enemy_Hit.wav");
 
-	//ƒvƒŒƒCƒ„[İ’èƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
 
+	m_SceneManager.addScene("Title", new TitleScene());
 	m_SceneManager.addScene("Hoge", new HogeScene());
+	m_SceneManager.addScene("EnemyTest", new EnemyTestScene());
+
 	m_SceneManager.changeScene("Hoge");
+	//m_SceneManager.changeScene("EnemyTest");
 }
 
 void Game::onUpdate()
 {
-	//ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒX‚ğƒzƒbƒgƒŠƒ[ƒh
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’ãƒ›ãƒƒãƒˆãƒªãƒ­ãƒ¼ãƒ‰
 	if (GameDevice::getInput().isKeyDown(DIK_R))
 		JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
 

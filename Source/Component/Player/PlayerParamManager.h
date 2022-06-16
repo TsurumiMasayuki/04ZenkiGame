@@ -2,6 +2,7 @@
 #include "Component/Base/AbstractComponent.h"
 
 class TestUI;
+class Option;
 
 //プレイヤーのパラメータ管理
 class PlayerParamManager
@@ -19,6 +20,7 @@ public:
 
 private:
 	TestUI* m_pTestUI;
+	Option* m_Option;
 
 	//体力
 	float m_Health = 5.0f;
