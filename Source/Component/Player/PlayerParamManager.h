@@ -3,6 +3,7 @@
 
 class TestUI;
 class Option;
+class CollectItem;
 
 //プレイヤーのパラメータ管理
 class PlayerParamManager
@@ -21,6 +22,7 @@ public:
 private:
 	TestUI* m_pTestUI;
 	Option* m_Option;
+	CollectItem* m_Item;
 
 	//体力
 	float m_Health = 5.0f;

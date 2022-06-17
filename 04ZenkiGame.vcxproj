@@ -168,6 +168,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\Component\Floor\Floor.cpp" />
     <ClCompile Include="Source\Component\Follow\LerpFollow.cpp" />
+    <ClCompile Include="Source\Component\Item\CollectItem.cpp" />
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
     <ClCompile Include="Source\Component\Map\Map.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerAttack.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Source\Component\Follow\Follow.h" />
     <ClInclude Include="Source\Component\Floor\Floor.h" />
     <ClInclude Include="Source\Component\Follow\LerpFollow.h" />
+    <ClInclude Include="Source\Component\Item\CollectItem.h" />
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
     <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Component\Player\PlayerAttack.h" />
