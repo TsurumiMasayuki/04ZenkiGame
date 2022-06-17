@@ -24,14 +24,14 @@ void PlayerParamManager::onUpdate()
 	if (GameInput::getInstance().getPlayerDash() && m_Fuel > 0.0f)
 	{
 		//‰Á‘¬
-		m_Acceleration += deltaTime * 0.1f;
+		m_Acceleration += deltaTime * 0.33f;
 		m_Acceleration = std::fminf(1.0f, m_Acceleration);
 
 		//”R—¿Œ¸­
 		m_Fuel -= deltaTime;
 		m_Fuel = std::fmaxf(0.0f, m_Fuel);
 	}
-	else
+	else if(!GameInput::getInstance().getPlayerDash())
 	{
 		//”R—¿‘‰Á
 		m_Fuel += deltaTime;
