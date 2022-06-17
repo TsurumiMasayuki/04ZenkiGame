@@ -52,4 +52,8 @@ private:
 
 	//左の攻撃判定
 	PlayerSideAttack* m_pLeftSideAttack;
+
+	Vec3 m_OriginModelPosition;
+	Vec3 m_OriginModelScale;
+	Vec3 m_OriginModelAngles;
 };

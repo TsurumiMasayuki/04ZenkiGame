@@ -103,6 +103,10 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			pTestEnemy->init(-10.0f, 0.0f, stageInfo.m_Radius);
 		}
 
+		if (objectPlaceInfo.m_ObjectName == "ZigZagEnemy")
+		{
+		}
+
 		if (objectPlaceInfo.m_ObjectName == "PhalanxEnemy")
 		{
 			auto pObject = new GameObject(m_pGameMediator);
@@ -118,21 +122,22 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 		if (objectPlaceInfo.m_ObjectName == "SlidingThrough")
 		{
 			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			Vec3 modelPosition = objectPlaceInfo.m_Position.normalized() * 2.0f;
+			float x = modelPosition.x;
+			float y = modelPosition.y;
+			modelPosition.x = y;
+			modelPosition.y = x;
+			modelPosition.z = 0.0f;
+			pObject->getChildren().at(0)->getTransform().setLocalPosition(modelPosition);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 			//ƒXƒP[ƒ‹Ý’è
-			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
+			pObject->getTransform().setLocalScale(Vec3(2.0f, stageInfo.m_Radius * 0.3f, 3.0f));
 			//Šp“xÝ’è
 			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
 			//FÝ’è
 			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Red, 1.0f));
 			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
 			auto pSlidingThrough = pObject->addComponent<SlidingThrough>();
-			
-			//ƒRƒ‰ƒCƒ_[’Ç‰Á
-			auto pCollider = pObject->addComponent<BoxColiiderBt>();
-			pCollider->setMass(0.0f);
-			pCollider->setUseGravity(false);
-			pCollider->setTrigger(false);
-			pCollider->applyForceImpluse(Vec3(0.0f, 0.0f, -1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "JumpingEnemy")
