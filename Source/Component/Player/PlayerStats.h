@@ -6,10 +6,6 @@ struct PlayerStats
 	PlayerStats();
 	PlayerStats(const nlohmann::json& json);
 
-	//1マス移動するまでの時間
-	float m_WalkTime;
-	//ダッシュ中に1マス移動するまでの時間
-	float m_DashTime;
 	//炎が残る時間
 	float m_FlameRemainTime;
 
@@ -17,4 +13,9 @@ struct PlayerStats
 	float m_WalkSpeed;
 	//ダッシュ速度
 	float m_DashSpeed;
+
+	//移動の加速時間
+	float m_WalkSpeedUpTime;
+	//ダッシュの加速時間
+	float m_DashSpeedUpTime;
 };

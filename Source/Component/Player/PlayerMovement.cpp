@@ -84,7 +84,7 @@ void PlayerMovement::onUpdate()
 		if (m_pActionManager->actionCount() == 1)
 			m_pActionManager->forceNext();
 
-		move(moveDir);
+		dash(moveDir);
 	}
 
 	convertCoord();
@@ -126,14 +126,14 @@ void PlayerMovement::move(const Vec3& moveDir)
 void PlayerMovement::dash(const Vec3& moveDir)
 {
 	//現在の速度を計算
-	float speed = 1.0f + m_pPlayerParam->getAcceleration();
+	float speed = m_Stats.m_WalkSpeed * m_pPlayerParam->getAcceleration();
 
 	//deltaTimeを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
 	//座標更新
 	m_CylinderCoord.y -= moveDir.x * deltaTime;
-	m_CylinderCoord.z += moveDir.z * m_Stats.m_DashSpeed * speed * deltaTime;
+	m_CylinderCoord.z += moveDir.z * (m_Stats.m_WalkSpeed + speed) * deltaTime;
 }
 
 void PlayerMovement::convertCoord()
