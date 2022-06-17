@@ -87,21 +87,11 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			DirectX::XMStoreFloat4x4(&info.m_InstanceMatrix, DirectX::XMMatrixTranspose(pObject->getTransform().getWorldMatrix()));
 			DirectX::XMStoreFloat4(&info.m_InstanceColor, DirectX::Colors::LawnGreen);
 
-			//è‰²è¨­å®š
-			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
-
 			//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
 			auto pCollider = pObject->addComponent<BoxColiiderBt>();
 			pCollider->setUseGravity(false);
 			pCollider->setMass(0.0f);
 			pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
-
-			//角度設定
-			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
-			//è§’åº¦è¨­å®š
-			pObject->getTransform().setLocalAngleZ(-objectPlaceInfo.m_Angle);
-			//è‰²è¨­å®š
-			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
@@ -127,6 +117,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 		if (objectPlaceInfo.m_ObjectName == "SlidingThrough")
 		{
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
 			//ƒXƒP[ƒ‹Ý’è
 			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
 			//Šp“xÝ’è
