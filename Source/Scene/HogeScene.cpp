@@ -84,8 +84,8 @@ void HogeScene::start()
 	//ゴールオブジェクト生成
 	auto pGoalObject = new GameObject(this);
 	//UI生成
-	goalObject = pGoalObject->addComponent<GoalObject>();
-	goalObject->Initialize(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage").m_Length, m_pPlayer);
+	//goalObject = pGoalObject->addComponent<GoalObject>();
+	//goalObject->Initialize(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage").m_Length, m_pPlayer);
 
 	{
 		//頂点
