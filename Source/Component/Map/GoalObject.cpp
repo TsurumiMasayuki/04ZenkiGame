@@ -1,6 +1,7 @@
 #include "Component/Map/GoalObject.h"
 #include "Device/GameDevice.h"
 #include "Device/GameInput.h"
+#include "Utility/ModelGameObjectHelper.h"
 void GoalObject::onStart()
 {
 	goalObj = new GameObject(getUser().getGameMediator());
@@ -13,7 +14,7 @@ void GoalObject::onStart()
 
 void GoalObject::onUpdate()
 {
-	if (pPlayer->getTransform().getLocalPosition().z >goalPos->getTransform().getLocalPosition().z)
+	if (goal->getTransform().getLocalPosition().distance(pPlayer->getTransform().getLocalPosition())<GOAL_DISTANCE)
 	{
 		GameDevice::getGameTime().m_TimeScale = 0;
 		GameInput::getInstance().setLock(true);
@@ -21,9 +22,9 @@ void GoalObject::onUpdate()
 	}
 }
 
-void GoalObject::Initialize(float Zpos,GameObject* player)
+void GoalObject::Initialize(Vec3 goalPos,GameObject* player)
 {
-	goalPos = new GameObject(getUser().getGameMediator());
-	goalPos->getTransform().setLocalPosition(Vec3(0, 0, Zpos));
-	pPlayer = player;
+	auto pCube = GameDevice::getModelManager().getModel("Cube");
+	goal = ModelGameObjectHelper::instantiateModel<int>(getUser().getGameMediator(),pCube);
+	goal->getTransform().setLocalPosition(goalPos);
 }
