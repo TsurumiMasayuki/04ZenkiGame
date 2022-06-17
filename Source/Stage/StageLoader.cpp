@@ -2,6 +2,8 @@
 #include "Component/Physics/BoxColliderBt.h"
 #include "Utility/ModelGameObjectHelper.h"
 
+#include "Graphics/DX12/Material/DefaultMaterials.h"
+
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/PhalanxEnemy.h"
 #include "Obstacle/SlidingThrough.h"
@@ -12,8 +14,15 @@
 #include "btBulletDynamicsCommon.h"
 
 StageLoader::StageLoader(IGameMediator* pGameMediator)
-	: m_pGameMediator(pGameMediator)
+	: m_pGameMediator(pGameMediator),
+	m_pMaterial(new InstancingMaterial())
 {
+	m_pMaterial->init(DX12GraphicsCore::g_pDevice.Get());
+}
+
+StageLoader::~StageLoader()
+{
+	delete m_pMaterial;
 }
 
 void StageLoader::loadStage(const StageInfo& stageInfo)
@@ -55,32 +64,34 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
-	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…ç½®æƒ…å ±ã‚’èµ°æŸ»
+	auto pWallInstanceObject = ModelGameObjectHelper::instantiateModel<InstanceInfo>(m_pGameMediator, pCube, true);
+	auto pWallInstancedRenderer = pWallInstanceObject->getChildren().at(0)->getComponent<InstancedRenderer<InstanceInfo>>();
+
+	std::vector<InstanceInfo> instanceInfo;
+
+	//オブジェクト配置情報を走査
 	for (auto& objectPlaceInfo : stageInfo.m_ObjectPlaceInfoList)
 	{
-		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
-
+		//オブジェクト生成
 		if (objectPlaceInfo.m_ObjectName == "Wall")
 		{
-			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			auto pObject = new GameObject(m_pGameMediator);
 			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
 			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
 			//è§’åº¦è¨­å®š
 			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
-			//è‰²è¨­å®š
-			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
+
+			auto& info = instanceInfo.emplace_back();
+
+			DirectX::XMStoreFloat4x4(&info.m_InstanceMatrix, DirectX::XMMatrixTranspose(pObject->getTransform().getWorldMatrix()));
+			DirectX::XMStoreFloat4(&info.m_InstanceColor, DirectX::Colors::LawnGreen);
 
 			//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
 			auto pCollider = pObject->addComponent<BoxColiiderBt>();
 			pCollider->setUseGravity(false);
 			pCollider->setMass(0.0f);
 			pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
-
-			//è§’åº¦è¨­å®š
-			pObject->getTransform().setLocalAngleZ(-objectPlaceInfo.m_Angle);
-			//è‰²è¨­å®š
-			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::LawnGreen, 1.0f));
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "TestEnemy")
@@ -106,6 +117,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 		if (objectPlaceInfo.m_ObjectName == "SlidingThrough")
 		{
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
 			//ƒXƒP[ƒ‹Ý’è
 			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
 			//Šp“xÝ’è
@@ -133,4 +145,9 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 				1.0f, 0, 11.0f);
 		}
 	}
+
+	m_pMaterial->setMainTexture(GameDevice::getTextureManager().getTexture("BoxFill"));
+	pWallInstancedRenderer->setMaterial(m_pMaterial);
+	pWallInstancedRenderer->setInstanceInfo(instanceInfo);
+	pWallInstancedRenderer->setInstanceCount(instanceInfo.size());
 }

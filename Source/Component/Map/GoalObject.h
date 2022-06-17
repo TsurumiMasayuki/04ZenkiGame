@@ -6,7 +6,7 @@
 #include "Component/Graphics/MeshRenderer.h"
 class GoalObject : public AbstractComponent {
 public:
-	// AbstractComponent ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+	// AbstractComponent ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
