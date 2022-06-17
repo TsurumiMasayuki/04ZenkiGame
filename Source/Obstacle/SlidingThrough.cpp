@@ -11,11 +11,11 @@
 
 void SlidingThrough::onStart()
 {
-	// コライダー付与
-	auto collider = getUser().addComponent<BoxColiiderBt>();
-	collider->setTrigger(true);
-	// 重力の無効化
-	collider->setUseGravity(false);
+	auto pCollider = getUser().addComponent<BoxColiiderBt>();
+	pCollider->setMass(0.0f);
+	pCollider->setUseGravity(false);
+	pCollider->setTrigger(false);
+
 	o_Timer.setMaxTime(1.0f);
 }
 
