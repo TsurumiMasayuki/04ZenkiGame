@@ -12,9 +12,9 @@ struct BBInstanceInfo
 {
 	DirectX::XMFLOAT4X4 instanceMat;
 	DirectX::XMFLOAT4 instanceColor;
-	//XY, XY‚Å“ü‚ê‚é
+	//XY, XYï¿½Å“ï¿½ï¿½ï¿½ï¿½
 	DirectX::XMFLOAT3X4 instanceUVOrigins;
-	//XY, XY‚Å“ü‚ê‚é
+	//XY, XYï¿½Å“ï¿½ï¿½ï¿½ï¿½
 	DirectX::XMFLOAT3X4 instanceUVSizes;
 };
 
@@ -36,8 +36,8 @@ private:
 	GameObject* m_pPlayer;
 	GameObject* m_pPlayerModel;
 
-	//Blockbench“Ç‚İ‚İ
+	//Blockbenchï¿½Ç‚İï¿½ï¿½ï¿½
 	BlockbenchLoader m_BBModelLoader;
-	//ƒCƒ“ƒXƒ^ƒ“ƒVƒ“ƒO•â•
+	//ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½Oï¿½â•
 	std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*> m_RenderHelpers;
 };
