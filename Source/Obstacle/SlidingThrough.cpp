@@ -11,6 +11,12 @@
 
 void SlidingThrough::onStart()
 {
+	auto pCollider = getUser().addComponent<BoxColiiderBt>();
+	pCollider->setMass(0.0f);
+	pCollider->setUseGravity(false);
+	pCollider->setTrigger(false);
+
+
 	o_Timer.setMaxTime(1.0f);
 }
 

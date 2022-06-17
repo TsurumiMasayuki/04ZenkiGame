@@ -37,6 +37,9 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("collectItemB", L"Resources/textures/ui_starB.png");
 	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png");
 
+	//Blockbenchモデル用画像読み込み
+	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
+
 	//モデル読み込み
 	GameDevice::getModelManager().startLoading();
 	GameDevice::getModelManager().load("Cube", "Resources/Models/cube/", "cube");

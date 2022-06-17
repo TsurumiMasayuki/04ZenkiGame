@@ -82,7 +82,7 @@ void EnemyTestScene::start()
 	auto pGoalObject = new GameObject(this);
 	//UI¶¬
 	goalObject = pGoalObject->addComponent<GoalObject>();
-	goalObject->Initialize(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage").m_Length, pPlayer);
+	//goalObject->Initialize(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage").m_Length, pPlayer);
 }
 
 void EnemyTestScene::update()
