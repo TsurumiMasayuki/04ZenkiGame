@@ -22,6 +22,10 @@ public:
 	void createBotton(float bottonNum);
 	//オプション中かどうか
 	bool IsOption() { return isOption; }
+	//setter
+	bool SetIsOption(bool isOption) { return this->isOption = isOption; }
+
+	void OptionStart();
 private:
 	//オプションオブジェクト
 	GameObject* optionScreenObj = nullptr;

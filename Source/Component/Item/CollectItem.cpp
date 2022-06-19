@@ -3,6 +3,8 @@
 #include "Device/GameDevice.h"
 #include "Utility/CoordConverter.h"
 #include <Math/MathUtility.h>
+#include "Device/GameInput.h"
+#include "CollectItemUI.h"
 
 void CollectItem::onStart()
 {
@@ -12,32 +14,19 @@ void CollectItem::onStart()
 	// d—Í‚Ì–³Œø‰»
 	collider->setUseGravity(false);
 	isDead = false;
-	count = 1;
-
-	itemObj = new GameObject(getUser().getGameMediator());
-	GUISpriteRenderer* itemSprite = itemObj->addComponent<GUISpriteRenderer>();
-	itemSprite->setTextureByName("collectItemF");
-	if (!GetDead())
-	{
-		itemObj->getTransform().setLocalPosition(Vec3{ 300,330,1 });
-		itemObj->getTransform().setLocalScale(Vec3{ 64 });
-	}
 }
 
 void CollectItem::onUpdate()
 {
-
+	if (IsDead())
+	{
+		SetDead(false);
+		getUser().destroy();
+	}
 }
 
 void CollectItem::onTriggerEnter(GameObject* pHit)
 {
-	if (!GetDead())
-	{
-		getUser().destroy();
-		SetDead(true);
-	}
-
-
-	//itemObj->getTransform().setLocalPosition(Vec3{ 300,330,0 });
-	//itemObj->getTransform().setLocalScale(Vec3{ 0 });
+	CollectItemUI::AddCount(CollectItemUI::GetCount());
+	SetDead(true);
 }

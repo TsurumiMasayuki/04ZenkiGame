@@ -4,7 +4,7 @@
 
 #include "Component/TestUI/TestUI.h"
 #include "Option/Option.h"
-#include "Component/Item/CollectItem.h"
+#include "Component/Item/CollectItemUI.h"
 
 #include "Component/Player/PlayerStats.h"
 #include "Utility/JsonFileManager.h"
@@ -22,7 +22,7 @@ void PlayerParamManager::onStart()
 
 	//アイテムスプライト
 	GameObject* itemObj = new GameObject(getUser().getGameMediator());
-	m_Item = itemObj->addComponent<CollectItem>();
+	m_Item = itemObj->addComponent<CollectItemUI>();
 }
 
 void PlayerParamManager::onUpdate()

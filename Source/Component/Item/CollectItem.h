@@ -4,7 +4,9 @@
 #include "Actor/Base/GameObject.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Utility/Timer.h"
+#include "CollectItemUI.h"
 
+class CollectItemUI;
 class CollectItem :
     public AbstractComponent
 {
@@ -14,15 +16,9 @@ public:
     virtual void onTriggerEnter(GameObject* pHit) override;
 
     bool  SetDead(bool flag) { return isDead = flag; }
-    bool  GetDead() { return isDead; }
-
+    bool& IsDead() { return isDead; }
 private:
-    Timer o_Timer;
-    GameObject* itemObj;
-    GUISpriteRenderer* CollectItemRenderer;
-    std::vector<Vec3> offPos;
-    std::vector<Vec3> onPos;
-    float count;
     bool isDead;
+    CollectItemUI* ItemUi;
 };
 
