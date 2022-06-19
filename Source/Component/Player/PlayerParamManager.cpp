@@ -4,6 +4,7 @@
 
 #include "Component/TestUI/TestUI.h"
 #include "Option/Option.h"
+#include "Component/Item/CollectItemUI.h"
 
 #include "Component/Player/PlayerStats.h"
 #include "Utility/JsonFileManager.h"
@@ -15,8 +16,13 @@ void PlayerParamManager::onStart()
 	//UI生成
 	m_pTestUI = pTestUIObj->addComponent<TestUI>();
 
+	//オプションオブジェクト生成
 	GameObject* optionObj = new GameObject(getUser().getGameMediator());
 	m_Option = optionObj->addComponent<Option>();
+
+	//アイテムスプライト
+	GameObject* itemObj = new GameObject(getUser().getGameMediator());
+	m_Item = itemObj->addComponent<CollectItemUI>();
 }
 
 void PlayerParamManager::onUpdate()

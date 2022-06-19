@@ -8,6 +8,7 @@
 #include "Component/Enemy/PhalanxEnemy.h"
 #include "Obstacle/SlidingThrough.h"
 #include "Component/Enemy/JumpingEnemy.h"
+#include "Component/Item/CollectItem.h"
 #include "Utility/CoordConverter.h"
 
 #include "btBulletCollisionCommon.h"
@@ -152,6 +153,14 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			auto pJumpingEnemy = pObject->addComponent<JumpingEnemy>();
 			pJumpingEnemy->init(pObject->getTransform().getLocalPosition(),
 				1.0f, 0, 11.0f);
+		}
+
+		if (objectPlaceInfo.m_ObjectName == "CollectItem")
+		{
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Yellow, 1.0f));
+			auto pCollectItem = pObject->addComponent<CollectItem>();
 		}
 	}
 

@@ -16,6 +16,7 @@ void SlidingThrough::onStart()
 	pCollider->setUseGravity(false);
 	pCollider->setTrigger(false);
 
+
 	o_Timer.setMaxTime(1.0f);
 }
 
@@ -27,14 +28,14 @@ void SlidingThrough::onUpdate()
 	
 	if (gameInput.getPlayerDash() && gameInput.getSliding() && o_Timer.isTime())
 	{
-		o_Timer.reset();
-		 //当たり判定のON
+		 //当たり判定の無効化
 		getUser().getComponent<BoxColiiderBt>()->setActive(false);
-    }
-
+		o_Timer.reset();
+	}
+	
 	if (o_Timer.isTime())
 	{
-		//コライダーを無効化
+		//コライダーを有効化
 		if (getUser().getComponent<BoxColiiderBt>()->isActive() == false)
 			getUser().getComponent<BoxColiiderBt>()->setActive(true);
 	}
