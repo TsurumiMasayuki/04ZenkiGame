@@ -33,6 +33,8 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("accelerationEffect", L"Resources/textures/accelerationEffect.png");
 	GameDevice::getTextureManager().load("accelerationGaugeFlame", L"Resources/textures/accelerationGaugeFlame.png");
 	GameDevice::getTextureManager().load("accelerationGaugeCore", L"Resources/textures/accelerationGaugeCore.png");
+	GameDevice::getTextureManager().load("collectItemF", L"Resources/textures/ui_starA.png");
+	GameDevice::getTextureManager().load("collectItemB", L"Resources/textures/ui_starB.png");
 	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png");
 
 	//Blockbenchモデル用画像読み込み

@@ -50,11 +50,13 @@
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
     <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
+    <ClCompile Include="Source\Component\Item\CollectItem.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchLoader.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchModel.cpp" />
     <ClCompile Include="Source\Graphics\Material\BBModelMaterial.cpp" />
     <ClCompile Include="Source\Graphics\Material\ValueMapMaterial.cpp" />
     <ClCompile Include="Source\Graphics\Shader\BBInstancingVertexShader.cpp" />
+    <ClCompile Include="Source\Component\Item\CollectItemUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -90,6 +92,7 @@
     <ClInclude Include="Source\Scene\EnemyTestScene.h" />
     <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
+    <ClInclude Include="Source\Component\Item\CollectItem.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchLoader.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchModel.h" />
     <ClInclude Include="Source\Graphics\DX12\DX12StructuredBuffer.h" />
@@ -97,5 +100,6 @@
     <ClInclude Include="Source\Graphics\Material\ValueMapMaterial.h" />
     <ClInclude Include="Source\Graphics\Shader\BBInstancingVertexShader.h" />
     <ClInclude Include="Source\Utility\InstancedRendererHelper.h" />
+    <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
   </ItemGroup>
 </Project>
