@@ -73,14 +73,14 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 	for (auto& objectPlaceInfo : stageInfo.m_ObjectPlaceInfoList)
 	{
 		//オブジェクト生成
-		if (objectPlaceInfo.m_ObjectName == "Wall")
+		if (objectPlaceInfo.m_ObjectName == "BaseWall")
 		{
 			auto pObject = new GameObject(m_pGameMediator);
 			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
-			pObject->getTransform().setLocalScale(Vec3(3.0f, stageInfo.m_Radius * 0.3f, 1.0f));
+			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
 			//è§’åº¦è¨­å®š
-			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
+			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
 
 			auto& info = instanceInfo.emplace_back();
 
@@ -130,10 +130,10 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			modelPosition.z = 0.0f;
 			pObject->getChildren().at(0)->getTransform().setLocalPosition(modelPosition);
 			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
-			//ƒXƒP[ƒ‹Ý’è
-			pObject->getTransform().setLocalScale(Vec3(2.0f, stageInfo.m_Radius * 0.3f, 3.0f));
-			//Šp“xÝ’è
-			pObject->getTransform().setLocalAngleZ(objectPlaceInfo.m_Angle);
+			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
+			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
+			//è§’åº¦è¨­å®š
+			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
 			//FÝ’è
 			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Red, 1.0f));
 			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
@@ -144,6 +144,10 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 		{
 			auto pObject = new GameObject(m_pGameMediator);
 			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
+			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
+			//è§’åº¦è¨­å®š
+			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
 			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
 			auto pJumpingEnemy = pObject->addComponent<JumpingEnemy>();
 			pJumpingEnemy->init(pObject->getTransform().getLocalPosition(),
