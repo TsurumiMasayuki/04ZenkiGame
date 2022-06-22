@@ -102,4 +102,10 @@
     <ClInclude Include="Source\Utility\InstancedRendererHelper.h" />
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Enemy\Enemy_Down.wav" />
+    <Media Include="Resources\Sounds\Player\Dash.wav" />
+    <Media Include="Resources\Sounds\Player\Sliding.wav" />
+    <Media Include="Resources\Sounds\Stage\Stage1.wav" />
+  </ItemGroup>
 </Project>

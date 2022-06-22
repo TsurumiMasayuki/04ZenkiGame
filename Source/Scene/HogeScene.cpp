@@ -12,6 +12,7 @@
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Player/PlayerParamManager.h"
+#include "Component/Audio/AudioSource.h"
 
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
@@ -150,6 +151,13 @@ void HogeScene::start()
 	pRenderer->setMesh(m_pCube);
 
 	m_RenderHelpers.emplace("Player", new InstancedRendererHelper<BBInstanceInfo>(bbModel, pRenderer));
+
+	//Sound関連
+	 m_pSound = new GameObject(this);
+	 auto pAudio = m_pSound->addComponent<AudioSource>();
+	 pAudio->setAudio("Stage1");
+	 pAudio->play(255);
+
 }
 
 void HogeScene::update()

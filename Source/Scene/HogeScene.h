@@ -36,6 +36,8 @@ private:
 	GameObject* m_pPlayer;
 	GameObject* m_pPlayerModel;
 
+	GameObject* m_pSound;
+
 	//Blockbench�ǂݍ���
 	BlockbenchLoader m_BBModelLoader;
 	//�C���X�^���V���O�⏕
