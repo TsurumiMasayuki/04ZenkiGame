@@ -153,10 +153,14 @@ void HogeScene::start()
 	m_RenderHelpers.emplace("Player", new InstancedRendererHelper<BBInstanceInfo>(bbModel, pRenderer));
 
 	//Sound関連
-	 m_pSound = new GameObject(this);
-	 auto pAudio = m_pSound->addComponent<AudioSource>();
-	 pAudio->setAudio("Stage1");
-	 pAudio->play(255);
+	//Sound関連用Object生成
+	GameObject* m_pSound = new GameObject(this);
+	auto pAudio = m_pSound->addComponent<AudioSource>();
+	//各種データ設定
+	pAudio->setAudio("Stage1");
+	pAudio->setVolume(0.1f);
+	//再生
+	pAudio->play(255);
 
 }
 
