@@ -20,6 +20,8 @@ public:
 	//ステージの読み込み
 	void loadStage(const StageInfo& stageInfo);
 
+	GameObject* GetObj() { return childCollectItemObj;}
+
 private:
 	//ステージ土台作成
 	void createStageBase(const StageInfo& stageInfo);
@@ -30,4 +32,6 @@ private:
 private:
 	IGameMediator* m_pGameMediator;
 	InstancingMaterial* m_pMaterial;
+	GameObject* parentCollectItemObj;
+	GameObject* childCollectItemObj;
 };

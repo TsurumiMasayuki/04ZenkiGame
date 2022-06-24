@@ -57,6 +57,8 @@
     <ClCompile Include="Source\Graphics\Material\ValueMapMaterial.cpp" />
     <ClCompile Include="Source\Graphics\Shader\BBInstancingVertexShader.cpp" />
     <ClCompile Include="Source\Component\Item\CollectItemUI.cpp" />
+    <ClCompile Include="Source\Component\Item\CollectItemDraw.cpp" />
+    <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -101,5 +103,7 @@
     <ClInclude Include="Source\Graphics\Shader\BBInstancingVertexShader.h" />
     <ClInclude Include="Source\Utility\InstancedRendererHelper.h" />
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
+    <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
+    <ClInclude Include="Source\Effect\CollectItemEffect.h" />
   </ItemGroup>
 </Project>

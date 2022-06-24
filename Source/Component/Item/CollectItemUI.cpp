@@ -1,13 +1,14 @@
 #include "CollectItemUI.h"
 #include "Device/GameInput.h"
 
-int CollectItemUI::count = -1;
+int  CollectItemUI::count = -1;
 
 void CollectItemUI::onStart()
 {
 	count = -1;
+	maxCount = 3;
 	//スプライト初期化
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < maxCount; i++)
 	{
 		itemObj[i] = new GameObject(getUser().getGameMediator());
 		CollectItemRenderer[i] = itemObj[i]->addComponent<GUISpriteRenderer>();
