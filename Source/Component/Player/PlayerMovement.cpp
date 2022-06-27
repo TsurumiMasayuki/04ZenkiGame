@@ -84,15 +84,17 @@ void PlayerMovement::onUpdate()
 		if (m_pActionManager->actionCount() == 1)
 			m_pActionManager->forceNext();
 
-		move(moveDir);
+		dash(moveDir);
 	}
 
 	convertCoord();
-
+		
 	//回転を決める
 	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 50.0f - moveDir.z * 35.0f;
 
-	getUser().getChildren().at(0)->getTransform().setLocalAngles(Vec3(yAngle, 0.0f, 0.0f));
+	Vec3 angles = getUser().getChildren().at(0)->getTransform().getLocalAngles();
+	angles.x = yAngle;
+	getUser().getChildren().at(0)->getTransform().setLocalAngles(angles);
 
 	//回転
 	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(m_CylinderCoord.y)));
@@ -124,14 +126,14 @@ void PlayerMovement::move(const Vec3& moveDir)
 void PlayerMovement::dash(const Vec3& moveDir)
 {
 	//現在の速度を計算
-	float speed = 1.0f + m_pPlayerParam->getAcceleration();
+	float speed = m_Stats.m_WalkSpeed * m_pPlayerParam->getAcceleration();
 
 	//deltaTimeを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
 	//座標更新
 	m_CylinderCoord.y -= moveDir.x * deltaTime;
-	m_CylinderCoord.z += moveDir.z * m_Stats.m_DashSpeed * speed * deltaTime;
+	m_CylinderCoord.z += moveDir.z * (m_Stats.m_WalkSpeed + speed) * deltaTime;
 }
 
 void PlayerMovement::convertCoord()
@@ -160,6 +162,5 @@ void PlayerMovement::convertCoord()
 	}
 
 	getTransform().setLocalPosition(cartCoord);
-	m_pBoxCollider->getRigidBody()->setLinearVelocity(diff.toBtVector3());
 	m_pBoxCollider->getRigidBody()->activate(true);
 }

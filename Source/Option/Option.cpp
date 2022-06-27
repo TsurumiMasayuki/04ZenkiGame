@@ -10,7 +10,6 @@ void Option::onStart()
 	offOptionPos = Vec3{-800.0f,-800.0f,1.0f};
 	onOptionPos = Vec3{ 0,-20,1.0f };
 	optionScreenObj = new GameObject(getUser().getGameMediator());
-	optionScreenObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	optionScreenObj->getTransform().setLocalPosition(Vec3{offOptionPos});
 	optionScreenObj->getTransform().setLocalAngleZ(100);
 	optionScreenSpriteRenderer = optionScreenObj->addComponent<GUISpriteRenderer>();
@@ -26,7 +25,6 @@ void Option::onStart()
 
 	//現在選択しているボタン
 	optionCurBottonObj = new GameObject(getUser().getGameMediator());
-	optionCurBottonObj->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
 	optionCurBottonObj->getTransform().setLocalPosition(Vec3{ offBottonPos.at(options.size()-1)});
 	optionCurBottonObj->getTransform().setLocalScale(Vec3{ 384,96,1 });
 	optionCurBottonSpriteRenderer = optionCurBottonObj->addComponent<GUISpriteRenderer>();
@@ -42,11 +40,41 @@ void Option::onStart()
 void Option::onUpdate()
 {
 	optionTimer.update();
+	
+	//OptionStart();
+}
 
+void Option::createBotton(float bottonNum)
+{
+	GameObject* botton = new GameObject(getUser().getGameMediator());
+	GUISpriteRenderer* bottonSprite = botton->addComponent<GUISpriteRenderer>();
+	Vec3 bottonOffPos = Vec3{ -800.0f,-800.0f + (bottonNum * 100),0.9f };
+	Vec3 bottonOnPos = Vec3{ 0,-200 + (bottonNum * 100) ,0.9f };
+
+	botton->getTransform().setLocalScale(Vec3{ 384,96,1 });
+	botton->getTransform().setLocalPosition(Vec3{bottonOffPos});
+	bottonSprite->setTextureByName("OptionBotton");
+	
+	offBottonPos.push_back(bottonOffPos);
+	onBottonPos.push_back(bottonOnPos);
+	options.push_back(botton);
+}
+
+void Option::OptionStart()
+{
 	//ゲーム進行を止める
 	if (IsOption() && optionTimer.getCurrentTime() >= 1.0f)
 	{
 		GameDevice::getGameTime().m_TimeScale = 0.0f;
+
+		//optionTimer.reset();
+		//optionCurBottonObj->getTransform().setLocalPosition(Vec3(onBottonPos.at(options.size() - 1)));
+		//		
+		//for (GameObject* optionBotton : options)
+		//{
+		//	optionBotton->getTransform().setLocalPosition(Vec3(onBottonPos.at(count)));
+		//	count++;
+		//}
 	}
 
 	//オプション画面移動遷移
@@ -60,20 +88,20 @@ void Option::onUpdate()
 					new Action::EaseOutCubic(new Action::MoveTo(Vec3(onOptionPos),1.0f)),
 					new Action::EaseOutCubic(new Action::RotateTo(Vec3(0.0f,0.0f,0.0f),1.0f))
 				}
-		    )
+			)
 		);
 
 		for (GameObject* optionBotton : options)
 		{
 			optionBotton->addComponent<Action::ActionManager>()->enqueueAction
-		    (
-		    	new Action::Spawn
-		    	(
-		    		{
+			(
+				new Action::Spawn
+				(
+					{
 						new Action::EaseOutCubic(new Action::MoveTo(Vec3(onBottonPos.at(count)),1.0f)),
-		    		}
-		    	)
-		    );
+					}
+					)
+			);
 			count++;
 		}
 
@@ -84,9 +112,9 @@ void Option::onUpdate()
 				{
 					new Action::EaseOutCubic(new Action::MoveTo(Vec3(onBottonPos.at(options.size() - 1).x,onBottonPos.at(options.size() - 1).y,onBottonPos.at(options.size() - 1).z - 0.1f),1.0f)),
 				}
-			)
+				)
 		);
-		
+
 		if (optionTimer.isTime())
 		{
 			optionTimer.reset();
@@ -94,7 +122,7 @@ void Option::onUpdate()
 			count = 0;
 		}
 	}//オプション中同じボタンでゲームに戻る
-	else if(GameInput::getInstance().getOption() && optionTimer.isTime())
+	else if (GameInput::getInstance().getOption() && optionTimer.isTime())
 	{
 		actionManager->enqueueAction(
 			new Action::Spawn(
@@ -107,8 +135,8 @@ void Option::onUpdate()
 
 		if (optionTimer.isTime())
 		{
-			optionCurBottonObj->getTransform().setLocalPosition(Vec3(offBottonPos.at(options.size()-1)));
-		
+			optionCurBottonObj->getTransform().setLocalPosition(Vec3(offBottonPos.at(options.size() - 1)));
+
 			for (GameObject* optionBotton : options)
 			{
 				optionBotton->getTransform().setLocalPosition(Vec3(offBottonPos.at(count)));
@@ -146,25 +174,8 @@ void Option::onUpdate()
 			currentBottnNum = options.size();
 			currentBottnNum--;
 		}
-		
+
 		optionCurBottonObj->getTransform().setLocalPosition(
 			Vec3(onBottonPos.at(currentBottnNum).x, onBottonPos.at(currentBottnNum).y, onBottonPos.at(currentBottnNum).z - 0.1f));
 	}
-}
-
-void Option::createBotton(float bottonNum)
-{
-	GameObject* botton = new GameObject(getUser().getGameMediator());
-	GUISpriteRenderer* bottonSprite = botton->addComponent<GUISpriteRenderer>();
-	Vec3 bottonOffPos = Vec3{ -800.0f,-800.0f + (bottonNum * 100),0.9f };
-	Vec3 bottonOnPos = Vec3{ 0,-200 + (bottonNum * 100) ,0.9f };
-
-	botton->setParent(&getUser().getGameMediator()->getMainCamera()->getUser());
-	botton->getTransform().setLocalScale(Vec3{ 384,96,1 });
-	botton->getTransform().setLocalPosition(Vec3{bottonOffPos});
-	bottonSprite->setTextureByName("OptionBotton");
-	
-	offBottonPos.push_back(bottonOffPos);
-	onBottonPos.push_back(bottonOnPos);
-	options.push_back(botton);
 }

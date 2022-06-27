@@ -33,7 +33,13 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("accelerationEffect", L"Resources/textures/accelerationEffect.png");
 	GameDevice::getTextureManager().load("accelerationGaugeFlame", L"Resources/textures/accelerationGaugeFlame.png");
 	GameDevice::getTextureManager().load("accelerationGaugeCore", L"Resources/textures/accelerationGaugeCore.png");
+	GameDevice::getTextureManager().load("collectItemF", L"Resources/textures/ui_starA.png");
+	GameDevice::getTextureManager().load("collectItemB", L"Resources/textures/ui_starB.png");
 	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png");
+
+	//Blockbenchモデル用画像読み込み
+	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
+	GameDevice::getTextureManager().load("ui_crystal", L"Resources/ui_crystal/crystal_red_tex.png");
 
 	//モデル読み込み
 	GameDevice::getModelManager().startLoading();
@@ -41,8 +47,16 @@ void Game::onStart()
 	GameDevice::getModelManager().load("Sphere", "Resources/Models/sphere/", "sphere");
 
 	//サウンド読み込み
+	//プレイヤー
 	GameDevice::getAudioManager().loadWavFile("Walk", L"Resources/Sounds/Player/Walk.wav");
+	GameDevice::getAudioManager().loadWavFile("Dash", L"Resources/Sounds/Player/Dash.wav");
+	GameDevice::getAudioManager().loadWavFile("Sliding", L"Resources/Sounds/Player/Sliding.wav");
+	//敵
+	GameDevice::getAudioManager().loadWavFile("EnemyDown", L"Resources/Sounds/Enemy/Enemy_Down.wav");
 	GameDevice::getAudioManager().loadWavFile("EnemyHit", L"Resources/Sounds/Enemy/Enemy_Hit.wav");
+	//ステージ
+	GameDevice::getAudioManager().loadWavFile("Stage1", L"Resources/Sounds/Stage/Stage1.wav");
+
 
 	//プレイヤー設定ファイル読み込み
 	JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");

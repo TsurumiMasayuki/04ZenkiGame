@@ -61,7 +61,6 @@ void TestUI::onUpdate()
 	float fuelScaleY = fuelGaugeObj->getTransform().getLocalScale().y;
 	fuelGaugeObj->getTransform().setLocalPosition(Vec3{ startFuelPos.x,startFuelPos.y + (fuelScaleY / 2),startFuelPos.z });
 	
-
 	/*if (!fuel)
 	{
 		assert(0);

@@ -47,11 +47,8 @@ void PlayerAttack::onStart()
 
 	//プレイヤーに追従する
 	auto pAttackFollow = getUser().addComponent<Follow>();
-	pAttackFollow->SetGameObject(m_pModelTransform->getUser().getParent());
+	pAttackFollow->SetGameObject(&getUser());
 	pAttackFollow->Setdistance(Vec3(0.0f, 0.0f, 1.0f));
-
-	//モデルにActionManagerアタッチ
-	m_pModelActionManager = m_pModelTransform->getUser().addComponent<Action::ActionManager>();
 
 	m_SlidingTimer.setMaxTime(1.5f);
 
@@ -89,10 +86,10 @@ void PlayerAttack::onUpdate()
 							new Action::EaseInQuart(new Action::MoveTo(Vec3(-0.25f, 0.0f, 0.0f), 0.4f))
 						}
 					),
-					//スケールを縮める
-					new Action::EaseInBack(new Action::ScaleTo(Vec3(0.5f, 0.8f, 0.9f), 0.35f)),
-					//前転する
-					new Action::EaseOutSine(new Action::RotateBy(Vec3(0.0f, -380.0f, 0.0f), 0.5f))
+				//スケールを縮める
+				new Action::EaseInBack(new Action::ScaleTo(m_OriginModelScale * 0.75f, 0.35f)),
+				//前転する
+				new Action::EaseOutSine(new Action::RotateBy(Vec3(0.0f, -380.0f, 0.0f), 0.5f))
 				}
 			)
 		);
@@ -107,17 +104,17 @@ void PlayerAttack::onUpdate()
 
 	m_SlidingTimer.update();
 
-	if (m_SlidingTimer.isTime() ||
-		m_pPlayerParam->isFuelZero())
+	if ((m_SlidingTimer.isTime() ||
+		m_pPlayerParam->isFuelZero()) &&
+		m_pBoxCollider->isActive())
 	{
 		//座標、スケール、回転を元に戻す
-		m_pModelTransform->setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
-		m_pModelTransform->setLocalScale(Vec3(1.0f));
-		m_pModelTransform->setLocalAngles(Vec3::zero());
+		m_pModelTransform->setLocalPosition(m_OriginModelPosition);
+		m_pModelTransform->setLocalScale(m_OriginModelScale);
+		m_pModelTransform->setLocalAngles(m_OriginModelAngles);
 
 		//コライダーを無効化
-		if (m_pBoxCollider->isActive())
-			m_pBoxCollider->setActive(false);
+		m_pBoxCollider->setActive(false);
 
 		m_pRightSideAttack->endAttack();
 		m_pLeftSideAttack->endAttack();
@@ -126,8 +123,15 @@ void PlayerAttack::onUpdate()
 
 void PlayerAttack::init(Transform* pModelTransform, PlayerParamManager* pPlayerParam)
 {
-	m_pModelTransform = pModelTransform;
 	m_pPlayerParam = pPlayerParam;
+
+	m_pModelTransform = pModelTransform;
+	m_OriginModelPosition = m_pModelTransform->getLocalPosition();
+	m_OriginModelScale = m_pModelTransform->getLocalScale();
+	m_OriginModelAngles = m_pModelTransform->getLocalAngles();
+
+	//ActionManagerをアタッチ
+	m_pModelActionManager = m_pModelTransform->getUser().addComponent<Action::ActionManager>();
 }
 
 void PlayerAttack::onTriggerEnter(GameObject* pHit)
