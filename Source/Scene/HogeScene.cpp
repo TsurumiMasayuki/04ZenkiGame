@@ -3,6 +3,7 @@
 #include "Component/Physics/BoxColliderBt.h"
 #include "Component/Utility/Action/ActionManager.h"
 #include "Component/Utility/Action/Actions.h"
+#include "Component/Audio/AudioSource.h"
 #include "Device/GameDevice.h"
 #include "Graphics/DX12/Material/DefaultMaterials.h"
 #include "Utility/ModelGameObjectHelper.h"
@@ -12,7 +13,7 @@
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Player/PlayerParamManager.h"
-#include "Component/Audio/AudioSource.h"
+#include "Component/Player/PlayerSound.h"
 
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
@@ -53,6 +54,7 @@ void HogeScene::start()
 
 	auto pPlayerParam = m_pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = m_pPlayer->addComponent<PlayerMovement>();
+	auto pPlayerSound = m_pPlayer->addComponent<PlayerSound>();
 
 	//攻撃用オブジェクト生成
 	auto pPlayerAttackObject = new GameObject(this);
