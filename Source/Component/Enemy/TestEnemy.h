@@ -14,7 +14,7 @@ public:
 
 public:
 
-	void init(float speed, float rotateSpeed, float radius = 11.0f, Vec3 centerPoint = Vec3(0, 0, 0));
+	void init(float speed, float rotateSpeed, float radius = 12.0f, Vec3 centerPoint = Vec3(0, 0, 0));
 
 	void setCenter(Vec3 centerPoint) { this->centerPoint = centerPoint; }
 

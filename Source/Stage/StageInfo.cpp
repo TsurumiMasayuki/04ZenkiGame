@@ -40,7 +40,7 @@ void calcPosition(float radius, const nlohmann::json& json, std::vector<Vec3>& r
 StageInfo::StageInfo(const nlohmann::json& file)
 {
 	//半径を取得
-	m_Radius = 11.0f;
+	m_Radius = 12.0f;
 
 	//長さを取得
 	m_Length = (float)file["stage"];
@@ -75,9 +75,10 @@ StageInfo::StageInfo(const nlohmann::json& file)
 		objectPlaceInfo.m_CylinderCoord = cylinder;
 
 		//オブジェクトの角度
-		objectPlaceInfo.m_Angles = Vec3(transform["rotation"][0], transform["rotation"][1], transform["rotation"][2]);
+		objectPlaceInfo.m_Angles = Vec3(0.0f, transform["rotation"][1], transform["rotation"][2]);
 
 		//オブジェクトのスケール
-		objectPlaceInfo.m_Scale = Vec3(transform["scaling"][0], transform["scaling"][1], transform["scaling"][2]);
+		Vec3 scale = Vec3(transform["scaling"][0], transform["scaling"][1], transform["scaling"][2]);
+		objectPlaceInfo.m_Scale = scale * 2.0f;
 	}
 }

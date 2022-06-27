@@ -38,9 +38,9 @@ bool HogeScene::isEnd()
 void HogeScene::start()
 {
 	//ステージ生成
-	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/PrototypeStage.json");
+	JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
 	m_pStageLoader = new StageLoader(this);
-	m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
+	m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"));
 
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
@@ -59,14 +59,14 @@ void HogeScene::start()
 	pPlayerAttack->init(&m_pPlayerModel->getTransform(), pPlayerParam);
 
 	pPlayerMove->init(pPlayerParam);
-	pPlayerMove->setCylinderRadius(11.0f);
+	pPlayerMove->setCylinderRadius(12.0f);
 
 	//コライダー追加
 	auto pCollider = m_pPlayer->addComponent<BoxColiiderBt>();
 	pCollider->setUseGravity(false);
 	pCollider->setTrigger(false);
 	pCollider->setMass(1.0f);
-	pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_DYNAMIC_OBJECT);
+	pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
 	//カメラ関係の設定
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
