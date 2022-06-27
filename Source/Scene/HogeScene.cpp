@@ -26,6 +26,7 @@
 
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
+#include "Component/Item/CollectItemUI.h"
 
 std::string HogeScene::nextScene()
 {
@@ -182,6 +183,7 @@ void HogeScene::shutdown()
 	delete m_pStageLoader;
 
 	m_BBModelLoader.unLoadModels();
+	star_blockModelLoader.unLoadModels();
 
 	for (auto& pair : m_RenderHelpers)
 	{

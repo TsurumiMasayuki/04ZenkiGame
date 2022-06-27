@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Component/Item/CollectItem.h"
 #include "Component/Base/AbstractComponent.h"
 #include "Actor/Base/GameObject.h"
@@ -6,6 +6,12 @@
 #include "Utility/Timer.h"
 #include "CollectItemUI.h"
 
+namespace Action
+{
+    class ActionManager;
+}
+
+//当たり判定部分
 class CollectItemUI;
 class CollectItem :
     public AbstractComponent
@@ -14,11 +20,8 @@ public:
     virtual void onStart() override;
     virtual void onUpdate() override;
     virtual void onTriggerEnter(GameObject* pHit) override;
-
-    bool  SetDead(bool flag) { return isDead = flag; }
-    bool& IsDead() { return isDead; }
 private:
-    bool isDead;
-    CollectItemUI* ItemUi;
+    GameObject* GameObj;
+    CollectItemUI* CollectItemUIObj;
+    Action::ActionManager* m_pActionManager;
 };
-
