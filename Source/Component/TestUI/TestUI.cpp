@@ -101,5 +101,6 @@ void TestUI::onUpdate()
 	//オブジェクトに反映
 	fuelGaugeObj->getTransform().setLocalScale(Vec3{ 100,fuelGaugeSize,1 });
 	accelerationGaugeCore->getTransform().setLocalAngles(Vec3{ 0,0,90-accAdjustNum });
+	
 }
 
