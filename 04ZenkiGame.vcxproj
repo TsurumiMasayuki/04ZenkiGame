@@ -172,6 +172,7 @@
     <ClCompile Include="Source\Component\Floor\Floor.cpp" />
     <ClCompile Include="Source\Component\Follow\LerpFollow.cpp" />
     <ClCompile Include="Source\Component\Item\CollectItem.cpp" />
+    <ClCompile Include="Source\Component\Item\CollectItemDraw.cpp" />
     <ClCompile Include="Source\Component\Item\CollectItemUI.cpp" />
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
     <ClCompile Include="Source\Component\Map\Map.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Device\GameInput.cpp" />
+    <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
     <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
@@ -213,6 +215,7 @@
     <ClInclude Include="Source\Component\Floor\Floor.h" />
     <ClInclude Include="Source\Component\Follow\LerpFollow.h" />
     <ClInclude Include="Source\Component\Item\CollectItem.h" />
+    <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
     <ClInclude Include="Source\Component\Map\Map.h" />
@@ -225,6 +228,7 @@
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Device\GameInput.h" />
+    <ClInclude Include="Source\Effect\CollectItemEffect.h" />
     <ClInclude Include="Source\Effect\TestFlameEffect.h" />
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
     <ClInclude Include="Source\Game.h" />

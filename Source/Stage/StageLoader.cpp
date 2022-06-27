@@ -9,6 +9,7 @@
 #include "Obstacle/SlidingThrough.h"
 #include "Component/Enemy/JumpingEnemy.h"
 #include "Component/Item/CollectItem.h"
+#include "Component/Item/CollectItemDraw.h"
 #include "Utility/CoordConverter.h"
 
 #include "btBulletCollisionCommon.h"
@@ -153,10 +154,13 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 		if (objectPlaceInfo.m_ObjectName == "CollectItem")
 		{
-			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
-			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
-			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Yellow, 1.0f));
-			auto pCollectItem = pObject->addComponent<CollectItem>();
+			parentCollectItemObj = new GameObject(m_pGameMediator);
+			parentCollectItemObj->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			childCollectItemObj = new GameObject(m_pGameMediator);
+			childCollectItemObj->getTransform().setLocalScale(Vec3(stageInfo.m_Radius, stageInfo.m_Radius, stageInfo.m_Radius));
+			parentCollectItemObj->addChild(*childCollectItemObj);
+			auto pCollectItem = parentCollectItemObj->addComponent<CollectItem>();
+			auto pCollectItemDraw = childCollectItemObj->addComponent<CollectItemDraw>();
 		}
 	}
 

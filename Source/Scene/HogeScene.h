@@ -28,6 +28,8 @@ public:
 	virtual void update() override;
 	virtual void shutdown() override;
 
+	std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*> GetRenderHelpers() { return m_RenderHelpers;}
+
 private:
 	DX12Mesh* m_pCube;
 	StageLoader* m_pStageLoader;
@@ -40,4 +42,5 @@ private:
 	BlockbenchLoader m_BBModelLoader;
 	//�C���X�^���V���O�⏕
 	std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*> m_RenderHelpers;
+	BlockbenchLoader star_blockModelLoader;
 };
