@@ -8,9 +8,6 @@ void PlayerSound::onStart()
 
 void PlayerSound::onUpdate()
 {
-	//通常移動
-	if (GameInput::getInstance().getPlayerWalk())
-		walk();
 	//ダッシュ使用時
 	if (GameInput::getInstance().getPlayerDash())
 	{
@@ -22,6 +19,9 @@ void PlayerSound::onUpdate()
 	}
 	if (GameInput::getInstance().getPlayerDashEND())
 		pAudio->stop();
+	//通常移動
+	if (GameInput::getInstance().getPlayerWalk())
+		walk();
 
 }
 

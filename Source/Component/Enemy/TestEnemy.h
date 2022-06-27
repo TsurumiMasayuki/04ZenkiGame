@@ -2,6 +2,7 @@
 #include "Component/Base/AbstractComponent.h"
 #include "Component/Graphics/MeshRenderer.h"
 #include "Actor/Base/GameObject.h"
+#include "Component/Audio/AudioSource.h"
 #include "Utility/Timer.h"
 
 class TestEnemy
@@ -59,4 +60,6 @@ private:
 	bool isDead = false;
 
 	Timer testTimer;
+	GameObject* m_pSound;
+	AudioSource* pAudio;
 };
