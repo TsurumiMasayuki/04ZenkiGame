@@ -36,6 +36,10 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("collectItemF", L"Resources/textures/ui_starA.png");
 	GameDevice::getTextureManager().load("collectItemB", L"Resources/textures/ui_starB.png");
 	GameDevice::getTextureManager().load("goal", L"Resources/textures/goal.png");
+	GameDevice::getTextureManager().load("title", L"Resources/textures/TITLE2.png");
+	GameDevice::getTextureManager().load("titleBG", L"Resources/textures/titleBG.png");
+	GameDevice::getTextureManager().load("fire", L"Resources/textures/fire.png");
+	GameDevice::getTextureManager().load("erase", L"Resources/textures/erase.png");
 
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
@@ -64,7 +68,7 @@ void Game::onStart()
 	m_SceneManager.addScene("Hoge", new HogeScene());
 	m_SceneManager.addScene("EnemyTest", new EnemyTestScene());
 
-	m_SceneManager.changeScene("Hoge");
+	m_SceneManager.changeScene("Title");
 	//m_SceneManager.changeScene("EnemyTest");
 }
 
