@@ -5,28 +5,57 @@
 #include <Math/MathUtility.h>
 #include "Device/GameInput.h"
 #include "CollectItemUI.h"
+#include "Component/Utility/Action/Actions.h"
+#include "Component/Utility/Action/ActionManager.h"
+#include "Effect/CollectItemEffect.h"
 
 void CollectItem::onStart()
 {
-	// ÉRÉâÉCÉ_Å[ïtó^
 	auto collider = getUser().addComponent<BoxColiiderBt>();
 	collider->setTrigger(true);
-	// èdóÕÇÃñ≥å¯âª
+	
 	collider->setUseGravity(false);
-	isDead = false;
+	GameObj = new GameObject(getUser().getGameMediator());
+	CollectItemUIObj = GameObj->addComponent<CollectItemUI>();
+	m_pActionManager = getUser().addComponent<Action::ActionManager>();
 }
 
 void CollectItem::onUpdate()
 {
-	if (IsDead())
+	if (CollectItemUIObj->IsDead())
 	{
-		SetDead(false);
 		getUser().destroy();
+	}
+	else if (!CollectItemUIObj->IsDead())
+	{
+		if (m_pActionManager->actionCount() == 0)
+		{
+			//ÈñìÈöî„ÇíÈñã„Åë„Å¶ÁÅ´ÁÇé„Ç®„Éï„Çß„ÇØ„Éà
+			auto pSequence = new Action::Sequence(
+				{
+					new Action::CollectItemEffect(m_pActionManager),
+				}
+			);
+
+			//„É™„Éî„Éº„ÉàÂÆüË°å
+			auto pRepeat = new Action::RepeatForever(pSequence);
+
+			m_pActionManager->enqueueAction(pRepeat);
+		}
+		else
+		{
+			//„Ç®„Éï„Çß„ÇØ„ÉàÂÅúÊ≠¢
+			if (m_pActionManager->actionCount() == 1)
+				m_pActionManager->forceNext();
+		}
 	}
 }
 
 void CollectItem::onTriggerEnter(GameObject* pHit)
 {
-	CollectItemUI::AddCount(CollectItemUI::GetCount());
-	SetDead(true);
+	if (CollectItemUI::GetCount() <= 1)
+	{
+		CollectItemUI::AddCount(CollectItemUI::GetCount());
+	}
+	CollectItemUIObj->SetDead(true);
 }

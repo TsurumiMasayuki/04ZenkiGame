@@ -43,6 +43,7 @@ void Game::onStart()
 
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
+	GameDevice::getTextureManager().load("ui_crystal", L"Resources/ui_crystal/crystal_red_tex.png");
 
 	//モデル読み込み
 	GameDevice::getModelManager().startLoading();
