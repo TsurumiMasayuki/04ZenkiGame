@@ -50,6 +50,8 @@
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
     <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
+    <ClCompile Include="Source\Component\Enemy\ZigzagEnemy.cpp" />
+    <ClCompile Include="Source\Component\Enemy\PressEnemy.cpp" />
     <ClCompile Include="Source\Component\Item\CollectItem.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchLoader.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchModel.cpp" />
@@ -95,6 +97,8 @@
     <ClInclude Include="Source\Scene\EnemyTestScene.h" />
     <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
+    <ClInclude Include="Source\Component\Enemy\ZigzagEnemy.h" />
+    <ClInclude Include="Source\Component\Enemy\PressEnemy.h" />
     <ClInclude Include="Source\Component\Item\CollectItem.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchLoader.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchModel.h" />
