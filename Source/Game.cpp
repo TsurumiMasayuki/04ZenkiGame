@@ -47,8 +47,16 @@ void Game::onStart()
 	GameDevice::getModelManager().load("Sphere", "Resources/Models/sphere/", "sphere");
 
 	//サウンド読み込み
+	//プレイヤー
 	GameDevice::getAudioManager().loadWavFile("Walk", L"Resources/Sounds/Player/Walk.wav");
+	GameDevice::getAudioManager().loadWavFile("Dash", L"Resources/Sounds/Player/Dash.wav");
+	GameDevice::getAudioManager().loadWavFile("Sliding", L"Resources/Sounds/Player/Sliding.wav");
+	//敵
+	GameDevice::getAudioManager().loadWavFile("EnemyDown", L"Resources/Sounds/Enemy/Enemy_Down.wav");
 	GameDevice::getAudioManager().loadWavFile("EnemyHit", L"Resources/Sounds/Enemy/Enemy_Hit.wav");
+	//ステージ
+	GameDevice::getAudioManager().loadWavFile("Stage1", L"Resources/Sounds/Stage/Stage1.wav");
+
 
 	//プレイヤー設定ファイル読み込み
 	JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");

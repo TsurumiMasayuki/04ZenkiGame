@@ -59,6 +59,7 @@
     <ClCompile Include="Source\Component\Item\CollectItemUI.cpp" />
     <ClCompile Include="Source\Component\Item\CollectItemDraw.cpp" />
     <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -105,5 +106,12 @@
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
     <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />
+    <ClInclude Include="Source\Component\Player\PlayerSound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Enemy\Enemy_Down.wav" />
+    <Media Include="Resources\Sounds\Player\Dash.wav" />
+    <Media Include="Resources\Sounds\Player\Sliding.wav" />
+    <Media Include="Resources\Sounds\Stage\Stage1.wav" />
   </ItemGroup>
 </Project>
