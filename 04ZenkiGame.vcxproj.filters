@@ -48,6 +48,8 @@
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
     <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
+    <ClCompile Include="Source\Component\Enemy\ZigzagEnemy.cpp" />
+    <ClCompile Include="Source\Component\Enemy\PressEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -82,5 +84,7 @@
     <ClInclude Include="Source\Scene\EnemyTestScene.h" />
     <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
+    <ClInclude Include="Source\Component\Enemy\ZigzagEnemy.h" />
+    <ClInclude Include="Source\Component\Enemy\PressEnemy.h" />
   </ItemGroup>
 </Project>
