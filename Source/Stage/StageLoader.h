@@ -18,7 +18,7 @@ public:
 	~StageLoader();
 
 	//ステージの読み込み
-	void loadStage(const StageInfo& stageInfo);
+	void loadStage(const StageInfo& stageInfo, GameObject** ppPlayer = nullptr, GameObject** ppPlayerModel = nullptr);
 
 	GameObject* GetObj() { return childCollectItemObj;}
 
@@ -27,7 +27,7 @@ private:
 	void createStageBase(const StageInfo& stageInfo);
 
 	//オブジェクト作成
-	void createObjects(const StageInfo& stageInfo);
+	void createObjects(const StageInfo& stageInfo, GameObject** ppPlayer, GameObject** ppPlayerModel);
 
 private:
 	IGameMediator* m_pGameMediator;
