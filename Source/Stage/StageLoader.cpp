@@ -15,6 +15,16 @@
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
 
+#include "Component/Player/PlayerAttack.h"
+#include "Component/Player/PlayerMovement.h"
+#include "Component/Player/PlayerParamManager.h"
+#include "Component/Player/PlayerSound.h"
+
+#include "Component/Map/GoalObject.h"
+
+#include "Component/Utility/Action/ActionManager.h"
+#include "Component/Utility/Action/Actions.h"
+
 StageLoader::StageLoader(IGameMediator* pGameMediator)
 	: m_pGameMediator(pGameMediator),
 	m_pMaterial(new InstancingMaterial())
@@ -27,10 +37,10 @@ StageLoader::~StageLoader()
 	delete m_pMaterial;
 }
 
-void StageLoader::loadStage(const StageInfo& stageInfo)
+void StageLoader::loadStage(const StageInfo& stageInfo, GameObject** ppPlayer, GameObject** ppPlayerModel)
 {
 	createStageBase(stageInfo);
-	createObjects(stageInfo);
+	createObjects(stageInfo, ppPlayer, ppPlayerModel);
 }
 
 void StageLoader::createStageBase(const StageInfo& stageInfo)
@@ -62,7 +72,7 @@ void StageLoader::createStageBase(const StageInfo& stageInfo)
 	}
 }
 
-void StageLoader::createObjects(const StageInfo& stageInfo)
+void StageLoader::createObjects(const StageInfo& stageInfo, GameObject** ppPlayer, GameObject** ppPlayerModel)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
@@ -71,9 +81,45 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 
 	std::vector<InstanceInfo> instanceInfo;
 
+	GameObject* pPlayer = nullptr;
+	GameObject* pGoal = nullptr;
+
 	//オブジェクト配置情報を走査
 	for (auto& objectPlaceInfo : stageInfo.m_ObjectPlaceInfoList)
 	{
+		if (objectPlaceInfo.m_ObjectName == "Player")
+		{
+			auto pCube = GameDevice::getModelManager().getModel("Cube");
+
+			*ppPlayer = new GameObject(m_pGameMediator);
+
+			pPlayer = *ppPlayer;
+
+			*ppPlayerModel = new GameObject(m_pGameMediator);
+			(*ppPlayer)->getTransform().setLocalScale(Vec3(0.1f));
+			(*ppPlayer)->addChild((**ppPlayerModel));
+			auto pPlayerActionManager = (*ppPlayer)->addComponent<Action::ActionManager>();
+
+			auto pPlayerParam = (*ppPlayer)->addComponent<PlayerParamManager>();
+			auto pPlayerMove = (*ppPlayer)->addComponent<PlayerMovement>();
+			auto pPlayerSound = (*ppPlayer)->addComponent<PlayerSound>();
+
+			//攻撃用オブジェクト生成
+			auto pPlayerAttackObject = new GameObject(m_pGameMediator);
+			auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
+			pPlayerAttack->init(&(*ppPlayerModel)->getTransform(), pPlayerParam);
+
+			pPlayerMove->init(pPlayerParam);
+			pPlayerMove->setCylinderRadius(12.0f);
+
+			//コライダー追加
+			auto pCollider = (*ppPlayer)->addComponent<BoxColiiderBt>();
+			pCollider->setUseGravity(false);
+			pCollider->setTrigger(false);
+			pCollider->setMass(1.0f);
+			pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+		}
+
 		//オブジェクト生成
 		if (objectPlaceInfo.m_ObjectName == "BaseWall" ||
 			objectPlaceInfo.m_ObjectName == "GarssBlock")
@@ -154,7 +200,17 @@ void StageLoader::createObjects(const StageInfo& stageInfo)
 			auto pCollectItem = parentCollectItemObj->addComponent<CollectItem>();
 			auto pCollectItemDraw = childCollectItemObj->addComponent<CollectItemDraw>();
 		}
+
+		if (objectPlaceInfo.m_ObjectName == "Goal")
+		{
+			//ゴールを設定
+			pGoal = new GameObject(m_pGameMediator);
+			pGoal->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			pGoal->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
+		}
 	}
+
+	pGoal->addComponent<GoalObject>()->Initialize(pGoal->getTransform().getLocalPosition(), pPlayer);
 
 	m_pMaterial->setMainTexture(GameDevice::getTextureManager().getTexture("BoxFill"));
 	pWallInstancedRenderer->setMaterial(m_pMaterial);

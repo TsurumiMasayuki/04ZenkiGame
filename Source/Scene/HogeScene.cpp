@@ -10,10 +10,6 @@
 
 #include "Component/Follow/Follow.h"
 #include "Component/Follow/LerpFollow.h"
-#include "Component/Player/PlayerAttack.h"
-#include "Component/Player/PlayerMovement.h"
-#include "Component/Player/PlayerParamManager.h"
-#include "Component/Player/PlayerSound.h"
 
 #include "Effect/TestFlameEffect.h"
 #include "Effect/TestVibrationEffect.h"
@@ -43,34 +39,7 @@ void HogeScene::start()
 	//ステージ生成
 	JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
 	m_pStageLoader = new StageLoader(this);
-	m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"));
-
-	auto pCube = GameDevice::getModelManager().getModel("Cube");
-
-	m_pPlayer = new GameObject(this);
-	m_pPlayerModel = new GameObject(this);
-	m_pPlayerModel->getTransform().setLocalScale(Vec3(0.1f));
-	m_pPlayer->addChild(*m_pPlayerModel);
-	auto pPlayerActionManager = m_pPlayer->addComponent<Action::ActionManager>();
-
-	auto pPlayerParam = m_pPlayer->addComponent<PlayerParamManager>();
-	auto pPlayerMove = m_pPlayer->addComponent<PlayerMovement>();
-	auto pPlayerSound = m_pPlayer->addComponent<PlayerSound>();
-
-	//攻撃用オブジェクト生成
-	auto pPlayerAttackObject = new GameObject(this);
-	auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
-	pPlayerAttack->init(&m_pPlayerModel->getTransform(), pPlayerParam);
-
-	pPlayerMove->init(pPlayerParam);
-	pPlayerMove->setCylinderRadius(12.0f);
-
-	//コライダー追加
-	auto pCollider = m_pPlayer->addComponent<BoxColiiderBt>();
-	pCollider->setUseGravity(false);
-	pCollider->setTrigger(false);
-	pCollider->setMass(1.0f);
-	pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+	m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"), &m_pPlayer, &m_pPlayerModel);
 
 	//カメラ関係の設定
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
@@ -83,13 +52,6 @@ void HogeScene::start()
 	auto pFollow = pCameraObject->addComponent<LerpFollow>();
 	pFollow->SetGameObject(m_pPlayer);
 	pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
-
-	//ゴールを設定
-	//ゴールオブジェクト生成
-	auto pGoalObject = new GameObject(this);
-	//UI生成
-	//goalObject = pGoalObject->addComponent<GoalObject>();
-	//goalObject->Initialize(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage").m_Length, m_pPlayer);
 
 	{
 		//頂点

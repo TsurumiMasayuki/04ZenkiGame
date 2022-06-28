@@ -43,7 +43,7 @@ StageInfo::StageInfo(const nlohmann::json& file)
 	m_Radius = 12.0f;
 
 	//長さを取得
-	m_Length = (float)file["stage"];
+	m_Length = (float)file["stage"] * 2.0f;
 
 	//オブジェクトリストを読み込み
 	auto& objectList = file["objects"];
