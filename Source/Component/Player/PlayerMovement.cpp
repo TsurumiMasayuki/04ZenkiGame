@@ -107,7 +107,7 @@ void PlayerMovement::init(PlayerParamManager* pPlayerParam)
 
 void PlayerMovement::setCylinderRadius(float radius)
 {
-	m_CylinderCoord.x = radius;
+	m_CylinderCoord.x = radius + 1.0f;
 }
 
 void PlayerMovement::move(const Vec3& moveDir)
