@@ -40,6 +40,8 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("titleBG", L"Resources/textures/titleBG.png");
 	GameDevice::getTextureManager().load("fire", L"Resources/textures/fire.png");
 	GameDevice::getTextureManager().load("erase", L"Resources/textures/erase.png");
+	GameDevice::getTextureManager().load("mask", L"Resources/textures/mask.png");
+
 
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
