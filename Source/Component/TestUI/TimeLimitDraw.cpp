@@ -50,17 +50,18 @@ void TimeLimitDraw::onUpdate()
 {
 	if (!GameObj->isMin(TimeLimitUi::GetLimitFirst()))
 	{
-		numTexFirst[TimeLimitUi::GetLimitFirst()]->setActive(true);
-			numTexSecond[TimeLimitUi::GetLimitSecond()]->setActive(true);
+		for (int i = 0; i < 10; i++)
+		{
+			bool firstNum = TimeLimitUi::GetLimitFirst() == i;
+			bool secondNum = TimeLimitUi::GetLimitSecond() == i;
+
+			numTexFirst[i]->setActive(firstNum);
+			numTexSecond[i]->setActive(secondNum);
+		}
 	}
 	
 	if (GameObj->isMin(TimeLimitUi::GetLimitSecond()))
 	{
-		for (int i = 0; i < 10; i++)
-		{
-			numTexSecond[i]->setActive(false);
-		}
-
 		TimeLimitUi::SetNum(TimeLimitUi::GetLimitSecond());
 		TimeLimitUi::ReduceTime(TimeLimitUi::GetLimitFirst());
 	}
