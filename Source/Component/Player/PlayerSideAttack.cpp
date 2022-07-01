@@ -58,6 +58,8 @@ void PlayerSideAttack::startAttack()
 
 void PlayerSideAttack::endAttack()
 {
+	return;
+
 	m_pBoxCollider->setActive(false);
 
 	//エフェクト停止

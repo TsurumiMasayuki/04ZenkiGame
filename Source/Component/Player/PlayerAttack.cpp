@@ -27,13 +27,6 @@
 
 void PlayerAttack::onStart()
 {
-	//自身にコライダーをアタッチ
-	m_pBoxCollider = getUser().addComponent<BoxColiiderBt>();
-	m_pBoxCollider->setMass(1.0f);
-	m_pBoxCollider->setTrigger(true);
-	m_pBoxCollider->setUseGravity(false);
-	m_pBoxCollider->setActive(false);
-
 	//カメラがアタッチされているオブジェクトを取得
 	auto pCameraObject = &getUser().getGameMediator()->getMainCamera()->getUser();
 
@@ -45,10 +38,6 @@ void PlayerAttack::onStart()
 	m_pAudioSource->setAudio("EnemyHit");
 	m_pAudioSource->setVolume(0.1f);
 
-	//プレイヤーに追従する
-	auto pAttackFollow = getUser().addComponent<Follow>();
-	pAttackFollow->SetGameObject(&getUser());
-	pAttackFollow->Setdistance(Vec3(0.0f, 0.0f, 1.0f));
 
 	m_SlidingTimer.setMaxTime(1.5f);
 
@@ -94,8 +83,6 @@ void PlayerAttack::onUpdate()
 			)
 		);
 
-		//コライダーを有効化
-		m_pBoxCollider->setActive(true);
 		m_SlidingTimer.reset();
 
 		m_pRightSideAttack->startAttack();
@@ -105,16 +92,12 @@ void PlayerAttack::onUpdate()
 	m_SlidingTimer.update();
 
 	if ((m_SlidingTimer.isTime() ||
-		m_pPlayerParam->isFuelZero()) &&
-		m_pBoxCollider->isActive())
+		m_pPlayerParam->isFuelZero()))
 	{
 		//座標、スケール、回転を元に戻す
 		m_pModelTransform->setLocalPosition(m_OriginModelPosition);
 		m_pModelTransform->setLocalScale(m_OriginModelScale);
 		m_pModelTransform->setLocalAngles(m_OriginModelAngles);
-
-		//コライダーを無効化
-		m_pBoxCollider->setActive(false);
 
 		m_pRightSideAttack->endAttack();
 		m_pLeftSideAttack->endAttack();
@@ -134,8 +117,12 @@ void PlayerAttack::init(Transform* pModelTransform, PlayerParamManager* pPlayerP
 	m_pModelActionManager = m_pModelTransform->getUser().addComponent<Action::ActionManager>();
 }
 
-void PlayerAttack::onTriggerEnter(GameObject* pHit)
+void PlayerAttack::onCollisionEnter(GameObject* pHit)
 {
+	//スライディング中でないならreturn
+	if (m_SlidingTimer.isTime()) 
+		return;
+
 	//敵でないならreturn
 	if (!pHit->compareTag("Enemy"))
 		return;

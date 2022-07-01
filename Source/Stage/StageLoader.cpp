@@ -105,8 +105,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo, GameObject** ppPlaye
 			auto pPlayerSound = (*ppPlayer)->addComponent<PlayerSound>();
 
 			//攻撃用オブジェクト生成
-			auto pPlayerAttackObject = new GameObject(m_pGameMediator);
-			auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
+			auto pPlayerAttack = pPlayer->addComponent<PlayerAttack>();
 			pPlayerAttack->init(&(*ppPlayerModel)->getTransform(), pPlayerParam);
 
 			pPlayerMove->init(pPlayerParam);
