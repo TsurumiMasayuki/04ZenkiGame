@@ -42,7 +42,7 @@ void PlayerAttack::onStart()
 
 	//AudioSourceをアタッチ
 	m_pAudioSource = getUser().addComponent<AudioSource>();
-	m_pAudioSource->setAudio("EnemyHit");
+	m_pAudioSource->setAudio("HitEnemy");
 	m_pAudioSource->setVolume(0.1f);
 
 	//プレイヤーに追従する

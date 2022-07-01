@@ -17,7 +17,15 @@ public:
 	Vec3 getPlayerMove();
 
 	// ダッシュ取得
+	bool getPlayerWalk();
+
+	// ダッシュ取得
 	bool getPlayerDash();
+
+	//ダッシュスタート
+	bool getPlayerDashStart();
+	//ダッシュエンド
+	bool getPlayerDashEND();
 
 	//スライディング取得
 	bool getSliding();
