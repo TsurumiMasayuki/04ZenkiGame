@@ -3,15 +3,27 @@
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerParamManager.h"
 
+#include "Component/Utility/Action/Actions.h"
 #include "Component/Utility/Action/ActionManager.h"
 #include "Effect/TestPlayerAttackedEffect.h"
 
 void PlayerDamage::onStart()
 {
+	m_MoveLockTimer.setMaxTime(1.5f);
 }
 
 void PlayerDamage::onUpdate()
 {
+	if (m_MoveLock)
+	{
+		m_MoveLockTimer.update();
+		if (m_MoveLockTimer.isTime())
+		{
+			m_MoveLock = false;
+			m_pPlayerParamManager->lockPlayerMove(false);
+		}
+	}
+		
 }
 
 void PlayerDamage::init(PlayerAttack* pPlayerAttack, PlayerParamManager* pPlayerParamManager)
@@ -31,6 +43,18 @@ void PlayerDamage::onCollisionEnter(GameObject* pHit)
 
 	//ƒ_ƒ[ƒW‚ðŽó‚¯‚é
 	m_pPlayerParamManager->onDamage();
+	m_pPlayerParamManager->lockPlayerMove(true);
+	m_pPlayerParamManager->setMoveSpeed(0.0f);
+	m_pPlayerParamManager->setMoveDir(Vec3::zero());
 
-	getUser().getComponent<Action::ActionManager>()->enqueueAction(new Action::TestPlayerAttackedEffect(nullptr));
+	auto pParam = m_pPlayerParamManager;
+
+	auto pAction = getUser().getComponent<Action::ActionManager>();
+
+	if (pAction->actionCount() != 0) return;
+
+	pAction->enqueueAction(new Action::TestPlayerAttackedEffect(nullptr));
+
+	m_MoveLock = true;
+	m_MoveLockTimer.reset();
 }
