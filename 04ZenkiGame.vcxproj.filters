@@ -56,6 +56,12 @@
     <ClCompile Include="Source\Graphics\Material\BBModelMaterial.cpp" />
     <ClCompile Include="Source\Graphics\Material\ValueMapMaterial.cpp" />
     <ClCompile Include="Source\Graphics\Shader\BBInstancingVertexShader.cpp" />
+    <ClCompile Include="Source\Component\Item\CollectItemUI.cpp" />
+    <ClCompile Include="Source\Component\Item\CollectItemDraw.cpp" />
+    <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
+    <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
+    <ClCompile Include="Source\Scene\ClearScene.cpp" />
     <ClCompile Include="Source\Obstacle\SlidingThrough.cpp" />
     <ClCompile Include="Source\Option\Option.cpp" />
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
@@ -116,5 +122,17 @@
     <ClInclude Include="Source\Utility\CoordConverter.h" />
     <ClInclude Include="Source\Utility\CylinderUtility.h" />
     <ClInclude Include="Source\Utility\InstancedRendererHelper.h" />
+    <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
+    <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
+    <ClInclude Include="Source\Effect\CollectItemEffect.h" />
+    <ClInclude Include="Source\Component\Player\PlayerSound.h" />
+    <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
+    <ClInclude Include="Source\Scene\ClearScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Enemy\Enemy_Down.wav" />
+    <Media Include="Resources\Sounds\Player\Dash.wav" />
+    <Media Include="Resources\Sounds\Player\Sliding.wav" />
+    <Media Include="Resources\Sounds\Stage\Stage1.wav" />
   </ItemGroup>
 </Project>
