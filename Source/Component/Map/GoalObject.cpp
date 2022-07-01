@@ -27,4 +27,6 @@ void GoalObject::Initialize(Vec3 goalPos,GameObject* player)
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 	goal = ModelGameObjectHelper::instantiateModel<int>(getUser().getGameMediator(),pCube);
 	goal->getTransform().setLocalPosition(goalPos);
+
+	pPlayer = player;
 }

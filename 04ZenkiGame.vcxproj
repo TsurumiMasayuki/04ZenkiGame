@@ -172,6 +172,7 @@
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
+    <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Device\GameInput.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
+    <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Device\GameInput.h" />
