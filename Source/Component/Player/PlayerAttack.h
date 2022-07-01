@@ -20,10 +20,12 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
+	bool isAttacking();
+
 	void init(Transform* pModelTransform, PlayerParamManager* pPlayerParam);
 
 protected:
-	virtual void onTriggerEnter(GameObject* pHit) override;
+	virtual void onCollisionEnter(GameObject* pHit) override;
 
 private:
 	//自身にアタッチされたBoxCollider
