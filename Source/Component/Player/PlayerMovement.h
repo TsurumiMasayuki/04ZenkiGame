@@ -26,9 +26,6 @@ public:
 	void setCylinderRadius(float radius);
 
 private:
-	//移動
-	void move(const Vec3& moveDir);
-
 	//ダッシュ
 	void dash(const Vec3& moveDir);
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Component/Base/AbstractComponent.h"
+#include "Utility/Timer.h"
 
 class PlayerAttack;
 class PlayerParamManager;
@@ -18,4 +19,7 @@ public:
 private:
 	PlayerAttack* m_pPlayerAttack;
 	PlayerParamManager* m_pPlayerParamManager;
+
+	bool m_MoveLock;
+	Timer m_MoveLockTimer;
 };

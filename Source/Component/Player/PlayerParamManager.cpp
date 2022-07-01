@@ -12,6 +12,8 @@
 
 void PlayerParamManager::onStart()
 {
+	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
+
 	//UIオブジェクト生成
 	GameObject* pTestUIObj = new GameObject(getUser().getGameMediator());
 	//UI生成
@@ -69,6 +71,13 @@ void PlayerParamManager::onUpdate()
 	m_pTestUI->SetParam(m_Health, m_Acceleration, m_Fuel);
 
 	m_Acceleration = std::fminf(1.0f, m_Acceleration);
+
+	//ロックされていないなら移動方向を設定
+	if (!m_IsLock)
+	{
+		m_MoveDir = GameInput::getInstance().getPlayerMove();
+		m_BaseMoveSpeed = m_Stats.m_WalkSpeed;
+	}
 }
 
 bool PlayerParamManager::isFuelZero() const
@@ -84,4 +93,29 @@ float PlayerParamManager::getAcceleration() const
 void PlayerParamManager::onDamage()
 {
 	m_Acceleration = 0.0f;
+}
+
+void PlayerParamManager::lockPlayerMove(bool isLock)
+{
+	m_IsLock = isLock;
+}
+
+const Vec3& PlayerParamManager::getMoveDir() const
+{
+	return m_MoveDir;
+}
+
+void PlayerParamManager::setMoveDir(const Vec3& moveDir)
+{
+	m_MoveDir = moveDir;
+}
+
+float PlayerParamManager::getMoveSpeed() const
+{
+	return m_BaseMoveSpeed * (1.0f + m_Acceleration);
+}
+
+void PlayerParamManager::setMoveSpeed(float speed)
+{
+	m_BaseMoveSpeed = speed;
 }
