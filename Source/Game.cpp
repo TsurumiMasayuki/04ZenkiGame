@@ -60,6 +60,8 @@ void Game::onStart()
 	GameDevice::getAudioManager().loadWavFile("EnemyDown", L"Resources/Sounds/Enemy/Enemy_Down.wav");
 	//ステージ
 	GameDevice::getAudioManager().loadWavFile("Stage1", L"Resources/Sounds/Stage/Stage1.wav");
+	//タイトル
+	GameDevice::getAudioManager().loadWavFile("Title", L"Resources/Sounds/BGM/TitleBGM.wav");
 
 
 	//プレイヤー設定ファイル読み込み

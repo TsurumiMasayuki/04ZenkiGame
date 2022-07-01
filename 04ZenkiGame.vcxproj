@@ -164,7 +164,6 @@
     <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchLoader.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchModel.cpp" />
-    <ClCompile Include="Source\Component\DistanceActivater\DistanceActivater.cpp" />
     <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\PhalanxEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\PressEnemy.cpp" />
@@ -210,7 +209,6 @@
     <ClInclude Include="Source\Component\Player\PlayerSound.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchLoader.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchModel.h" />
-    <ClInclude Include="Source\Component\DistanceActivater\DistanceActivater.h" />
     <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\PressEnemy.h" />
