@@ -1,7 +1,7 @@
 #pragma once
 #include "Stage/StageInfo.h"
 #include "Component/Graphics/InstancedRenderer.h"
-
+#include "Component/Map/GoalObject.h"
 class IGameMediator;
 class InstancingMaterial;
 
@@ -22,6 +22,8 @@ public:
 
 	GameObject* GetObj() { return childCollectItemObj;}
 
+	//ゴールオブジェクトを返す
+	GoalObject* GetGoal() { return m_pGoal;}
 private:
 	//ステージ土台作成
 	void createStageBase(const StageInfo& stageInfo);
@@ -34,4 +36,6 @@ private:
 	InstancingMaterial* m_pMaterial;
 	GameObject* parentCollectItemObj;
 	GameObject* childCollectItemObj;
+	//シーンにゴールオブジェクトのデータを渡すための実体
+	GoalObject* m_pGoal;
 };
