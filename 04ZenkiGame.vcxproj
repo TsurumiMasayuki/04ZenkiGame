@@ -185,6 +185,8 @@
     <ClCompile Include="Source\Component\Player\PlayerSideAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
+    <ClCompile Include="Source\Component\TestUI\TimeLimitDraw.cpp" />
+    <ClCompile Include="Source\Component\TestUI\TimeLimitUi.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Device\GameInput.cpp" />
     <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
@@ -230,6 +232,8 @@
     <ClInclude Include="Source\Component\Player\PlayerSideAttack.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
+    <ClInclude Include="Source\Component\TestUI\TimeLimitDraw.h" />
+    <ClInclude Include="Source\Component\TestUI\TimeLimitUi.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Device\GameInput.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />

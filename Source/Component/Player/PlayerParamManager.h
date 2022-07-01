@@ -4,6 +4,7 @@
 class TestUI;
 class Option;
 class CollectItemUI;
+class TimeLimitDraw;
 
 //プレイヤーのパラメータ管理
 class PlayerParamManager
@@ -23,6 +24,7 @@ private:
 	TestUI* m_pTestUI;
 	Option* m_Option;
 	CollectItemUI* m_Item;
+	TimeLimitDraw* m_TimeLimit;
 
 	//体力
 	float m_Health = 5.0f;

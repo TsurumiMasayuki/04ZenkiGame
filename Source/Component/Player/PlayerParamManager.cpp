@@ -8,6 +8,7 @@
 
 #include "Component/Player/PlayerStats.h"
 #include "Utility/JsonFileManager.h"
+#include "Component/TestUI/TimeLimitDraw.h"
 
 void PlayerParamManager::onStart()
 {
@@ -23,6 +24,9 @@ void PlayerParamManager::onStart()
 	//アイテムスプライト
 	GameObject* itemObj = new GameObject(getUser().getGameMediator());
 	m_Item = itemObj->addComponent<CollectItemUI>();
+
+	GameObject* timeLimitObj = new GameObject(getUser().getGameMediator());
+	m_TimeLimit = timeLimitObj->addComponent<TimeLimitDraw>();
 }
 
 void PlayerParamManager::onUpdate()

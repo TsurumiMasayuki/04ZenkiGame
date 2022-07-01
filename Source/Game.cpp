@@ -40,6 +40,16 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("titleBG", L"Resources/textures/titleBG.png");
 	GameDevice::getTextureManager().load("fire", L"Resources/textures/fire.png");
 	GameDevice::getTextureManager().load("erase", L"Resources/textures/erase.png");
+	GameDevice::getTextureManager().load("num0", L"Resources/textures/0.png");
+	GameDevice::getTextureManager().load("num1", L"Resources/textures/1.png");
+	GameDevice::getTextureManager().load("num2", L"Resources/textures/2.png");
+	GameDevice::getTextureManager().load("num3", L"Resources/textures/3.png");
+	GameDevice::getTextureManager().load("num4", L"Resources/textures/4.png");
+	GameDevice::getTextureManager().load("num5", L"Resources/textures/5.png");
+	GameDevice::getTextureManager().load("num6", L"Resources/textures/6.png");
+	GameDevice::getTextureManager().load("num7", L"Resources/textures/7.png");
+	GameDevice::getTextureManager().load("num8", L"Resources/textures/8.png");
+	GameDevice::getTextureManager().load("num9", L"Resources/textures/9.png");
 
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
