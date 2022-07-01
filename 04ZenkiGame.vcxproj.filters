@@ -62,6 +62,8 @@
     <ClCompile Include="Source\Component\Item\CollectItemDraw.cpp" />
     <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
+    <ClCompile Include="Source\Component\TestUI\TimeLimitUi.cpp" />
+    <ClCompile Include="Source\Component\TestUI\TimeLimitDraw.cpp" />
     <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +114,8 @@
     <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />
     <ClInclude Include="Source\Component\Player\PlayerSound.h" />
+    <ClInclude Include="Source\Component\TestUI\TimeLimitUi.h" />
+    <ClInclude Include="Source\Component\TestUI\TimeLimitDraw.h" />
     <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
   </ItemGroup>
   <ItemGroup>
