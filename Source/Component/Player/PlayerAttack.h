@@ -20,6 +20,8 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
+	bool isAttacking();
+
 	void init(Transform* pModelTransform, PlayerParamManager* pPlayerParam);
 
 protected:

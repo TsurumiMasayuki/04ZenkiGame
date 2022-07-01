@@ -104,6 +104,11 @@ void PlayerAttack::onUpdate()
 	}
 }
 
+bool PlayerAttack::isAttacking()
+{
+	return !m_SlidingTimer.isTime();
+}
+
 void PlayerAttack::init(Transform* pModelTransform, PlayerParamManager* pPlayerParam)
 {
 	m_pPlayerParam = pPlayerParam;
@@ -120,7 +125,7 @@ void PlayerAttack::init(Transform* pModelTransform, PlayerParamManager* pPlayerP
 void PlayerAttack::onCollisionEnter(GameObject* pHit)
 {
 	//スライディング中でないならreturn
-	if (m_SlidingTimer.isTime()) 
+	if (!isAttacking()) 
 		return;
 
 	//敵でないならreturn

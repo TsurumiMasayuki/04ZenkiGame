@@ -80,3 +80,8 @@ float PlayerParamManager::getAcceleration() const
 {
 	return m_Acceleration;
 }
+
+void PlayerParamManager::onDamage()
+{
+	m_Acceleration = 0.0f;
+}

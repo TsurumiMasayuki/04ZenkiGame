@@ -20,6 +20,8 @@ public:
 	//‰Á‘¬“x‚ðŽæ“¾
 	float getAcceleration() const;
 
+	void onDamage();
+
 private:
 	TestUI* m_pTestUI;
 	Option* m_Option;

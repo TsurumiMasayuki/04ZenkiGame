@@ -37,8 +37,6 @@ void PlayerSideAttack::onTriggerEnter(GameObject* pHit)
 
 void PlayerSideAttack::startAttack()
 {
-	m_pBoxCollider->setActive(true);
-
 	if (m_pActionManager->actionCount() == 0)
 	{
 		//間隔を開けて火炎エフェクト
@@ -58,10 +56,6 @@ void PlayerSideAttack::startAttack()
 
 void PlayerSideAttack::endAttack()
 {
-	return;
-
-	m_pBoxCollider->setActive(false);
-
 	//エフェクト停止
 	if (m_pActionManager->actionCount() == 1)
 		m_pActionManager->forceNext();
