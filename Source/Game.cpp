@@ -3,6 +3,7 @@
 #include "Scene/TitleScene.h"
 #include "Scene/HogeScene.h"
 #include "Scene/EnemyTestScene.h"
+#include "Scene/GameOverScene.h"
 #include "Utility/JsonFileManager.h"
 
 #include "Component/Player/PlayerStats.h"
@@ -79,6 +80,7 @@ void Game::onStart()
 	m_SceneManager.addScene("Title", new TitleScene());
 	m_SceneManager.addScene("Hoge", new HogeScene());
 	m_SceneManager.addScene("EnemyTest", new EnemyTestScene());
+	m_SceneManager.addScene("GameOver", new GameOverScene());
 
 	m_SceneManager.changeScene("Title");
 	//m_SceneManager.changeScene("EnemyTest");
