@@ -50,6 +50,7 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("num7", L"Resources/textures/7.png");
 	GameDevice::getTextureManager().load("num8", L"Resources/textures/8.png");
 	GameDevice::getTextureManager().load("num9", L"Resources/textures/9.png");
+	GameDevice::getTextureManager().load("mask", L"Resources/textures/mask.png");
 
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
@@ -65,9 +66,9 @@ void Game::onStart()
 	GameDevice::getAudioManager().loadWavFile("Walk", L"Resources/Sounds/Player/Walk.wav");
 	GameDevice::getAudioManager().loadWavFile("Dash", L"Resources/Sounds/Player/Dash.wav");
 	GameDevice::getAudioManager().loadWavFile("Sliding", L"Resources/Sounds/Player/Sliding.wav");
+	GameDevice::getAudioManager().loadWavFile("HitEnemy", L"Resources/Sounds/Player/Damage.wav");
 	//敵
 	GameDevice::getAudioManager().loadWavFile("EnemyDown", L"Resources/Sounds/Enemy/Enemy_Down.wav");
-	GameDevice::getAudioManager().loadWavFile("EnemyHit", L"Resources/Sounds/Enemy/Enemy_Hit.wav");
 	//ステージ
 	GameDevice::getAudioManager().loadWavFile("Stage1", L"Resources/Sounds/Stage/Stage1.wav");
 

@@ -16,6 +16,9 @@ void TestEnemy::onStart()
 	x->setUseGravity(false);
 
 	testTimer.setMaxTime(5.0f);
+
+	m_pSound = new GameObject(getUser().getGameMediator());
+	pAudio = m_pSound->addComponent<AudioSource>();
 }
 
 void TestEnemy::onUpdate()
@@ -72,6 +75,9 @@ void TestEnemy::init(float speed, float rotateSpeed, float radius, Vec3 centerPo
 void TestEnemy::setDead(bool isDead)
 {
 	this->isDead = isDead;
+	pAudio->setAudio("EnemyDown");
+
+	pAudio->play();
 
 	// “–‚½‚è”»’è‚ÌOFF
 	getUser().getComponent<BoxColiiderBt>()->setActive(false);
