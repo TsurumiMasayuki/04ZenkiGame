@@ -12,7 +12,7 @@ public:
 	virtual void onUpdate() override;
 
 	/// <summary>
-	/// 
+	/// ‰Šú‰»
 	/// </summary>
 	/// <param name="position">‰ŠúÀ•W</param>
 	/// <param name="speedZ"></param>

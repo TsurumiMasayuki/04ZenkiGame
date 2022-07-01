@@ -161,6 +161,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Component\Enemy\BarrierEnemy.cpp" />
+    <ClCompile Include="Source\Component\Gimmick\BoundGimmick.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchLoader.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchModel.cpp" />
@@ -207,6 +209,8 @@
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Component\Enemy\BarrierEnemy.h" />
+    <ClInclude Include="Source\Component\Gimmick\BoundGimmick.h" />
     <ClInclude Include="Source\Component\Player\PlayerSound.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchLoader.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchModel.h" />
