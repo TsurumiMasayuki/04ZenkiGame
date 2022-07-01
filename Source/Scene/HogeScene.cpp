@@ -30,7 +30,7 @@
 
 std::string HogeScene::nextScene()
 {
-	return std::string();
+	return "Clear";
 }
 
 bool HogeScene::isEnd()
