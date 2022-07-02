@@ -12,15 +12,12 @@ std::string TitleScene::nextScene()
 
 bool TitleScene::isEnd()
 {
-	return m_pSceneEffect->IsEnd();
+	return GameDevice::getInput().isKeyDown(DIK_SPACE) ||
+		ControllerInput::getInstance().isPadButtonDown(ControllerInput::PAD_BUTTON::START);
 }
 
 void TitleScene::start()
 {
-	//SceneEffectオブジェクト生成
-	pSceneEffect = new GameObject(this);
-	m_pSceneEffect = pSceneEffect->addComponent<SceneEffect>();
-	m_pSceneEffect->Initialize(1);
 	/*auto pTitleTextObject = new GameObject(this);
 	auto pTitleText = pTitleTextObject->addComponent<D2DTextRenderer>();
 	pTitleText->setFont(L"Agency FB", L"ja-jp", 256.0f);
@@ -36,15 +33,15 @@ void TitleScene::start()
 	titleObject = new GameObject(this);
 	titleSprite = titleObject->addComponent<GUISpriteRenderer>();
 	titleSprite->setTextureByName("title");
-	titleObject->getTransform().setLocalPosition(Vec3{ 0,-50,3 });
+	titleObject->getTransform().setLocalPosition(Vec3{ 0,-50,2 });
 	titleObject->getTransform().setLocalScale(Vec3{ 900,600,1 });
 	titleSprite->setActive(true);
 
 	titleBGObject = new GameObject(this);
 	titleBGSprite = titleBGObject->addComponent<GUISpriteRenderer>();
 	titleBGSprite->setTextureByName("titleBG");
-	titleBGObject->getTransform().setLocalPosition(Vec3{ 0,0,5 });
-	titleBGObject->getTransform().setLocalScale(Vec3{ 1280,720,5});
+	titleBGObject->getTransform().setLocalPosition(Vec3{ 0,0,2 });
+	titleBGObject->getTransform().setLocalScale(Vec3{ 1280,720,2 });
 	titleBGSprite->setActive(true);
 	Random rand = GameDevice::getRandom();
 	for (int i = 0; i < 100; i++)
@@ -59,7 +56,7 @@ void TitleScene::start()
 		float scaleRand = rand.getRandom(20.0f, 60.0f);
 		float angleRand = rand.getRandom(0.0f, 360.0f);
 		life[i] = rand.getRandom(80, 120);
-		fireObjects[i]->getTransform().setLocalPosition(Vec3{ Xrand,Yrand,3 });
+		fireObjects[i]->getTransform().setLocalPosition(Vec3{ Xrand,Yrand,1 });
 		fireObjects[i]->getTransform().setLocalScale(Vec3{ scaleRand,scaleRand,1 });
 		fireObjects[i]->getTransform().setLocalAngles(Vec3{ 0,0,angleRand});
 		fireSprites[i]->setColor(Color{ 255,1,1,0.6f });
@@ -70,11 +67,6 @@ void TitleScene::start()
 
 void TitleScene::update()
 {
-	if (GameDevice::getInput().isKeyDown(DIK_SPACE) ||
-		ControllerInput::getInstance().isPadButtonDown(ControllerInput::PAD_BUTTON::START))
-	{
-		m_pSceneEffect->StartEffect();
-	}
 	for (int i = 0; i < 100; i++)
 	{
 		currentLife[i]++;
@@ -128,7 +120,7 @@ void TitleScene::RePosition(int num)
 	float scaleRand = rand.getRandom(20.0f, 60.0f);
 	float angleRand = rand.getRandom(0.0f, 360.0f);
 	life[num] = rand.getRandom(45, 120);
-	fireObjects[num]->getTransform().setLocalPosition(Vec3{ Xrand,Yrand,4 });
-	fireObjects[num]->getTransform().setLocalScale(Vec3{ scaleRand,scaleRand,4 });
+	fireObjects[num]->getTransform().setLocalPosition(Vec3{ Xrand,Yrand,1 });
+	fireObjects[num]->getTransform().setLocalScale(Vec3{ scaleRand,scaleRand,1 });
 	fireObjects[num]->getTransform().setLocalAngles(Vec3{ 0,0,angleRand });
 }

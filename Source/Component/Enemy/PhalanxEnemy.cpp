@@ -116,7 +116,7 @@ void PhalanxEnemy::init(Vec3 position, int length, int mainUnit, float radius, f
 	}
 
 	// 円筒の半径セット
-	this->radius = radius + 1.0f;
+	this->radius = radius;
 
 	// 速度セット
 	this->speedZ = speedZ;

@@ -11,10 +11,10 @@ struct ObjectPlaceInfo
 	Vec3 m_Position;
 	//円筒座標
 	Vec3 m_CylinderCoord;
-	//スケール
-	Vec3 m_Scale;
 	//角度
-	Vec3 m_Angles;
+	float m_Angle;
+	//出現位置
+	float m_SpawnPosZ;
 };
 
 struct StageInfo

@@ -11,12 +11,10 @@ public:
 	virtual void onUpdate() override;
 
 	void Initialize(Vec3 goalPos, GameObject* player);
-	bool GetIsGoal();
 private:
 	GameObject* pPlayer = nullptr;
 	GameObject* goalObj = nullptr;
 	GUISpriteRenderer* goalObjSprite = nullptr;
 	GameObject* goal = nullptr;
 	const float GOAL_DISTANCE = 3.0f;
-	bool isGoal;
 };

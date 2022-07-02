@@ -42,42 +42,9 @@ Vec3 GameInput::getPlayerMove()
 		//左
 		if (input.isKey(DIK_LEFT))
 			result += Vec3(-1.0f, 0.0f, 0.0f);
-
-		if (moveLock)
-			result = Vec3::zero();
 	}
 
 	return result.normalized();
-}
-
-bool GameInput::getPlayerWalk()
-{
-	bool result;
-
-	// コントローラー接続中
-	if (ControllerInput::getInstance().isConnect())
-	{
-		StickInput vec;
-		if (!moveLock)
-		{
-			// 左スティックの傾き取得
-			return true;
-		}
-	}
-	// キーボード
-	else
-	{
-		//入力デバイスを取得
-		const auto& input = GameDevice::getInput();
-
-		//入力に応じて移動方向をセット(マス目なので斜め移動はなし)
-		//移動キーが入力されているか
-		if (input.isKey(DIK_UP) ||
-			input.isKey(DIK_DOWN) ||
-			input.isKey(DIK_RIGHT) ||
-			input.isKey(DIK_LEFT)
-			)return true;
-	}
 }
 
 bool GameInput::getPlayerDash()
@@ -96,48 +63,6 @@ bool GameInput::getPlayerDash()
 		const auto& input = GameDevice::getInput();
 
 		result = input.isKey(DIK_SPACE);
-	}
-
-	return result;
-}
-
-bool GameInput::getPlayerDashStart()
-{
-	bool result;
-
-	// コントローラー接続中
-	if (ControllerInput::getInstance().isConnect())
-	{
-		result = ControllerInput::getInstance().isTrigger(ControllerInput::PAD_TRIGGER::RIGHT);
-	}
-	// キーボード
-	else
-	{
-		//入力デバイスを取得
-		const auto& input = GameDevice::getInput();
-
-		result = input.isKeyDown(DIK_SPACE);
-	}
-
-	return result;
-}
-
-bool GameInput::getPlayerDashEND()
-{
-	bool result;
-
-	// コントローラー接続中
-	if (ControllerInput::getInstance().isConnect())
-	{
-		result = ControllerInput::getInstance().isTrigger(ControllerInput::PAD_TRIGGER::RIGHT);
-	}
-	// キーボード
-	else
-	{
-		//入力デバイスを取得
-		const auto& input = GameDevice::getInput();
-
-		result = input.isKeyUp(DIK_SPACE);
 	}
 
 	return result;

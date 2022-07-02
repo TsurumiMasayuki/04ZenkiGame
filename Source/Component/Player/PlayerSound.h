@@ -19,7 +19,6 @@ public:
 
     void dash();
     void sliding();
-    void walk();
 private:
     //オブジェクトデータ
     GameObject* m_pSound;

@@ -10,7 +10,6 @@ void GoalObject::onStart()
 	goalObjSprite =goalObj->addComponent<GUISpriteRenderer>();
 	goalObjSprite->setTextureByName("goal");
 	goalObjSprite->setActive(false);
-    isGoal = false;
 }
 
 void GoalObject::onUpdate()
@@ -19,8 +18,7 @@ void GoalObject::onUpdate()
 	{
 		GameDevice::getGameTime().m_TimeScale = 0;
 		GameInput::getInstance().setLock(true);
-	/*	goalObjSprite->setActive(true);*/
-		isGoal = true;
+		goalObjSprite->setActive(true);
 	}
 }
 
@@ -29,11 +27,4 @@ void GoalObject::Initialize(Vec3 goalPos,GameObject* player)
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 	goal = ModelGameObjectHelper::instantiateModel<int>(getUser().getGameMediator(),pCube);
 	goal->getTransform().setLocalPosition(goalPos);
-
-	pPlayer = player;
-}
-
-bool GoalObject::GetIsGoal()
-{
-	return isGoal;
 }

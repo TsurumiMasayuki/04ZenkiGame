@@ -4,8 +4,6 @@
 #include "Utility/CoordConverter.h"
 #include "Math/MathUtility.h"
 
-#include "btBulletDynamicsCommon.h"
-
 void TestEnemy::onStart()
 {
 	m_CylinderCoord.z = getTransform().getLocalPosition().z;
@@ -13,14 +11,11 @@ void TestEnemy::onStart()
 
 	// コライダー付与
 	auto x = getUser().addComponent<BoxColiiderBt>();
-	x->setTrigger(true);
+	x->setTrigger(false);
 	// 重力の無効化
 	x->setUseGravity(false);
 
 	testTimer.setMaxTime(5.0f);
-
-	m_pSound = new GameObject(getUser().getGameMediator());
-	pAudio = m_pSound->addComponent<AudioSource>();
 }
 
 void TestEnemy::onUpdate()
@@ -77,9 +72,6 @@ void TestEnemy::init(float speed, float rotateSpeed, float radius, Vec3 centerPo
 void TestEnemy::setDead(bool isDead)
 {
 	this->isDead = isDead;
-	pAudio->setAudio("EnemyDown");
-
-	pAudio->play();
 
 	// 当たり判定のOFF
 	getUser().getComponent<BoxColiiderBt>()->setActive(false);

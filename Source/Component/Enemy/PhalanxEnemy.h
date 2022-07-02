@@ -18,10 +18,10 @@ public:
 	/// <param name="position">‰ŠúÀ•W</param>
 	/// <param name="length">’·‚³ : 1</param>
 	/// <param name="mainUnit">–{‘Ì”Ô† : 0</param>
-	/// <param name="radius">‰~“›”¼Œa : 12.0f</param>
+	/// <param name="radius">‰~“›”¼Œa : 11.0f</param>
 	/// <param name="speedX">ZˆÚ“®‘¬“x : 1.0f</param>
 	/// <param name="speedZ">”½•œŠÔ</param>
-	void init(Vec3 position, int length = 1, int mainUnit = 0, float radius = 12.0f, float speedZ = 1.0f);
+	void init(Vec3 position, int length = 1, int mainUnit = 0, float radius = 11.0f, float speedZ = 1.0f);
 
 	/// <summary>
 	/// U‚ê•İ’è

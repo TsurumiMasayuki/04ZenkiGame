@@ -1,5 +1,4 @@
 #include "StageInfo.h"	
-#include "Utility/StringUtility.h"
 #include "Utility/CoordConverter.h"
 #include "Utility/CylinderUtility.h"
 
@@ -40,45 +39,47 @@ void calcPosition(float radius, const nlohmann::json& json, std::vector<Vec3>& r
 StageInfo::StageInfo(const nlohmann::json& file)
 {
 	//半径を取得
-	m_Radius = 12.0f;
+	m_Radius = file["CylinderRadius"];
 
 	//長さを取得
-	m_Length = (float)file["stage"] * 2.0f;
+	m_Length = file["CylinderLength"];
 
 	//オブジェクトリストを読み込み
-	auto& objectList = file["objects"];
+	auto& objectList = file["ObjectList"];
 
 	//オブジェクトリストを走査
 	for (auto& object : objectList)
 	{
-		//オブジェクト配置情報を作成
-		auto& objectPlaceInfo = m_ObjectPlaceInfoList.emplace_back();
+		//座標計算
+		std::vector<Vec3> positions;
+		calcPosition(m_Radius, object, positions);
 
-		//名前から.の後を切る
-		std::string name = (std::string)object["name"];
-		std::vector<std::string> split;
-		StringUtility::split(name, '.', split);
+		//出現位置
+		float spawnPosZ = (float)object[2];
 
-		//オブジェクトの名前
-		objectPlaceInfo.m_ObjectName = split.at(0);
+		//座標
+		for (auto& position : positions)
+		{
+			//オブジェクト配置情報を作成
+			auto& objectPlaceInfo = m_ObjectPlaceInfoList.emplace_back();
 
-		//transformを取得
-		auto& transform = object["transform"];
+			//オブジェクトの名前
+			objectPlaceInfo.m_ObjectName = (std::string)object[0];
 
-		//オブジェクトの座標
-		objectPlaceInfo.m_Position = Vec3(transform["translation"][0], transform["translation"][1], transform["translation"][2]);
+			//オブジェクトの座標
+			objectPlaceInfo.m_Position = position;
 
-		//円筒座標に変換
-		Vec3 cylinder = CoordConverter::cartesianToCylinder(objectPlaceInfo.m_Position);
+			//円筒座標に変換
+			Vec3 cylinder = CoordConverter::cartesianToCylinder(position);
 
-		//オブジェクトの円筒座標
-		objectPlaceInfo.m_CylinderCoord = cylinder;
+			//オブジェクトの円筒座標
+			objectPlaceInfo.m_CylinderCoord = cylinder;
 
-		//オブジェクトの角度
-		objectPlaceInfo.m_Angles = Vec3(transform["rotation"][0], transform["rotation"][1], transform["rotation"][2]);
+			//オブジェクトの角度
+			objectPlaceInfo.m_Angle = MathUtility::toDegree(cylinder.y);
 
-		//オブジェクトのスケール
-		Vec3 scale = Vec3(transform["scaling"][0], transform["scaling"][1], transform["scaling"][2]);
-		objectPlaceInfo.m_Scale = scale * 2.0f;
+			//オブジェクトの出現位置(Z)
+			objectPlaceInfo.m_SpawnPosZ = spawnPosZ;
+		}
 	}
 }

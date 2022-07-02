@@ -18,7 +18,7 @@ public:
 	/// <param name="speedZ"></param>
 	/// <param name="speedY"></param>
 	/// <param name="radius"></param>
-	void init(Vec3 position, float speedZ, float speedY, float radius = 12.0f);
+	void init(Vec3 position, float speedZ, float speedY, float radius = 11.0f);
 
 	/// <summary>
 	/// –Ú•Wİ’è
