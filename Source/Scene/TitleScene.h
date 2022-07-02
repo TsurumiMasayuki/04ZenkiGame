@@ -3,6 +3,7 @@
 #include "Component/Base/AbstractComponent.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Actor/Base/GameObject.h"
+#include "Component/TestUI/SceneEffect.h"
 class TitleScene
 	: public AbstractScene
 {
@@ -29,4 +30,8 @@ private:
 	int life[100];
 	int currentLife[100];
 	float velocity[100];
+	GameObject* pSceneEffect;
+	SceneEffect* m_pSceneEffect;
+	//シーン遷移エフェクトが終わったかどうか
+	bool sceneEffectIsEnd;
 };

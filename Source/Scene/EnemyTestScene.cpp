@@ -42,7 +42,7 @@ void EnemyTestScene::start()
 	auto pModel = pPlayer->getChildren().at(0);
 	pModel->getComponent<MeshRenderer>()->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 11.0f, 0.0f));
+	pPlayer->getTransform().setLocalPosition(Vec3(0.0f, 12.0f, 0.0f));
 	auto pPlayerParam = pPlayer->addComponent<PlayerParamManager>();
 	auto pPlayerMove = pPlayer->addComponent<PlayerMovement>();
 
@@ -52,7 +52,7 @@ void EnemyTestScene::start()
 	pPlayerAttack->init(&pModel->getTransform(), pPlayerParam);
 
 	pPlayerMove->init(pPlayerParam);
-	pPlayerMove->setCylinderRadius(11.0f);
+	pPlayerMove->setCylinderRadius(12.0f);
 
 	//コライダー追加
 	auto pCollider = pPlayer->addComponent<BoxColiiderBt>();

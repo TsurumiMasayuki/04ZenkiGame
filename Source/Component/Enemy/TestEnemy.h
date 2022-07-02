@@ -2,6 +2,7 @@
 #include "Component/Base/AbstractComponent.h"
 #include "Component/Graphics/MeshRenderer.h"
 #include "Actor/Base/GameObject.h"
+#include "Component/Audio/AudioSource.h"
 #include "Utility/Timer.h"
 
 class TestEnemy
@@ -14,7 +15,7 @@ public:
 
 public:
 
-	void init(float speed, float rotateSpeed, float radius = 11.0f, Vec3 centerPoint = Vec3(0, 0, 0));
+	void init(float speed, float rotateSpeed, float radius = 12.0f, Vec3 centerPoint = Vec3(0, 0, 0));
 
 	void setCenter(Vec3 centerPoint) { this->centerPoint = centerPoint; }
 
@@ -59,4 +60,6 @@ private:
 	bool isDead = false;
 
 	Timer testTimer;
+	GameObject* m_pSound;
+	AudioSource* pAudio;
 };
