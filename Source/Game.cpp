@@ -62,6 +62,7 @@ void Game::onStart()
 	GameDevice::getAudioManager().loadWavFile("EnemyDown", L"Resources/Sounds/Enemy/Enemy_Down.wav");
 	//ステージ
 	GameDevice::getAudioManager().loadWavFile("Stage1", L"Resources/Sounds/Stage/Stage1.wav");
+	GameDevice::getAudioManager().loadWavFile("ClearJG", L"Resources/Sounds/Stage/ClearJG.wav");
 	//タイトル
 	GameDevice::getAudioManager().loadWavFile("Title", L"Resources/Sounds/BGM/TitleBGM.wav");
 

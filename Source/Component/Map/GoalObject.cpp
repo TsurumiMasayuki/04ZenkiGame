@@ -10,12 +10,21 @@ void GoalObject::onStart()
 	goalObjSprite =goalObj->addComponent<GUISpriteRenderer>();
 	goalObjSprite->setTextureByName("goal");
 	goalObjSprite->setActive(false);
+
+	//SoundŠÖ˜A
+	pAudio = goalObj->addComponent<AudioSource>();
+	pAudio->setAudio("ClearJG");
+
+
 }
 
 void GoalObject::onUpdate()
 {
 	if (goal->getTransform().getLocalPosition().distance(pPlayer->getTransform().getLocalPosition())<GOAL_DISTANCE)
 	{
+		//SoundÄ¶
+		pAudio->play();
+
 		GameDevice::getGameTime().m_TimeScale = 0;
 		GameInput::getInstance().setLock(true);
 		goalObjSprite->setActive(true);
