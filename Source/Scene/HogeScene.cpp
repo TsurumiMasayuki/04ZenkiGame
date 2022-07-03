@@ -134,19 +134,31 @@ void HogeScene::start()
 		pAudio->setVolume(0.1f);
 		//再生
 		pAudio->play(255);
+
+		//SceneEffectオブジェクト生成
+		pSceneEndEffect = new GameObject(this);
+		m_pSceneEndEffect = pSceneEndEffect->addComponent<SceneEffect>();
+		m_pSceneEndEffect->Initialize(1);
+		pSceneStartEffect = new GameObject(this);
+		m_pSceneStartEffect = pSceneStartEffect->addComponent<SceneEffect>();
+		m_pSceneStartEffect->Initialize(0);
+		m_pSceneStartEffect->StartEffect();
 	}
 }
 
 void HogeScene::update()
 {
-	if (!TimeLimitUi::IsDead())
+	if (m_pSceneStartEffect->IsEnd())
 	{
-		std::vector<DirectX::XMMATRIX> matrices;
-		matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
-			DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
-			m_pPlayerModel->getTransform().getWorldMatrix());
-		m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
-		m_RenderHelpers.at("Player")->sendInstanceInfo();
+		if (!TimeLimitUi::IsDead())
+		{
+			std::vector<DirectX::XMMATRIX> matrices;
+			matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
+				DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
+				m_pPlayerModel->getTransform().getWorldMatrix());
+			m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
+			m_RenderHelpers.at("Player")->sendInstanceInfo();
+		}
 	}
 }
 
