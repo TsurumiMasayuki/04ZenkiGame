@@ -72,6 +72,7 @@
     <ClCompile Include="Source\Stage\StageLoader.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
+    <ClCompile Include="Source\Scene\GameOverScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Source\Utility\CoordConverter.h" />
     <ClInclude Include="Source\Utility\CylinderUtility.h" />
     <ClInclude Include="Source\Utility\InstancedRendererHelper.h" />
+    <ClInclude Include="Source\Scene\GameOverScene.h" />
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
     <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />
