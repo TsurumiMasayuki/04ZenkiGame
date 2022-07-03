@@ -27,12 +27,12 @@
 
 std::string HogeScene::nextScene()
 {
-	return "GameOver";
+	return  pGoalObj->GetIsGoal() ? "Clear" : "GameOver";
 }
 
 bool HogeScene::isEnd()
 {
-	return TimeLimitUi::IsDead();
+	return pGoalObj->GetIsGoal() || TimeLimitUi::IsDead();
 }
 
 void HogeScene::start()
@@ -41,10 +41,13 @@ void HogeScene::start()
 
 	if (!TimeLimitUi::IsDead())
 	{
-		//ステージ生成
-		JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
-		m_pStageLoader = new StageLoader(this);
-		m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"), &m_pPlayer, &m_pPlayerModel);
+	  //ステージ生成
+	  JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
+	  m_pStageLoader = new StageLoader(this);
+	  m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"), &m_pPlayer, &m_pPlayerModel);
+	  pGoalObj = m_pStageLoader->GetGoal();
+	  //カメラ関係の設定
+	  auto& cameraTransform = getMainCamera()->getUser().getTransform();
 
 		//カメラ関係の設定
 		auto& cameraTransform = getMainCamera()->getUser().getTransform();

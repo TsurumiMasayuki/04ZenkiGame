@@ -33,8 +33,8 @@ public:
 private:
 	DX12Mesh* m_pCube;
 	StageLoader* m_pStageLoader;
-	GoalObject* goalObject= nullptr;
-
+	
+	GoalObject* pGoalObj;
 	GameObject* m_pPlayer;
 	GameObject* m_pPlayerModel;
 

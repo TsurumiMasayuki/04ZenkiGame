@@ -161,8 +161,12 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Component\Enemy\BarrierEnemy.cpp" />
+    <ClCompile Include="Source\Component\Gimmick\BoundGimmick.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchLoader.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchModel.cpp" />
+    <ClCompile Include="Source\Component\DistanceActivater\DistanceActivater.cpp" />
     <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\PhalanxEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\PressEnemy.cpp" />
@@ -177,17 +181,12 @@
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
     <ClCompile Include="Source\Component\Map\Map.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerAttack.cpp" />
-    <ClCompile Include="Source\Component\Player\PlayerDamage.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerMovement.cpp" />
     <ClCompile Include="Source\Component\Enemy\TestEnemy.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerSideAttack.cpp" />
-    <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
-    <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
-    <ClCompile Include="Source\Component\TestUI\TimeLimitDraw.cpp" />
-    <ClCompile Include="Source\Component\TestUI\TimeLimitUi.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Device\GameInput.cpp" />
     <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
@@ -201,18 +200,22 @@
     <ClCompile Include="Source\Option\Option.cpp" />
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
     <ClCompile Include="Source\Scene\GameOverScene.cpp" />
+    <ClCompile Include="Source\Scene\TitleScene.cpp" />
+    <ClCompile Include="Source\Stage\StageInfo.cpp" />
     <ClCompile Include="Source\Scene\HogeScene.cpp" />
     <ClCompile Include="Source\Effect\TestEffect.cpp" />
     <ClCompile Include="Source\Effect\TestVibrationEffect.cpp" />
-    <ClCompile Include="Source\Scene\TitleScene.cpp" />
-    <ClCompile Include="Source\Stage\StageInfo.cpp" />
     <ClCompile Include="Source\Stage\StageLoader.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Component\Enemy\BarrierEnemy.h" />
+    <ClInclude Include="Source\Component\Gimmick\BoundGimmick.h" />
+    <ClInclude Include="Source\Component\Player\PlayerSound.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchLoader.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchModel.h" />
+    <ClInclude Include="Source\Component\DistanceActivater\DistanceActivater.h" />
     <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\PressEnemy.h" />
@@ -226,17 +229,12 @@
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
     <ClInclude Include="Source\Component\Map\Map.h" />
     <ClInclude Include="Source\Component\Player\PlayerAttack.h" />
-    <ClInclude Include="Source\Component\Player\PlayerDamage.h" />
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
     <ClInclude Include="Source\Component\Enemy\TestEnemy.h" />
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
     <ClInclude Include="Source\Component\Player\PlayerSideAttack.h" />
-    <ClInclude Include="Source\Component\Player\PlayerSound.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
-    <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
-    <ClInclude Include="Source\Component\TestUI\TimeLimitDraw.h" />
-    <ClInclude Include="Source\Component\TestUI\TimeLimitUi.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Device\GameInput.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />
@@ -251,11 +249,11 @@
     <ClInclude Include="Source\Option\Option.h" />
     <ClInclude Include="Source\Scene\EnemyTestScene.h" />
     <ClInclude Include="Source\Scene\GameOverScene.h" />
+    <ClInclude Include="Source\Scene\TitleScene.h" />
+    <ClInclude Include="Source\Stage\StageInfo.h" />
     <ClInclude Include="Source\Scene\HogeScene.h" />
     <ClInclude Include="Source\Effect\TestEffect.h" />
     <ClInclude Include="Source\Effect\TestVibrationEffect.h" />
-    <ClInclude Include="Source\Scene\TitleScene.h" />
-    <ClInclude Include="Source\Stage\StageInfo.h" />
     <ClInclude Include="Source\Stage\StageLoader.h" />
     <ClInclude Include="Source\Utility\CoordConverter.h" />
     <ClInclude Include="Source\Utility\CylinderUtility.h" />
@@ -273,6 +271,10 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\BasicVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\BBInstancingVertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
@@ -320,6 +322,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Enemy\Enemy_Down.wav" />
+    <Media Include="Resources\Sounds\Player\Dash.wav" />
+    <Media Include="Resources\Sounds\Player\Sliding.wav" />
+    <Media Include="Resources\Sounds\Stage\Stage1.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

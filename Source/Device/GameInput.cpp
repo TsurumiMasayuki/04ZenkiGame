@@ -42,6 +42,9 @@ Vec3 GameInput::getPlayerMove()
 		//ç∂
 		if (input.isKey(DIK_LEFT))
 			result += Vec3(-1.0f, 0.0f, 0.0f);
+
+		if (moveLock)
+			result = Vec3::zero();
 	}
 
 	return result.normalized();
