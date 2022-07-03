@@ -4,11 +4,11 @@
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Actor/Base/GameObject.h"
 #include "Component/TestUI/SceneEffect.h"
-class TitleScene
-	: public AbstractScene
+
+class GameOverScene :
+    public AbstractScene
 {
 public:
-
 	virtual std::string nextScene() override;
 	virtual bool isEnd() override;
 	virtual void start() override;
@@ -18,12 +18,11 @@ public:
 	void SubMove();
 	void MainMove();
 	void RePosition(int num);
-
 private:
-	GameObject* titleObject = nullptr;
-	GUISpriteRenderer* titleSprite = nullptr;
-	GameObject* titleBGObject = nullptr;
-	GUISpriteRenderer* titleBGSprite = nullptr;
+	GameObject* gameOverObject = nullptr;
+	GUISpriteRenderer* gameOverSprite = nullptr;
+	GameObject* gameOverBGObject = nullptr;
+	GUISpriteRenderer* gameOverBGSprite = nullptr;
 	GameObject* fireObjects[100];
 	GUISpriteRenderer* fireSprites[100];
 
@@ -32,6 +31,4 @@ private:
 	float velocity[100];
 	GameObject* pSceneEffect;
 	SceneEffect* m_pSceneEffect;
-	//シーン遷移エフェクトが終わったかどうか
-	bool sceneEffectIsEnd;
 };

@@ -14,8 +14,7 @@ std::string TitleScene::nextScene()
 
 bool TitleScene::isEnd()
 {
-	return GameDevice::getInput().isKeyDown(DIK_SPACE) ||
-		ControllerInput::getInstance().isPadButtonDown(ControllerInput::PAD_BUTTON::START);
+	return m_pSceneEffect->IsEnd();
 }
 
 void TitleScene::start()
@@ -84,7 +83,8 @@ void TitleScene::start()
 
 void TitleScene::update()
 {
-	if (GameDevice::getInput().isKeyDown(DIK_A))
+	if (GameDevice::getInput().isKeyDown(DIK_SPACE) ||
+		ControllerInput::getInstance().isPadButtonDown(ControllerInput::PAD_BUTTON::START))
 	{
 		m_pSceneEffect->StartEffect();
 	}

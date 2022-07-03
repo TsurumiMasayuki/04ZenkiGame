@@ -75,7 +75,7 @@ StageInfo::StageInfo(const nlohmann::json& file)
 		objectPlaceInfo.m_CylinderCoord = cylinder;
 
 		//オブジェクトの角度
-		objectPlaceInfo.m_Angles = Vec3(0.0f, transform["rotation"][1], transform["rotation"][2]);
+		objectPlaceInfo.m_Angles = Vec3(transform["rotation"][0], transform["rotation"][1], transform["rotation"][2]);
 
 		//オブジェクトのスケール
 		Vec3 scale = Vec3(transform["scaling"][0], transform["scaling"][1], transform["scaling"][2]);

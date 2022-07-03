@@ -19,6 +19,7 @@
 #include "Component/Player/PlayerMovement.h"
 #include "Component/Player/PlayerParamManager.h"
 #include "Component/Player/PlayerSound.h"
+#include "Component/Player/PlayerDamage.h"
 
 #include "Component/Map/GoalObject.h"
 
@@ -104,13 +105,15 @@ void StageLoader::createObjects(const StageInfo& stageInfo, GameObject** ppPlaye
 			auto pPlayerMove = (*ppPlayer)->addComponent<PlayerMovement>();
 			auto pPlayerSound = (*ppPlayer)->addComponent<PlayerSound>();
 
-			//攻撃用オブジェクト生成
-			auto pPlayerAttackObject = new GameObject(m_pGameMediator);
-			auto pPlayerAttack = pPlayerAttackObject->addComponent<PlayerAttack>();
+			//攻撃用
+			auto pPlayerAttack = pPlayer->addComponent<PlayerAttack>();
 			pPlayerAttack->init(&(*ppPlayerModel)->getTransform(), pPlayerParam);
 
 			pPlayerMove->init(pPlayerParam);
 			pPlayerMove->setCylinderRadius(12.0f);
+
+			//ダメージを受ける用
+			pPlayer->addComponent<PlayerDamage>()->init(pPlayerAttack, pPlayerParam);
 
 			//コライダー追加
 			auto pCollider = (*ppPlayer)->addComponent<BoxColiiderBt>();
@@ -210,8 +213,8 @@ void StageLoader::createObjects(const StageInfo& stageInfo, GameObject** ppPlaye
 		}
 	}
 
-	pGoal->addComponent<GoalObject>()->Initialize(pGoal->getTransform().getLocalPosition(), pPlayer);
-
+	m_pGoal = pGoal->addComponent<GoalObject>();
+	m_pGoal->Initialize(pGoal->getTransform().getLocalPosition(), pPlayer);
 	m_pMaterial->setMainTexture(GameDevice::getTextureManager().getTexture("BoxFill"));
 	pWallInstancedRenderer->setMaterial(m_pMaterial);
 	pWallInstancedRenderer->setInstanceInfo(instanceInfo);

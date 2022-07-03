@@ -146,6 +146,18 @@ void SceneEffect::StartEffect()
 	}
 }
 
+bool SceneEffect::IsEnd()
+{
+	if (callNum == 0)
+	{
+		return endDrawFlg;
+	}
+	else if (callNum == 1)
+	{
+		return endEraseFlg;
+	}
+}
+
 bool SceneEffect::FirstErase()
 {
 	if (firstEndFlg)
