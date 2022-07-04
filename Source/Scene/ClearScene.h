@@ -30,7 +30,4 @@ private:
 	SceneEffect* m_pSceneEndEffect;
 	//シーン終了エフェクトが終わったかどうか
 	bool sceneEffectIsEnd;
-=========
-	AudioSource* pAudio;
->>>>>>>>> Temporary merge branch 2
 };
