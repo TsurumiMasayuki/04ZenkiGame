@@ -17,17 +17,20 @@ public:
 private:
 	GameObject* ClearObject;
 	GUISpriteRenderer* ClearSprite;
+	AudioSource* pAudio;
 
-	//ƒV[ƒ“‘JˆÚ
-	//ŠJŽn
+	//ã‚·ãƒ¼ãƒ³é·ç§»
+	//é–‹å§‹
 	GameObject* pSceneStartEffect;
 	SceneEffect* m_pSceneStartEffect;
-	//ƒV[ƒ“ŠJŽnƒGƒtƒFƒNƒg‚ªI‚í‚Á‚½‚©‚Ç‚¤‚©
+	//ã‚·ãƒ¼ãƒ³é–‹å§‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒçµ‚ã‚ã£ãŸã‹ã©ã†ã‹
 	bool sceneStartEffectIsEnd;
-	//I—¹
+	//çµ‚äº†
 	GameObject* pSceneEndEffect;
 	SceneEffect* m_pSceneEndEffect;
-	//ƒV[ƒ“I—¹ƒGƒtƒFƒNƒg‚ªI‚í‚Á‚½‚©‚Ç‚¤‚©
+	//ã‚·ãƒ¼ãƒ³çµ‚äº†ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒçµ‚ã‚ã£ãŸã‹ã©ã†ã‹
 	bool sceneEffectIsEnd;
+=========
 	AudioSource* pAudio;
+>>>>>>>>> Temporary merge branch 2
 };
