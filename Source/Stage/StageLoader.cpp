@@ -255,8 +255,8 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 		}
 	}
 
-	pGoal->addComponent<GoalObject>()->Initialize(pGoal->getTransform().getLocalPosition(), pPlayer);
-
+	m_pGoal = pGoal->addComponent<GoalObject>();
+	m_pGoal->Initialize(pGoal->getTransform().getLocalPosition(), pPlayer);
 	m_pMaterial->setMainTexture(GameDevice::getTextureManager().getTexture("BoxFill"));
 	pWallInstancedRenderer->setMaterial(m_pMaterial);
 	pWallInstancedRenderer->setInstanceInfo(instanceInfo);

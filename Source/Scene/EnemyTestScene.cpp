@@ -21,6 +21,7 @@
 #include "Component/Map/GoalObject.h"
 
 #include "Component/Enemy/JumpingEnemy.h"
+#include "Component/TestUI/TimeLimitUi.h"
 
 std::string EnemyTestScene::nextScene()
 {

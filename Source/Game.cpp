@@ -3,6 +3,8 @@
 #include "Scene/TitleScene.h"
 #include "Scene/HogeScene.h"
 #include "Scene/EnemyTestScene.h"
+#include "Scene/GameOverScene.h"
+#include "Scene/ClearScene.h"
 #include "Utility/JsonFileManager.h"
 
 #include "Component/Player/PlayerStats.h"
@@ -51,6 +53,8 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("num8", L"Resources/textures/8.png");
 	GameDevice::getTextureManager().load("num9", L"Resources/textures/9.png");
 	GameDevice::getTextureManager().load("mask", L"Resources/textures/mask.png");
+	GameDevice::getTextureManager().load("clear", L"Resources/textures/Clear.png");
+
 
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
@@ -75,6 +79,9 @@ void Game::onStart()
 	GameDevice::getAudioManager().loadWavFile("EnemyDown", L"Resources/Sounds/Enemy/Enemy_Down.wav");
 	//ステージ
 	GameDevice::getAudioManager().loadWavFile("Stage1", L"Resources/Sounds/Stage/Stage1.wav");
+	GameDevice::getAudioManager().loadWavFile("ClearJG", L"Resources/Sounds/Stage/ClearJG.wav");
+	//タイトル
+	GameDevice::getAudioManager().loadWavFile("Title", L"Resources/Sounds/BGM/TitleBGM.wav");
 
 
 	//プレイヤー設定ファイル読み込み
@@ -83,7 +90,8 @@ void Game::onStart()
 	m_SceneManager.addScene("Title", new TitleScene());
 	m_SceneManager.addScene("Hoge", new HogeScene());
 	m_SceneManager.addScene("EnemyTest", new EnemyTestScene());
-
+	m_SceneManager.addScene("GameOver", new GameOverScene());
+	m_SceneManager.addScene("Clear", new ClearScene());
 	m_SceneManager.changeScene("Title");
 	//m_SceneManager.changeScene("EnemyTest");
 }

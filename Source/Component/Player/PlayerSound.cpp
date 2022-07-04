@@ -42,10 +42,10 @@ void PlayerSound::dash()
 
 void PlayerSound::sliding()
 {
-	play("Sliding", 0, 0.1f);
+	play("Sliding", 0, 0.5f);
 }
 
 void PlayerSound::walk()
 {
-	if (!pAudio->isPlaying())play("Walk", 0, 1.0f);
+	if (!pAudio->isPlaying())play("Walk", 0, 0.1f);
 }

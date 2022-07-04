@@ -4,6 +4,8 @@
 #include "Component/Graphics/D2DTextRenderer.h"
 #include "Device/GameDevice.h"
 #include "Device/ControllerInput.h"
+#include "Component/Audio/AudioSource.h"
+
 
 std::string TitleScene::nextScene()
 {
@@ -12,8 +14,7 @@ std::string TitleScene::nextScene()
 
 bool TitleScene::isEnd()
 {
-	return GameDevice::getInput().isKeyDown(DIK_SPACE) ||
-		ControllerInput::getInstance().isPadButtonDown(ControllerInput::PAD_BUTTON::START);
+	return m_pSceneEffect->IsEnd();
 }
 
 void TitleScene::start()
@@ -33,6 +34,17 @@ void TitleScene::start()
 	pTitleText->setTextRect(0.0f, 0.0f, 1280.0f, 720.0f);
 	pTitleText->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 	pTitleText->setText(L"FLAME BOOTS");*/
+
+	//Sound関連
+	//Sound関連用Object生成
+	GameObject* m_pSound = new GameObject(this);
+	auto pAudio = m_pSound->addComponent<AudioSource>();
+	//各種データ設定
+	pAudio->setAudio("Title");
+	pAudio->setVolume(0.1f);
+	//再生
+	pAudio->play(255);
+
 	//オブジェクト生成
 	titleObject = new GameObject(this);
 	titleSprite = titleObject->addComponent<GUISpriteRenderer>();
@@ -71,7 +83,8 @@ void TitleScene::start()
 
 void TitleScene::update()
 {
-	if (GameDevice::getInput().isKeyDown(DIK_A))
+	if (GameDevice::getInput().isKeyDown(DIK_SPACE) ||
+		ControllerInput::getInstance().isPadButtonDown(ControllerInput::PAD_BUTTON::START))
 	{
 		m_pSceneEffect->StartEffect();
 	}

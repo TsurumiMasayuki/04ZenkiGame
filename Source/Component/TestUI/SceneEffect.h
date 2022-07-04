@@ -16,19 +16,18 @@ public:
 	/// <param name="callNum">呼び出す処理 0-シーン開始 1-シーン終了</param>
 	void Initialize(short callNum);
 	//シーン終了処理
-	void StartErase();
 	bool FirstErase();
 	bool SecondErase();
 	bool ThirdErase();
 	bool FourthErase();
-	bool EraseIsEnd() { return endEraseFlg; }
 	//シーン開始処理
-	void StartEffect();
 	bool FirstDraw();
 	bool SecondDraw();
 	bool ThirdDraw();
 	bool FourthDraw();
-	bool DrawIsEnd() { return endDrawFlg; }
+	//共通処理
+	void StartEffect();
+	bool IsEnd();
 private:
 	//シーン終了処理用変数
 	GameObject* eraseObject;

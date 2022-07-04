@@ -23,68 +23,117 @@
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
 #include "Component/Item/CollectItemUI.h"
+#include "Component/TestUI/TimeLimitUi.h"
 
 std::string HogeScene::nextScene()
 {
-	return std::string();
+	return  pGoalObj->GetIsGoal() ? "Clear" : "GameOver";
 }
 
 bool HogeScene::isEnd()
 {
-	return false;
+	return pGoalObj->GetIsGoal() || TimeLimitUi::IsDead();
 }
 
 void HogeScene::start()
 {
+	TimeLimitUi::SetDead(false);
+
+	if (!TimeLimitUi::IsDead())
 	{
-		//頂点
-		DX12Mesh::MeshVertex baseVertices[8] =
-		{
-			{ { 0.0f, 1.0f, 1.0f }, {  0.0f,  0.0f, 1.0f }, { 0.0f, 0.0f } },
-			{ { 0.0f, 0.0f, 1.0f }, {  0.0f,  0.0f, 1.0f }, { 0.0f, 0.0f } },
-			{ { 0.0f, 1.0f, 0.0f }, { -1.0f,  0.0f, 0.0f }, { 0.0f, 0.0f } },
-			{ { 0.0f, 0.0f, 0.0f }, { -1.0f,  0.0f, 0.0f }, { 0.0f, 0.0f } },
-			{ { 1.0f, 1.0f, 1.0f }, {  0.0f,  0.0f, 1.0f }, { 0.0f, 0.0f } },
-			{ { 1.0f, 0.0f, 1.0f }, {  0.0f,  0.0f, 1.0f }, { 0.0f, 0.0f } },
-			{ { 1.0f, 1.0f, 0.0f }, {  1.0f,  0.0f, 0.0f }, { 0.0f, 0.0f } },
-			{ { 1.0f, 0.0f, 0.0f }, {  0.0f, -1.0f, 0.0f }, { 0.0f, 0.0f } }
-		};
+	  //ステージ生成
+	  JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
+	  m_pStageLoader = new StageLoader(this);
+	  m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"), &m_pPlayer, &m_pPlayerModel);
+	  pGoalObj = m_pStageLoader->GetGoal();
+	  //カメラ関係の設定
+	  auto& cameraTransform = getMainCamera()->getUser().getTransform();
 
-		//法線
-		DirectX::XMFLOAT3 normals[6] =
-		{
-			{  0.0f,  1.0f,  0.0f },
-			{  0.0f,  0.0f, -1.0f },
-			{  1.0f,  0.0f,  0.0f },
-			{  0.0f,  0.0f,  1.0f },
-			{ -1.0f,  0.0f,  0.0f },
-			{  0.0f, -1.0f,  0.0f }
-		};
+		//カメラ関係の設定
+		auto& cameraTransform = getMainCamera()->getUser().getTransform();
 
-		//インデックス
-		int baseIndices[36] =
-		{
-			0, 4, 6, 6, 2, 0,	//上
-			3, 2, 6, 6, 7, 3,	//後
-			7, 6, 4, 4, 5, 7,	//右
-			5, 1, 3, 3, 7, 5,	//前
-			1, 0, 2, 2, 3, 1,	//左
-			5, 4, 0, 0, 1, 5	//下
-		};
+		getMainCamera()->setTarget(m_pPlayer);
 
-		std::vector<DX12Mesh::MeshVertex> vertices;
-		std::vector<USHORT> indices;
-		vertices.resize(36);
-		indices.resize(36);
-		for (int i = 0; i < 36; i++)
+		auto* pCameraObject = &getMainCamera()->getUser();
+		pCameraObject->addComponent<Action::ActionManager>();
+
+		auto pFollow = pCameraObject->addComponent<LerpFollow>();
+		pFollow->SetGameObject(m_pPlayer);
+		pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
+
 		{
-			vertices[i] = baseVertices[baseIndices[i]];
-			vertices[i].normal = normals[baseIndices[i] % 6];
-			indices[i] = i;
+			//頂点
+			DX12Mesh::MeshVertex baseVertices[8] =
+			{
+				{ { 0.0f, 1.0f, 1.0f }, {  0.0f,  0.0f, 1.0f }, { 0.0f, 0.0f } },
+				{ { 0.0f, 0.0f, 1.0f }, {  0.0f,  0.0f, 1.0f }, { 0.0f, 0.0f } },
+				{ { 0.0f, 1.0f, 0.0f }, { -1.0f,  0.0f, 0.0f }, { 0.0f, 0.0f } },
+				{ { 0.0f, 0.0f, 0.0f }, { -1.0f,  0.0f, 0.0f }, { 0.0f, 0.0f } },
+				{ { 1.0f, 1.0f, 1.0f }, {  0.0f,  0.0f, 1.0f }, { 0.0f, 0.0f } },
+				{ { 1.0f, 0.0f, 1.0f }, {  0.0f,  0.0f, 1.0f }, { 0.0f, 0.0f } },
+				{ { 1.0f, 1.0f, 0.0f }, {  1.0f,  0.0f, 0.0f }, { 0.0f, 0.0f } },
+				{ { 1.0f, 0.0f, 0.0f }, {  0.0f, -1.0f, 0.0f }, { 0.0f, 0.0f } }
+			};
+
+			//法線
+			DirectX::XMFLOAT3 normals[6] =
+			{
+				{  0.0f,  1.0f,  0.0f },
+				{  0.0f,  0.0f, -1.0f },
+				{  1.0f,  0.0f,  0.0f },
+				{  0.0f,  0.0f,  1.0f },
+				{ -1.0f,  0.0f,  0.0f },
+				{  0.0f, -1.0f,  0.0f }
+			};
+
+			//インデックス
+			int baseIndices[36] =
+			{
+				0, 4, 6, 6, 2, 0,	//上
+				3, 2, 6, 6, 7, 3,	//後
+				7, 6, 4, 4, 5, 7,	//右
+				5, 1, 3, 3, 7, 5,	//前
+				1, 0, 2, 2, 3, 1,	//左
+				5, 4, 0, 0, 1, 5	//下
+			};
+
+			std::vector<DX12Mesh::MeshVertex> vertices;
+			std::vector<USHORT> indices;
+			vertices.resize(36);
+			indices.resize(36);
+			for (int i = 0; i < 36; i++)
+			{
+				vertices[i] = baseVertices[baseIndices[i]];
+				vertices[i].normal = normals[baseIndices[i] % 6];
+				indices[i] = i;
+			}
+
+			m_pCube = new DX12Mesh();
+			m_pCube->init(DX12GraphicsCore::g_pDevice.Get(), vertices, indices, "BoxFill");
 		}
 
-		m_pCube = new DX12Mesh();
-		m_pCube->init(DX12GraphicsCore::g_pDevice.Get(), vertices, indices, "BoxFill");
+		//Blockbenchモデル読み込み
+		{
+			m_BBModelLoader.load("Resources/BBModels/player.geo.json", "Player", "Player");
+		}
+
+		auto bbModel = m_BBModelLoader.getModel("Player");
+
+		auto pRendererObj = new GameObject(this);
+		auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
+		pRenderer->setMesh(m_pCube);
+
+		m_RenderHelpers.emplace("Player", new InstancedRendererHelper<BBInstanceInfo>(bbModel, pRenderer));
+
+		//Sound関連
+		//Sound関連用Object生成
+		GameObject* m_pSound = new GameObject(this);
+		auto pAudio = m_pSound->addComponent<AudioSource>();
+		//各種データ設定
+		pAudio->setAudio("Stage1");
+		pAudio->setVolume(0.1f);
+		//再生
+		pAudio->play(255);
 	}
 
 	//Blockbenchモデル読み込み
@@ -160,18 +209,32 @@ void HogeScene::update()
 	{
 		renderHelper.second->sendInstanceInfo();
 	}
+
+	if (!TimeLimitUi::IsDead())
+	{
+		std::vector<DirectX::XMMATRIX> matrices;
+		matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
+			DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
+			m_pPlayerModel->getTransform().getWorldMatrix());
+		m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
+		m_RenderHelpers.at("Player")->sendInstanceInfo();
+	}
 }
 
 void HogeScene::shutdown()
 {
-	delete m_pCube;
-	delete m_pStageLoader;
-
-	m_BBModelLoader.unLoadModels();
-	star_blockModelLoader.unLoadModels();
-
-	for (auto& pair : m_RenderHelpers)
+	if (TimeLimitUi::IsDead())
 	{
-		delete pair.second;
+		delete m_pCube;
+		delete m_pStageLoader;
+
+		m_BBModelLoader.unLoadModels();
+
+		for (auto& pair : m_RenderHelpers)
+		{
+			delete pair.second;
+		}
+
+		m_RenderHelpers.clear();
 	}
 }
