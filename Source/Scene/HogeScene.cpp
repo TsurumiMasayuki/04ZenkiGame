@@ -41,26 +41,6 @@ void HogeScene::start()
 
 	if (!TimeLimitUi::IsDead())
 	{
-	  //ステージ生成
-	  JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
-	  m_pStageLoader = new StageLoader(this);
-	  m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"), &m_pPlayer, &m_pPlayerModel);
-	  pGoalObj = m_pStageLoader->GetGoal();
-	  //カメラ関係の設定
-	  auto& cameraTransform = getMainCamera()->getUser().getTransform();
-
-		//カメラ関係の設定
-		auto& cameraTransform = getMainCamera()->getUser().getTransform();
-
-		getMainCamera()->setTarget(m_pPlayer);
-
-		auto* pCameraObject = &getMainCamera()->getUser();
-		pCameraObject->addComponent<Action::ActionManager>();
-
-		auto pFollow = pCameraObject->addComponent<LerpFollow>();
-		pFollow->SetGameObject(m_pPlayer);
-		pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
-
 		{
 			//頂点
 			DX12Mesh::MeshVertex baseVertices[8] =
@@ -115,15 +95,52 @@ void HogeScene::start()
 		//Blockbenchモデル読み込み
 		{
 			m_BBModelLoader.load("Resources/BBModels/player.geo.json", "Player", "Player");
+			m_BBModelLoader.load("Resources/BBModels/moster_03.geo.json", "monster_03", "monster_03");
+			m_BBModelLoader.load("Resources/BBModels/moster_04.geo.json", "monster_04", "monster_04");
+			m_BBModelLoader.load("Resources/BBModels/moster_04b.geo.json", "monster_04b", "monster_04b");
 		}
 
 		auto bbModel = m_BBModelLoader.getModel("Player");
 
 		auto pRendererObj = new GameObject(this);
-		auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
-		pRenderer->setMesh(m_pCube);
+		{
+			auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
+			pRenderer->setMesh(m_pCube);
+			m_RenderHelpers.emplace("Player", new InstancedRendererHelper<BBInstanceInfo>(bbModel, pRenderer));
+		}
+		{
+			auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
+			pRenderer->setMesh(m_pCube);
+			m_RenderHelpers.emplace("monster_03", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("monster_03"), pRenderer));
+		}
+		{
+			auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
+			pRenderer->setMesh(m_pCube);
+			m_RenderHelpers.emplace("monster_04", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("monster_04"), pRenderer));
+		}
+		{
+			auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
+			pRenderer->setMesh(m_pCube);
+			m_RenderHelpers.emplace("monster_04b", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("monster_04b"), pRenderer));
+		}
 
-		m_RenderHelpers.emplace("Player", new InstancedRendererHelper<BBInstanceInfo>(bbModel, pRenderer));
+		//ステージ生成
+		JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
+		m_pStageLoader = new StageLoader(this);
+		m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"), m_RenderHelpers, &m_pPlayer, &m_pPlayerModel);
+		pGoalObj = m_pStageLoader->GetGoal();
+
+		//カメラ関係の設定
+		auto& cameraTransform = getMainCamera()->getUser().getTransform();
+
+		getMainCamera()->setTarget(m_pPlayer);
+
+		auto* pCameraObject = &getMainCamera()->getUser();
+		pCameraObject->addComponent<Action::ActionManager>();
+
+		auto pFollow = pCameraObject->addComponent<LerpFollow>();
+		pFollow->SetGameObject(m_pPlayer);
+		pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
 
 		//Sound関連
 		//Sound関連用Object生成
@@ -135,66 +152,6 @@ void HogeScene::start()
 		//再生
 		pAudio->play(255);
 	}
-
-	//Blockbenchモデル読み込み
-	{
-		m_BBModelLoader.load("Resources/BBModels/player.geo.json", "Player", "Player");
-		m_BBModelLoader.load("Resources/BBModels/moster_03.geo.json", "monster_03", "monster_03");
-		m_BBModelLoader.load("Resources/BBModels/moster_04.geo.json", "monster_04", "monster_04");
-		m_BBModelLoader.load("Resources/BBModels/moster_04b.geo.json", "monster_04b", "monster_04b");
-	}
-
-	auto bbModel = m_BBModelLoader.getModel("Player");
-
-	auto pRendererObj = new GameObject(this);
-	{
-		auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
-		pRenderer->setMesh(m_pCube);
-		m_RenderHelpers.emplace("Player", new InstancedRendererHelper<BBInstanceInfo>(bbModel, pRenderer));
-	}
-	{
-		auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
-		pRenderer->setMesh(m_pCube);
-		m_RenderHelpers.emplace("monster_03", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("monster_03"), pRenderer));
-	}
-	{
-		auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
-		pRenderer->setMesh(m_pCube);
-		m_RenderHelpers.emplace("monster_04", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("monster_04"), pRenderer));
-	}
-	{
-		auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
-		pRenderer->setMesh(m_pCube);
-		m_RenderHelpers.emplace("monster_04b", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("monster_04b"), pRenderer));
-	}
-
-	//ステージ生成
-	JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
-	m_pStageLoader = new StageLoader(this);
-	m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"), m_RenderHelpers, &m_pPlayer, &m_pPlayerModel);
-
-	//カメラ関係の設定
-	auto& cameraTransform = getMainCamera()->getUser().getTransform();
-
-	getMainCamera()->setTarget(m_pPlayer);
-
-	auto* pCameraObject = &getMainCamera()->getUser();
-	pCameraObject->addComponent<Action::ActionManager>();
-
-	auto pFollow = pCameraObject->addComponent<LerpFollow>();
-	pFollow->SetGameObject(m_pPlayer);
-	pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
-
-	//Sound関連
-	//Sound関連用Object生成
-	GameObject* m_pSound = new GameObject(this);
-	auto pAudio = m_pSound->addComponent<AudioSource>();
-	//各種データ設定
-	pAudio->setAudio("Stage1");
-	pAudio->setVolume(0.1f);
-	//再生
-	pAudio->play(255);
-
 }
 
 void HogeScene::update()

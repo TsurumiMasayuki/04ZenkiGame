@@ -160,7 +160,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 			//æ•µç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆè¿½åŠ 
 			auto pPhalanxEnemy = pObject->addComponent<PhalanxEnemy>();
 			pPhalanxEnemy->init(objectPlaceInfo.m_Position,
-				6, 0, stageInfo.m_Radius + 1.0f, -1.0f);
+				6, 0, stageInfo.m_Radius, -1.0f);
 
 			pPhalanxEnemy->setSwing(5.0f);
 
