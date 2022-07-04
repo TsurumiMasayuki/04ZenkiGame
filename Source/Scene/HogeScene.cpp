@@ -32,7 +32,7 @@ std::string HogeScene::nextScene()
 
 bool HogeScene::isEnd()
 {
-	return pGoalObj->GetIsGoal() || TimeLimitUi::IsDead();
+	return m_pSceneEndEffect->IsEnd();
 }
 
 void HogeScene::start()
@@ -159,6 +159,11 @@ void HogeScene::update()
 			m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
 			m_RenderHelpers.at("Player")->sendInstanceInfo();
 		}
+		if (pGoalObj->GetIsGoal() || TimeLimitUi::IsDead())
+		{
+			m_pSceneEndEffect->StartEffect();
+		}
+		
 	}
 }
 
