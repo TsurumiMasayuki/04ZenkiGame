@@ -18,6 +18,9 @@ public:
 	//”R—¿‚ªƒ[ƒ‚©‚Ç‚¤‚©
 	bool isFuelZero() const;
 
+	//‰Á‘¬“x‚ğİ’è
+	void setAcceleration(float acceleration);
+
 	//‰Á‘¬“x‚ğæ“¾
 	float getAcceleration() const;
 
