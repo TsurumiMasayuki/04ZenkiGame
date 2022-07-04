@@ -21,8 +21,8 @@ void GameOverScene::start()
 	gameOverObject = new GameObject(this);
 	gameOverSprite = gameOverObject->addComponent<GUISpriteRenderer>();
 	gameOverSprite->setTextureByName("gameOver");
-	gameOverSprite->getTransform().setLocalPosition(Vec3{ 0,-50,3 });
-	gameOverSprite->getTransform().setLocalScale(Vec3{ 900,600,1 });
+	gameOverSprite->getTransform().setLocalPosition(Vec3{ 0,0,1 });
+	gameOverSprite->getTransform().setLocalScale(Vec3{ 1280,720,1 });
 	gameOverSprite->setActive(true);
 }
 
