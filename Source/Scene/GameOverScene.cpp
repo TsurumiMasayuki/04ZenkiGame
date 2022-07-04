@@ -25,6 +25,7 @@ void GameOverScene::start()
 	gameOverSprite->setActive(true);
 
 	//Sound
+	pAudio = gameOverObject->addComponent<AudioSource>();
 	pAudio->setAudio("GameOver");
 	pAudio->play(255);
   
