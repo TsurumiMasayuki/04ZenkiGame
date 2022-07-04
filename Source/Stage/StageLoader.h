@@ -1,7 +1,12 @@
 #pragma once
 #include "Stage/StageInfo.h"
 #include "Component/Graphics/InstancedRenderer.h"
+
+#include "Component/Utility/BBModelHelper.h"
+#include "Utility/InstancedRendererHelper.h"
+
 #include "Component/Map/GoalObject.h"
+
 class IGameMediator;
 class InstancingMaterial;
 
@@ -17,25 +22,29 @@ public:
 	StageLoader(IGameMediator* pGameMediator);
 	~StageLoader();
 
-	//ƒXƒe[ƒW‚Ì“Ç‚İ‚İ
-	void loadStage(const StageInfo& stageInfo, GameObject** ppPlayer = nullptr, GameObject** ppPlayerModel = nullptr);
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ì“Ç‚İï¿½ï¿½ï¿½
+	void loadStage(const StageInfo& stageInfo,
+		std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*>& renderHelpers,
+		GameObject** ppPlayer = nullptr, GameObject** ppPlayerModel = nullptr);
 
 	GameObject* GetObj() { return childCollectItemObj;}
 
-	//ƒS[ƒ‹ƒIƒuƒWƒFƒNƒg‚ğ•Ô‚·
+	//ï¿½Sï¿½[ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½Ô‚ï¿½
 	GoalObject* GetGoal() { return m_pGoal;}
 private:
-	//ƒXƒe[ƒW“y‘äì¬
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½yï¿½ï¿½ì¬
 	void createStageBase(const StageInfo& stageInfo);
 
-	//ƒIƒuƒWƒFƒNƒgì¬
-	void createObjects(const StageInfo& stageInfo, GameObject** ppPlayer, GameObject** ppPlayerModel);
+	//ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ì¬
+	void createObjects(const StageInfo& stageInfo,
+		std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*>& renderHelpers,
+		GameObject** ppPlayer, GameObject** ppPlayerModel);
 
 private:
 	IGameMediator* m_pGameMediator;
 	InstancingMaterial* m_pMaterial;
 	GameObject* parentCollectItemObj;
 	GameObject* childCollectItemObj;
-	//ƒV[ƒ“‚ÉƒS[ƒ‹ƒIƒuƒWƒFƒNƒg‚Ìƒf[ƒ^‚ğ“n‚·‚½‚ß‚ÌÀ‘Ì
+	//ï¿½Vï¿½[ï¿½ï¿½ï¿½ÉƒSï¿½[ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìƒfï¿½[ï¿½^ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ß‚Ìï¿½ï¿½ï¿½
 	GoalObject* m_pGoal;
 };
