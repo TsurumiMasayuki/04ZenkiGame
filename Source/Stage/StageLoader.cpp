@@ -6,8 +6,11 @@
 
 #include "Component/Enemy/TestEnemy.h"
 #include "Component/Enemy/PhalanxEnemy.h"
-#include "Obstacle/SlidingThrough.h"
 #include "Component/Enemy/JumpingEnemy.h"
+#include "Component/Enemy/PressEnemy.h"
+#include "Component/Enemy/ZigzagEnemy.h"
+
+#include "Obstacle/SlidingThrough.h"
 #include "Component/Item/CollectItem.h"
 #include "Component/Item/CollectItemDraw.h"
 #include "Utility/CoordConverter.h"
@@ -38,10 +41,13 @@ StageLoader::~StageLoader()
 	delete m_pMaterial;
 }
 
-void StageLoader::loadStage(const StageInfo& stageInfo, GameObject** ppPlayer, GameObject** ppPlayerModel)
+void StageLoader::loadStage(const StageInfo& stageInfo,
+	std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*>& renderHelpers,
+	GameObject** ppPlayer,
+	GameObject** ppPlayerModel)
 {
 	createStageBase(stageInfo);
-	createObjects(stageInfo, ppPlayer, ppPlayerModel);
+	createObjects(stageInfo, renderHelpers, ppPlayer, ppPlayerModel);
 }
 
 void StageLoader::createStageBase(const StageInfo& stageInfo)
@@ -73,7 +79,9 @@ void StageLoader::createStageBase(const StageInfo& stageInfo)
 	}
 }
 
-void StageLoader::createObjects(const StageInfo& stageInfo, GameObject** ppPlayer, GameObject** ppPlayerModel)
+void StageLoader::createObjects(const StageInfo& stageInfo,
+	std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*>& renderHelpers,
+	GameObject** ppPlayer, GameObject** ppPlayerModel)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
@@ -146,16 +154,50 @@ void StageLoader::createObjects(const StageInfo& stageInfo, GameObject** ppPlaye
 			pCollider->getRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
 		}
 
-		if (objectPlaceInfo.m_ObjectName == "Enemy")
+		if (objectPlaceInfo.m_ObjectName == "PhalanxEnemy")
 		{
 			auto pObject = new GameObject(m_pGameMediator);
-			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
 			//æ•µç”¨ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆè¿½åŠ 
 			auto pPhalanxEnemy = pObject->addComponent<PhalanxEnemy>();
 			pPhalanxEnemy->init(objectPlaceInfo.m_Position,
-				6, 0, 12.0f, -1.0f);
+				6, 0, stageInfo.m_Radius, -1.0f);
 
 			pPhalanxEnemy->setSwing(5.0f);
+
+			for (int i = 0; i < pObject->getChildren().size(); i++)
+			{
+				auto pPhalanxObject = pObject->getChildren().at(i);
+				auto pModelObject = new GameObject(m_pGameMediator);
+
+				pModelObject->getTransform().setLocalScale(Vec3(0.1f));
+				pModelObject->getTransform().setLocalAngles(Vec3(0.0f, 180.0f, -90.0f));
+
+				pPhalanxObject->addChild(*pModelObject);
+
+				if (i == 0)
+					pModelObject->addComponent<BBModelHelper>()->setRenderer(renderHelpers.at("monster_04"));
+				else
+					pModelObject->addComponent<BBModelHelper>()->setRenderer(renderHelpers.at("monster_04b"));
+			}
+		}
+
+		if (objectPlaceInfo.m_ObjectName == "PressEnemy")
+		{
+			//auto pObject = new GameObject(m_pGameMediator);
+			//pObject->addComponent<PressEnemy>()->init(Vec3::zero(), 3.0f, 0.0f, stageInfo.m_Radius + 1.0f);
+			//pObject->getTransform().setLocalPosition(Vec3::zero());
+
+			//auto pModelObject = new GameObject(m_pGameMediator);
+			//pModelObject->getTransform().setLocalScale(Vec3(0.1f));
+			//pModelObject->getTransform().setLocalAngles(Vec3(0.0f, 180.0f, -90.0f));
+			//pModelObject->addComponent<BBModelHelper>()->setRenderer(renderHelpers.at("monster_03"));
+
+			//pObject->addChild(*pModelObject);
+		}
+
+		if (objectPlaceInfo.m_ObjectName == "ZiguZaguEnemy")
+		{
+			auto pObject = new GameObject(m_pGameMediator);
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "PassingBlock")
@@ -179,7 +221,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo, GameObject** ppPlaye
 			auto pSlidingThrough = pObject->addComponent<SlidingThrough>();
 		}
 
-		if (objectPlaceInfo.m_ObjectName == "JumpingEnemy")
+		if (objectPlaceInfo.m_ObjectName == "JumpEnemy")
 		{
 			auto pObject = new GameObject(m_pGameMediator);
 			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);

@@ -76,7 +76,7 @@ void EnemyTestScene::start()
 	//ステージ読み込み
 	JsonFileManager<StageInfo>::getInstance().load("PrototypeStage", "Resources/EnemyTestStage.json");
 	StageLoader stageLoader(this);
-	stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
+	//stageLoader.loadStage(JsonFileManager<StageInfo>::getInstance().get("PrototypeStage"));
 
 	//ゴールを設定
 	//ゴールオブジェクト生成

@@ -15,6 +15,7 @@
     <FxCompile Include="Resources\Shaders\ParticlePixelShader.hlsl" />
     <FxCompile Include="Resources\Shaders\ParticleVertexShader.hlsl" />
     <FxCompile Include="Resources\Shaders\PostEffectPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\BBInstancingVertexShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -48,7 +49,6 @@
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
     <ClCompile Include="Source\Component\TestUI\TimeLimitUi.cpp" />
     <ClCompile Include="Source\Component\TestUI\TimeLimitDraw.cpp" />
-    <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
     <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\PhalanxEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\PressEnemy.cpp" />
@@ -60,7 +60,6 @@
     <ClCompile Include="Source\Component\Item\CollectItemDraw.cpp" />
     <ClCompile Include="Source\Component\Item\CollectItemUI.cpp" />
     <ClCompile Include="Source\Component\Map\GoalObject.cpp" />
-    <ClCompile Include="Source\Component\Player\PlayerDamage.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerSideAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
     <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
@@ -74,7 +73,6 @@
     <ClCompile Include="Source\Component\Enemy\BarrierEnemy.cpp" />
     <ClCompile Include="Source\Component\Gimmick\BoundGimmick.cpp" />
     <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
-    <ClCompile Include="Source\Scene\ClearScene.cpp" />
     <ClCompile Include="Source\Obstacle\SlidingThrough.cpp" />
     <ClCompile Include="Source\Option\Option.cpp" />
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
@@ -83,7 +81,11 @@
     <ClCompile Include="Source\Stage\StageLoader.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
+    <ClCompile Include="Source\Component\Utility\BBModelHelper.cpp" />
     <ClCompile Include="Source\Scene\GameOverScene.cpp" />
+    <ClCompile Include="Source\Scene\ClearScene.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerDamage.cpp" />
+    <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -118,7 +120,6 @@
     <ClInclude Include="Source\Scene\EnemyTestScene.h" />
     <ClInclude Include="Source\Component\TestUI\TimeLimitUi.h" />
     <ClInclude Include="Source\Component\TestUI\TimeLimitDraw.h" />
-    <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
     <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\PressEnemy.h" />
@@ -130,7 +131,6 @@
     <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
     <ClInclude Include="Source\Component\Map\GoalObject.h" />
-    <ClInclude Include="Source\Component\Player\PlayerDamage.h" />
     <ClInclude Include="Source\Component\Player\PlayerSideAttack.h" />
     <ClInclude Include="Source\Component\Player\PlayerSound.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />
@@ -147,6 +147,8 @@
     <ClInclude Include="Source\Utility\CoordConverter.h" />
     <ClInclude Include="Source\Utility\CylinderUtility.h" />
     <ClInclude Include="Source\Utility\InstancedRendererHelper.h" />
+    <ClInclude Include="Source\Component\Utility\BBModelHelper.h" />
+    <ClInclude Include="Source\Blockbench\BBInstanceInfo.h" />
     <ClInclude Include="Source\Scene\GameOverScene.h" />
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
     <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
@@ -156,6 +158,8 @@
     <ClInclude Include="Source\Component\Gimmick\BoundGimmick.h" />
     <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
     <ClInclude Include="Source\Scene\ClearScene.h" />
+    <ClInclude Include="Source\Component\Player\PlayerDamage.h" />
+    <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Sounds\Enemy\Enemy_Down.wav" />
