@@ -83,6 +83,8 @@
     <ClCompile Include="Source\Component\Gimmick\AccelBoard.cpp" />
     <ClCompile Include="Source\Component\Utility\BBModelHelper.cpp" />
     <ClCompile Include="Source\Scene\GameOverScene.cpp" />
+    <ClCompile Include="Source\Component\DistanceActivater\DistanceActivater.cpp" />
+    <ClCompile Include="Source\Scene\ClearScene.cpp" />
     <ClCompile Include="Source\Scene\ClearScene.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerDamage.cpp" />
     <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
@@ -157,6 +159,7 @@
     <ClInclude Include="Source\Component\Gimmick\BoundGimmick.h" />
     <ClInclude Include="Source\Component\Gimmick\AccelBoard.h" />
     <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
+    <ClInclude Include="Source\Component\DistanceActivater\DistanceActivater.h" />
     <ClInclude Include="Source\Scene\ClearScene.h" />
     <ClInclude Include="Source\Component\Player\PlayerDamage.h" />
     <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />

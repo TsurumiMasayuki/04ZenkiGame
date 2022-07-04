@@ -31,4 +31,15 @@ private:
 	float velocity[100];
 	GameObject* pSceneEffect;
 	SceneEffect* m_pSceneEffect;
+	//シーン遷移
+	//開始
+	GameObject* pSceneStartEffect;
+	SceneEffect* m_pSceneStartEffect;
+	//シーン開始エフェクトが終わったかどうか
+	bool sceneStartEffectIsEnd;
+	//終了
+	GameObject* pSceneEndEffect;
+	SceneEffect* m_pSceneEndEffect;
+	//シーン終了エフェクトが終わったかどうか
+	bool sceneEffectIsEnd;
 };
