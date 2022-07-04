@@ -85,6 +85,11 @@ bool PlayerParamManager::isFuelZero() const
 	return m_Fuel <= 0.0f;
 }
 
+void PlayerParamManager::setAcceleration(float acceleration)
+{
+	m_Acceleration = acceleration;
+}
+
 float PlayerParamManager::getAcceleration() const
 {
 	return m_Acceleration;
