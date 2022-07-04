@@ -26,12 +26,12 @@
 
 std::string HogeScene::nextScene()
 {
-	return std::string();
+	return "Clear";
 }
 
 bool HogeScene::isEnd()
 {
-	return false;
+	return pGoalObj->GetIsGoal();
 }
 
 void HogeScene::start()
@@ -40,7 +40,7 @@ void HogeScene::start()
 	JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
 	m_pStageLoader = new StageLoader(this);
 	m_pStageLoader->loadStage(JsonFileManager<StageInfo>::getInstance().get("Map1"), &m_pPlayer, &m_pPlayerModel);
-
+	pGoalObj = m_pStageLoader->GetGoal();
 	//カメラ関係の設定
 	auto& cameraTransform = getMainCamera()->getUser().getTransform();
 
