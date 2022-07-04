@@ -47,6 +47,8 @@
     <ClCompile Include="Source\Obstacle\SlidingThrough.cpp" />
     <ClCompile Include="Source\Component\Follow\LerpFollow.cpp" />
     <ClCompile Include="Source\Scene\EnemyTestScene.cpp" />
+    <ClCompile Include="Source\Component\TestUI\TimeLimitUi.cpp" />
+    <ClCompile Include="Source\Component\TestUI\TimeLimitDraw.cpp" />
     <ClCompile Include="Source\Component\Enemy\JumpingEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\PhalanxEnemy.cpp" />
     <ClCompile Include="Source\Component\Enemy\PressEnemy.cpp" />
@@ -79,9 +81,13 @@
     <ClCompile Include="Source\Stage\StageLoader.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
+    <ClCompile Include="Source\Component\Utility\BBModelHelper.cpp" />
     <ClCompile Include="Source\Scene\GameOverScene.cpp" />
     <ClCompile Include="Source\Component\DistanceActivater\DistanceActivater.cpp" />
     <ClCompile Include="Source\Scene\ClearScene.cpp" />
+    <ClCompile Include="Source\Scene\ClearScene.cpp" />
+    <ClCompile Include="Source\Component\Player\PlayerDamage.cpp" />
+    <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -114,6 +120,8 @@
     <ClInclude Include="Source\Obstacle\SlidingThrough.h" />
     <ClInclude Include="Source\Component\Follow\LerpFollow.h" />
     <ClInclude Include="Source\Scene\EnemyTestScene.h" />
+    <ClInclude Include="Source\Component\TestUI\TimeLimitUi.h" />
+    <ClInclude Include="Source\Component\TestUI\TimeLimitDraw.h" />
     <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\PhalanxEnemy.h" />
     <ClInclude Include="Source\Component\Enemy\PressEnemy.h" />
@@ -141,6 +149,8 @@
     <ClInclude Include="Source\Utility\CoordConverter.h" />
     <ClInclude Include="Source\Utility\CylinderUtility.h" />
     <ClInclude Include="Source\Utility\InstancedRendererHelper.h" />
+    <ClInclude Include="Source\Component\Utility\BBModelHelper.h" />
+    <ClInclude Include="Source\Blockbench\BBInstanceInfo.h" />
     <ClInclude Include="Source\Scene\GameOverScene.h" />
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
     <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
@@ -151,6 +161,8 @@
     <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
     <ClInclude Include="Source\Component\DistanceActivater\DistanceActivater.h" />
     <ClInclude Include="Source\Scene\ClearScene.h" />
+    <ClInclude Include="Source\Component\Player\PlayerDamage.h" />
+    <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Sounds\Enemy\Enemy_Down.wav" />

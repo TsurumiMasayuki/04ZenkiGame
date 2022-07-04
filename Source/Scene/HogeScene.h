@@ -3,20 +3,15 @@
 #include "Component/Map/GoalObject.h"
 #include "Utility/InstancedRendererHelper.h"
 #include "Blockbench/BlockbenchLoader.h"
+<<<<<<< HEAD
 #include "Component/TestUI/SceneEffect.h"
+=======
+#include "Blockbench/BBInstanceInfo.h"
+
+>>>>>>> main
 class DX12Mesh;
 class StageLoader;
 class BBModelMaterial;
-
-struct BBInstanceInfo
-{
-	DirectX::XMFLOAT4X4 instanceMat;
-	DirectX::XMFLOAT4 instanceColor;
-	//XY, XY�œ����
-	DirectX::XMFLOAT3X4 instanceUVOrigins;
-	//XY, XY�œ����
-	DirectX::XMFLOAT3X4 instanceUVSizes;
-};
 
 class HogeScene
 	: public AbstractScene
