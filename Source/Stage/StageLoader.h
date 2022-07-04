@@ -2,6 +2,9 @@
 #include "Stage/StageInfo.h"
 #include "Component/Graphics/InstancedRenderer.h"
 
+#include "Component/Utility/BBModelHelper.h"
+#include "Utility/InstancedRendererHelper.h"
+
 class IGameMediator;
 class InstancingMaterial;
 
@@ -18,7 +21,9 @@ public:
 	~StageLoader();
 
 	//ステージの読み込み
-	void loadStage(const StageInfo& stageInfo, GameObject** ppPlayer = nullptr, GameObject** ppPlayerModel = nullptr);
+	void loadStage(const StageInfo& stageInfo,
+		std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*>& renderHelpers,
+		GameObject** ppPlayer = nullptr, GameObject** ppPlayerModel = nullptr);
 
 	GameObject* GetObj() { return childCollectItemObj;}
 
@@ -27,7 +32,9 @@ private:
 	void createStageBase(const StageInfo& stageInfo);
 
 	//オブジェクト作成
-	void createObjects(const StageInfo& stageInfo, GameObject** ppPlayer, GameObject** ppPlayerModel);
+	void createObjects(const StageInfo& stageInfo,
+		std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*>& renderHelpers,
+		GameObject** ppPlayer, GameObject** ppPlayerModel);
 
 private:
 	IGameMediator* m_pGameMediator;

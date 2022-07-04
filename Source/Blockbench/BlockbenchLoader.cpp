@@ -60,13 +60,15 @@ void BlockbenchLoader::load(const std::string& filePath, const std::string& text
 		//ピボット情報を読み取って行列に変換
 		json bonePivot;
 		XMMATRIX bonePivotMat = XMMatrixIdentity();
+		XMMATRIX bonePivotReverseMat = XMMatrixIdentity();
 		if (safeGet(bone, bonePivot, "pivot"))
 		{
 			bonePivotMat = XMMatrixTranslation((float)bonePivot[0], (float)bonePivot[1], (float)bonePivot[2]);
+			bonePivotReverseMat = XMMatrixTranslation(-(float)bonePivot[0], -(float)bonePivot[1], -(float)bonePivot[2]);
 		}
 
 		//行列を合成
-		XMMATRIX boneMat = bonePivotMat * boneRotationMat;
+		XMMATRIX boneMat = bonePivotReverseMat * boneRotationMat * bonePivotMat;
 
 		//親の名前を読み取って親の行列を合成する
 		json parentName = "";
@@ -121,7 +123,7 @@ void BlockbenchLoader::load(const std::string& filePath, const std::string& text
 			}
 
 			//行列を全て合成
-			XMMATRIX world = scalingMat * translateMat * pivotReverseMat * rotationMat * pivotMat;
+			XMMATRIX world = scalingMat * translateMat * pivotReverseMat * rotationMat * pivotMat * boneMat;
 
 			//UVを読み込み
 			float originX = (float)cube["uv"][0];

@@ -188,6 +188,7 @@
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
     <ClCompile Include="Source\Component\TestUI\TimeLimitDraw.cpp" />
     <ClCompile Include="Source\Component\TestUI\TimeLimitUi.cpp" />
+    <ClCompile Include="Source\Component\Utility\BBModelHelper.cpp" />
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Device\GameInput.cpp" />
     <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Blockbench\BBInstanceInfo.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchLoader.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchModel.h" />
     <ClInclude Include="Source\Component\Enemy\JumpingEnemy.h" />
@@ -236,6 +238,7 @@
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
     <ClInclude Include="Source\Component\TestUI\TimeLimitDraw.h" />
     <ClInclude Include="Source\Component\TestUI\TimeLimitUi.h" />
+    <ClInclude Include="Source\Component\Utility\BBModelHelper.h" />
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Device\GameInput.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />

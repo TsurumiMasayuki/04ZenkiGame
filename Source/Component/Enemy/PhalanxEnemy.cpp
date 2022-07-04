@@ -84,8 +84,6 @@ void PhalanxEnemy::onUpdate()
 
 void PhalanxEnemy::init(Vec3 position, int length, int mainUnit, float radius, float speedZ)
 {
-	auto pCube = GameDevice::getModelManager().getModel("Cube");
-
 	// 配列の再構築
 	vec_object.resize(length);
 
@@ -93,16 +91,12 @@ void PhalanxEnemy::init(Vec3 position, int length, int mainUnit, float radius, f
 	for (int i = 0; i < length; i++)
 	{
 		// 生成
-		vec_object[i] = ModelGameObjectHelper::instantiateModel<int>(getUser().getGameMediator(), pCube);
+		vec_object[i] = new GameObject(getUser().getGameMediator());
+		vec_object[i]->setParent(&getUser());
 
 		vec_object[i]->getTransform().setLocalPosition(position + Vec3(0, 0, i));
+		vec_object[i]->getTransform().setLocalAngles(getTransform().getLocalAngles());
 		vec_object[i]->addComponent<TestEnemy>()->init(0.0f, 0.0f);
-
-		//弱点を強調表示
-		if (i == mainUnit)
-		{
-			vec_object[i]->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(1.0f, 0.0f, 0.0f, 1.0f));
-		}
 	}
 
 	// 本体番号セット
