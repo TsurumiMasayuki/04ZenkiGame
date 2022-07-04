@@ -71,6 +71,8 @@
     <ClCompile Include="Source\Component\Item\CollectItemDraw.cpp" />
     <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
+    <ClCompile Include="Source\Component\Enemy\BarrierEnemy.cpp" />
+    <ClCompile Include="Source\Component\Gimmick\BoundGimmick.cpp" />
     <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
     <ClCompile Include="Source\Scene\ClearScene.cpp" />
     <ClCompile Include="Source\Obstacle\SlidingThrough.cpp" />
@@ -81,6 +83,7 @@
     <ClCompile Include="Source\Stage\StageLoader.cpp" />
     <ClCompile Include="Source\Utility\CoordConverter.cpp" />
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
+    <ClCompile Include="Source\Scene\GameOverScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -144,10 +147,13 @@
     <ClInclude Include="Source\Utility\CoordConverter.h" />
     <ClInclude Include="Source\Utility\CylinderUtility.h" />
     <ClInclude Include="Source\Utility\InstancedRendererHelper.h" />
+    <ClInclude Include="Source\Scene\GameOverScene.h" />
     <ClInclude Include="Source\Component\Item\CollectItemUI.h" />
     <ClInclude Include="Source\Component\Item\CollectItemDraw.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />
     <ClInclude Include="Source\Component\Player\PlayerSound.h" />
+    <ClInclude Include="Source\Component\Enemy\BarrierEnemy.h" />
+    <ClInclude Include="Source\Component\Gimmick\BoundGimmick.h" />
     <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
     <ClInclude Include="Source\Scene\ClearScene.h" />
   </ItemGroup>

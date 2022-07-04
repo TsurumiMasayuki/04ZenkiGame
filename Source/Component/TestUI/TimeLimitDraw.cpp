@@ -22,6 +22,7 @@ void TimeLimitDraw::onStart()
 	}	
 
 	GameObj = objFirst[0]->addComponent<TimeLimitUi>();
+	GameObj->SetDead(false);
 
 	numTexFirst[0]->setTextureByName("num0");
 	numTexFirst[1]->setTextureByName("num1");
@@ -58,6 +59,11 @@ void TimeLimitDraw::onUpdate()
 			numTexFirst[i]->setActive(firstNum);
 			numTexSecond[i]->setActive(secondNum);
 		}
+	}
+	else if (GameObj->isMin(TimeLimitUi::GetLimitFirst()))
+	{
+		GameObj->SetDead(true);
+		GameObj->ResetNum(TimeLimitUi::GetLimitFirst(), TimeLimitUi::GetLimitSecond());
 	}
 	
 	if (GameObj->isMin(TimeLimitUi::GetLimitSecond()))
