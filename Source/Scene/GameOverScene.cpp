@@ -24,7 +24,11 @@ void GameOverScene::start()
 	gameOverSprite->getTransform().setLocalScale(Vec3{ 1280,720,1 });
 	gameOverSprite->setActive(true);
 
-<<<<<<<<< Temporary merge branch 1
+	//Sound
+	pAudio = gameOverObject->addComponent<AudioSource>();
+	pAudio->setAudio("GameOver");
+	pAudio->play(255);
+  
 	// SceneEffectオブジェクト生成
 	pSceneEndEffect = new GameObject(this);
 	m_pSceneEndEffect = pSceneEndEffect->addComponent<SceneEffect>();
@@ -33,10 +37,6 @@ void GameOverScene::start()
 	m_pSceneStartEffect = pSceneStartEffect->addComponent<SceneEffect>();
 	m_pSceneStartEffect->Initialize(0);
 	m_pSceneStartEffect->StartEffect();
-
-	//Sound
-	pAudio->setAudio("GameOver");
-	pAudio->play(255);
 }
 
 void GameOverScene::update()
