@@ -24,6 +24,10 @@ void ClearScene::start()
 	ClearSprite = ClearObject->addComponent<GUISpriteRenderer>();
 	ClearSprite->setTextureByName("clear");
 
+	//Sound
+	pAudio->setAudio("Endeng");
+	pAudio->play(255);
+
 	//SceneEffectƒIƒuƒWƒFƒNƒg¶¬
 	pSceneEndEffect = new GameObject(this);
 	m_pSceneEndEffect = pSceneEndEffect->addComponent<SceneEffect>();

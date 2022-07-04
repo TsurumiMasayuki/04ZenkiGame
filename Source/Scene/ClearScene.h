@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene/Base/AbstractScene.h"
 #include "Component/Base/AbstractComponent.h"
+#include "Component/Audio/AudioSource.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Actor/Base/GameObject.h"
 #include "Component/TestUI/SceneEffect.h"
@@ -16,16 +17,17 @@ public:
 private:
 	GameObject* ClearObject;
 	GUISpriteRenderer* ClearSprite;
+	AudioSource* pAudio;
 
-	//ƒV[ƒ“‘JˆÚ
-	//ŠJn
+	//ã‚·ãƒ¼ãƒ³é·ç§»
+	//é–‹å§‹
 	GameObject* pSceneStartEffect;
 	SceneEffect* m_pSceneStartEffect;
-	//ƒV[ƒ“ŠJnƒGƒtƒFƒNƒg‚ªI‚í‚Á‚½‚©‚Ç‚¤‚©
+	//ã‚·ãƒ¼ãƒ³é–‹å§‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒçµ‚ã‚ã£ãŸã‹ã©ã†ã‹
 	bool sceneStartEffectIsEnd;
-	//I—¹
+	//çµ‚äº†
 	GameObject* pSceneEndEffect;
 	SceneEffect* m_pSceneEndEffect;
-	//ƒV[ƒ“I—¹ƒGƒtƒFƒNƒg‚ªI‚í‚Á‚½‚©‚Ç‚¤‚©
+	//ã‚·ãƒ¼ãƒ³çµ‚äº†ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒçµ‚ã‚ã£ãŸã‹ã©ã†ã‹
 	bool sceneEffectIsEnd;
 };

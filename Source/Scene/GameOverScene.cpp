@@ -16,7 +16,7 @@ bool GameOverScene::isEnd()
 
 void GameOverScene::start()
 {
-	//ƒIƒuƒWƒFƒNƒg¶¬
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	gameOverObject = new GameObject(this);
 	gameOverSprite = gameOverObject->addComponent<GUISpriteRenderer>();
 	gameOverSprite->setTextureByName("gameOver");
@@ -24,7 +24,11 @@ void GameOverScene::start()
 	gameOverSprite->getTransform().setLocalScale(Vec3{ 1280,720,1 });
 	gameOverSprite->setActive(true);
 
-	// SceneEffectƒIƒuƒWƒFƒNƒg¶¬
+	//Sound
+	pAudio->setAudio("GameOver");
+	pAudio->play(255);
+  
+	// SceneEffectã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	pSceneEndEffect = new GameObject(this);
 	m_pSceneEndEffect = pSceneEndEffect->addComponent<SceneEffect>();
 	m_pSceneEndEffect->Initialize(1);
