@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene/Base/AbstractScene.h"
 #include "Component/Base/AbstractComponent.h"
+#include "Component/Audio/AudioSource.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Actor/Base/GameObject.h"
 class ClearScene :public AbstractScene
@@ -15,5 +16,5 @@ public:
 private:
 	GameObject* ClearObject;
 	GUISpriteRenderer* ClearSprite;
-
+	AudioSource* pAudio;
 };

@@ -24,6 +24,10 @@ void GameOverScene::start()
 	gameOverSprite->getTransform().setLocalPosition(Vec3{ 0,-50,3 });
 	gameOverSprite->getTransform().setLocalScale(Vec3{ 900,600,1 });
 	gameOverSprite->setActive(true);
+
+	//Sound
+	pAudio->setAudio("GameOver");
+	pAudio->play(255);
 }
 
 void GameOverScene::update()

@@ -2,6 +2,7 @@
 #include "Scene/Base/AbstractScene.h"
 #include "Component/Base/AbstractComponent.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
+#include "Component/Audio/AudioSource.h"
 #include "Actor/Base/GameObject.h"
 #include "Component/TestUI/SceneEffect.h"
 
@@ -25,6 +26,8 @@ private:
 	GUISpriteRenderer* gameOverBGSprite = nullptr;
 	GameObject* fireObjects[100];
 	GUISpriteRenderer* fireSprites[100];
+
+	AudioSource* pAudio;
 
 	int life[100];
 	int currentLife[100];

@@ -22,6 +22,10 @@ void ClearScene::start()
 	ClearObject->getTransform().setLocalScale(Vec3{ 700,600,1 });
 	ClearSprite = ClearObject->addComponent<GUISpriteRenderer>();
 	ClearSprite->setTextureByName("clear");
+
+	//Sound
+	pAudio->setAudio("Endeng");
+	pAudio->play(255);
 }
 
 void ClearScene::update()

@@ -80,9 +80,10 @@ void Game::onStart()
 	//ステージ
 	GameDevice::getAudioManager().loadWavFile("Stage1", L"Resources/Sounds/Stage/Stage1.wav");
 	GameDevice::getAudioManager().loadWavFile("ClearJG", L"Resources/Sounds/Stage/ClearJG.wav");
-	//タイトル
+	//BGM
 	GameDevice::getAudioManager().loadWavFile("Title", L"Resources/Sounds/BGM/TitleBGM.wav");
-
+	GameDevice::getAudioManager().loadWavFile("Endeng", L"Resources/Sounds/BGM/EndengBGM.wav");
+	GameDevice::getAudioManager().loadWavFile("GameOver", L"Resources/Sounds/BGM/GameOverJG.wav");
 
 	//プレイヤー設定ファイル読み込み
 	JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
