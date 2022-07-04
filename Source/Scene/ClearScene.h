@@ -4,6 +4,7 @@
 #include "Component/Audio/AudioSource.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Actor/Base/GameObject.h"
+#include "Component/TestUI/SceneEffect.h"
 class ClearScene :public AbstractScene
 {
 public:
@@ -17,4 +18,16 @@ private:
 	GameObject* ClearObject;
 	GUISpriteRenderer* ClearSprite;
 	AudioSource* pAudio;
+
+	//シーン遷移
+	//開始
+	GameObject* pSceneStartEffect;
+	SceneEffect* m_pSceneStartEffect;
+	//シーン開始エフェクトが終わったかどうか
+	bool sceneStartEffectIsEnd;
+	//終了
+	GameObject* pSceneEndEffect;
+	SceneEffect* m_pSceneEndEffect;
+	//シーン終了エフェクトが終わったかどうか
+	bool sceneEffectIsEnd;
 };

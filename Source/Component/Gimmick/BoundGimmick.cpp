@@ -3,11 +3,12 @@
 #include "Device/GameDevice.h"
 #include "Utility/CoordConverter.h"
 #include <Math/MathUtility.h>
+#include "Component/Player/PlayerParamManager.h"
 
 void BoundGimmick::onStart()
 {
-	// 敵としてタグ付け
-	getUser().setTag("Enemy");
+	// ギミックとしてタグ付け
+	getUser().setTag("Gimmick");
 
 	// コライダー付与
 	auto x = getUser().addComponent<SphereColliderBt>();
@@ -35,6 +36,17 @@ void BoundGimmick::onUpdate()
 	{
 		scale = Vec3(1, 1, 1);
 	}
+
+	// 跳ね返す
+	if (getUser().getTransform().getLocalPosition().distance(targetObj->getTransform().getLocalPosition()) < scale.x)
+	{
+		// 移動方向反転
+		Vec3 pMoveDir = targetObj->getComponent<PlayerParamManager>()->getMoveDir();
+		targetObj->getComponent<PlayerParamManager>()->setMoveDir(-pMoveDir);
+	}
+
+	// サイズセット
+	getUser().getTransform().setLocalScale(scale);
 
 	changeTime.update();
 }
