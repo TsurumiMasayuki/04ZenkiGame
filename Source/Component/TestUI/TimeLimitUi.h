@@ -38,8 +38,20 @@ public:
 		num = 9;
 	}
 
+	static void ResetNum(int& numFirst, int& numSecond)
+	{
+		numFirst = 6;
+		numSecond = 0;
+	}
+
 	static bool isMin(int& value) { return value < 0; }
+
+	static bool SetDead(bool dead) { return isDead = dead; }
+
+	static bool& IsDead() { return isDead; }
+
 private:
 	Timer limitTimer;
 	static int firstNum, secondNum;
+	static bool isDead;
 };

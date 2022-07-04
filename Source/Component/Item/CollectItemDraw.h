@@ -1,15 +1,9 @@
 ﻿#pragma once
+#include "Blockbench/BBInstanceInfo.h"
 #include "Blockbench/BlockbenchLoader.h"
 #include "Utility/InstancedRendererHelper.h"
 #include "CollectItemUI.h"
-
-struct BBInstanceInfo
-{
-    DirectX::XMFLOAT4X4 instanceMat;
-    DirectX::XMFLOAT4 instanceColor;
-    DirectX::XMFLOAT3X4 instanceUVOrigins;
-    DirectX::XMFLOAT3X4 instanceUVSizes;
-};
+#include "Scene/HogeScene.h"
 
 //描画部分
 class CollectItemUI;

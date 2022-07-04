@@ -7,12 +7,16 @@
 #include "Blockbench\BlockbenchModel.h"
 #include "Graphics\Material\BBModelMaterial.h"
 
+#include "Utility/InstancedRendererHelper.h"
+
 template<typename T> class InstancedRendererHelper
 {
 public:
 	InstancedRendererHelper(const BlockbenchModel* pModel, InstancedRenderer<T>* pInstancedRenderer);
 	~InstancedRendererHelper();
 
+	//インスタンス用情報を連結する(Transpose不要)
+	void appendInstanceInfo(const DirectX::XMMATRIX& objMatrix);
 	//インスタンス用情報を連結する(Transpose不要)
 	void appendInstanceInfo(const std::vector<DirectX::XMMATRIX>& objMatrices);
 	//インスタンス用情報をRendererに転送
@@ -50,6 +54,12 @@ inline InstancedRendererHelper<T>::~InstancedRendererHelper()
 {
 	if (m_pMaterial != nullptr)
 		delete m_pMaterial;
+}
+
+template<typename T>
+inline void InstancedRendererHelper<T>::appendInstanceInfo(const DirectX::XMMATRIX& objMatrix)
+{
+	m_DataPerObject.emplace_back(objMatrix);
 }
 
 template<typename T>

@@ -3,6 +3,7 @@
 #include "Device/GameInput.h"
 int  TimeLimitUi::firstNum = 6;
 int  TimeLimitUi::secondNum = 0;
+bool TimeLimitUi::isDead = false;
 
 void TimeLimitUi::onStart()
 {

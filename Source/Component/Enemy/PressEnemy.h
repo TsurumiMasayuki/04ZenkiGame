@@ -5,7 +5,7 @@
 #include "Utility/Timer.h"
 
 class PressEnemy
-	: AbstractComponent
+	: public AbstractComponent
 {
 public:
 	// AbstractComponent ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
