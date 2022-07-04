@@ -17,7 +17,7 @@ bool ClearScene::isEnd()
 void ClearScene::start()
 {
 	ClearObject = new GameObject(this);
-	ClearObject->getTransform().setLocalPosition(Vec3{ 0,0,1 });
+	ClearObject->getTransform().setLocalPosition(Vec3{ 0,0,2 });
 	ClearObject->getTransform().setLocalScale(Vec3{ 700,600,1 });
 	ClearSprite = ClearObject->addComponent<GUISpriteRenderer>();
 	ClearSprite->setTextureByName("clear");

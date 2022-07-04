@@ -3,12 +3,9 @@
 #include "Component/Map/GoalObject.h"
 #include "Utility/InstancedRendererHelper.h"
 #include "Blockbench/BlockbenchLoader.h"
-<<<<<<< HEAD
 #include "Component/TestUI/SceneEffect.h"
-=======
 #include "Blockbench/BBInstanceInfo.h"
 
->>>>>>> main
 class DX12Mesh;
 class StageLoader;
 class BBModelMaterial;

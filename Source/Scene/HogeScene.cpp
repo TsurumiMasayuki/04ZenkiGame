@@ -165,36 +165,35 @@ void HogeScene::start()
 
 void HogeScene::update()
 {
-<<<<<<< HEAD
+
 	if (m_pSceneStartEffect->IsEnd())
-=======
-	std::vector<DirectX::XMMATRIX> matrices;
-	matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
-		DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
-		m_pPlayerModel->getTransform().getWorldMatrix());
-	m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
-
-	for (auto renderHelper : m_RenderHelpers)
 	{
-		renderHelper.second->sendInstanceInfo();
-	}
+		std::vector<DirectX::XMMATRIX> matrices;
+		matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
+			DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
+			m_pPlayerModel->getTransform().getWorldMatrix());
+		m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
 
-	if (!TimeLimitUi::IsDead())
->>>>>>> main
-	{
-		if (!TimeLimitUi::IsDead())
+		for (auto renderHelper : m_RenderHelpers)
 		{
-			std::vector<DirectX::XMMATRIX> matrices;
-			matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
-				DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
-				m_pPlayerModel->getTransform().getWorldMatrix());
-			m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
-			m_RenderHelpers.at("Player")->sendInstanceInfo();
+			renderHelper.second->sendInstanceInfo();
 		}
-		if (pGoalObj->GetIsGoal() || TimeLimitUi::IsDead())
-		{
-			m_pSceneEndEffect->StartEffect();
-		}
+
+		
+			if (!TimeLimitUi::IsDead())
+			{
+				std::vector<DirectX::XMMATRIX> matrices;
+				matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
+					DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
+					m_pPlayerModel->getTransform().getWorldMatrix());
+				m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
+				m_RenderHelpers.at("Player")->sendInstanceInfo();
+			}
+			if (pGoalObj->GetIsGoal() || TimeLimitUi::IsDead())
+			{
+				m_pSceneEndEffect->StartEffect();
+			}
+
 		
 	}
 }
