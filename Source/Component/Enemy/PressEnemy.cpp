@@ -58,7 +58,7 @@ void PressEnemy::onUpdate()
 	getUser().getTransform().setLocalPosition(cartCoord);
 
 	//‰ñ“]
-	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(position.y)));
+	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(position.y) + 180.0f));
 
 }
 
