@@ -98,6 +98,7 @@ void HogeScene::start()
 			m_BBModelLoader.load("Resources/BBModels/moster_03.geo.json", "monster_03", "monster_03");
 			m_BBModelLoader.load("Resources/BBModels/moster_04.geo.json", "monster_04", "monster_04");
 			m_BBModelLoader.load("Resources/BBModels/moster_04b.geo.json", "monster_04b", "monster_04b");
+			m_BBModelLoader.load("Resources/BBModels/block_door.geo.json", "block_door_tex", "block_door_tex");
 		}
 
 		auto bbModel = m_BBModelLoader.getModel("Player");

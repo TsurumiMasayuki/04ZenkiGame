@@ -21,4 +21,5 @@ private:
 	GameObject* goal = nullptr;
 	const float GOAL_DISTANCE = 3.0f;
 	bool isGoal;
+	float velocity;
 };
