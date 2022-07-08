@@ -13,9 +13,13 @@ struct PlayerStats
 	float m_WalkSpeed;
 	//ダッシュ速度
 	float m_DashSpeed;
+	//加速時速度
+	float m_AcceleratorSpeed;
 
 	//移動の加速時間
 	float m_WalkSpeedUpTime;
 	//ダッシュの加速時間
 	float m_DashSpeedUpTime;
+	//加速状態の加速時間
+	float m_AcceleratorSpeedUpTime;
 };
