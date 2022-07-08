@@ -46,36 +46,49 @@ void StageLoader::loadStage(const StageInfo& stageInfo,
 	GameObject** ppPlayer,
 	GameObject** ppPlayerModel)
 {
-	createStageBase(stageInfo);
+	createStageBase(stageInfo, renderHelpers);
 	createObjects(stageInfo, renderHelpers, ppPlayer, ppPlayerModel);
 }
 
-void StageLoader::createStageBase(const StageInfo& stageInfo)
+void StageLoader::createStageBase(const StageInfo& stageInfo, std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*>& renderHelpers)
 {
 	auto pCube = GameDevice::getModelManager().getModel("Cube");
 
 	//é¢ã®æ•°
-	const int faceCount = 36;
+	const int faceCount = 18;
 	//è§’åº¦
 	const float rad = DirectX::XM_2PI / faceCount;
 	//å††æŸ±ã®åŠå¾„
 	const float radius = stageInfo.m_Radius;
 
+	float floorSize = 4.2f;
+	int zCount = (int)(stageInfo.m_Length / floorSize);
+
 	//å††æŸ±ã‚’ç”Ÿæˆ
 	for (int i = 0; i < faceCount; i++)
 	{
-		Vec3 cylinder(radius, rad * i, stageInfo.m_Length * 0.5f);
+		for (int j = 0; j < zCount; j++)
+		{
+			Vec3 cylinder(radius, rad * i, j * floorSize + floorSize * 0.5f);
 
-		//ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
-		auto pFloor = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
-		pFloor->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(0.7f, 0.7f, 0.7f, 1.0f));
+			//ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
+			GameObject* pFloor = new GameObject(m_pGameMediator);
 
-		//åº§æ¨™è¨­å®š
-		pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
-		//ã‚µã‚¤ã‚ºè¨­å®š
-		pFloor->getTransform().setLocalScale(Vec3(1.0f, radius * 0.25f, stageInfo.m_Length));
-		//å›žè»¢è¨­å®š
-		pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i));
+			//åº§æ¨™è¨­å®š
+			pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
+			//ã‚µã‚¤ã‚ºè¨­å®š
+			pFloor->getTransform().setLocalScale(Vec3(1.0f, floorSize, floorSize));
+			//å›žè»¢è¨­å®š
+			pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i) - 10.0f);
+
+			auto pModelObject = new GameObject(m_pGameMediator);
+			pFloor->addChild(*pModelObject);
+
+			pModelObject->getTransform().setLocalPosition(Vec3(0.0f, -0.5f, 0.0f));
+			pModelObject->getTransform().setLocalScale(Vec3(1.0f / 16.0f));
+			pModelObject->getTransform().setLocalAngles(Vec3(0.0f, 180.0f, -90.0f - 180.0f));
+			pModelObject->addComponent<BBModelHelper>()->setRenderer(renderHelpers.at("block_floor"));
+		}
 	}
 }
 
@@ -98,8 +111,6 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 	{
 		if (objectPlaceInfo.m_ObjectName == "Player")
 		{
-			auto pCube = GameDevice::getModelManager().getModel("Cube");
-
 			*ppPlayer = new GameObject(m_pGameMediator);
 
 			pPlayer = *ppPlayer;
@@ -135,17 +146,20 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 		if (objectPlaceInfo.m_ObjectName == "BaseWall" ||
 			objectPlaceInfo.m_ObjectName == "GarssBlock")
 		{
+
 			auto pObject = new GameObject(m_pGameMediator);
+
 			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
-			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
 			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
-			//è§’åº¦è¨­å®š
 			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
 
 			auto& info = instanceInfo.emplace_back();
 
-			DirectX::XMStoreFloat4x4(&info.m_InstanceMatrix, DirectX::XMMatrixTranspose(pObject->getTransform().getWorldMatrix()));
-			DirectX::XMStoreFloat4(&info.m_InstanceColor, DirectX::Colors::LawnGreen);
+			auto pModelObject = new GameObject(m_pGameMediator);
+			pObject->addChild(*pModelObject);
+
+			pModelObject->getTransform().setLocalScale(Vec3(1.0f / 16.0f));
+			pModelObject->addComponent<BBModelHelper>()->setRenderer(renderHelpers.at("block_wall"));
 
 			//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
 			auto pCollider = pObject->addComponent<BoxColiiderBt>();
@@ -161,6 +175,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 			auto pPhalanxEnemy = pObject->addComponent<PhalanxEnemy>();
 			pPhalanxEnemy->init(objectPlaceInfo.m_Position,
 				6, 0, stageInfo.m_Radius, -1.0f);
+			pPhalanxEnemy->setTarget(pPlayer);
 
 			pPhalanxEnemy->setSwing(5.0f);
 
@@ -181,20 +196,6 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 			}
 		}
 
-		if (objectPlaceInfo.m_ObjectName == "PressEnemy")
-		{
-			//auto pObject = new GameObject(m_pGameMediator);
-			//pObject->addComponent<PressEnemy>()->init(Vec3::zero(), 3.0f, 0.0f, stageInfo.m_Radius + 1.0f);
-			//pObject->getTransform().setLocalPosition(Vec3::zero());
-
-			//auto pModelObject = new GameObject(m_pGameMediator);
-			//pModelObject->getTransform().setLocalScale(Vec3(0.1f));
-			//pModelObject->getTransform().setLocalAngles(Vec3(0.0f, 180.0f, -90.0f));
-			//pModelObject->addComponent<BBModelHelper>()->setRenderer(renderHelpers.at("monster_03"));
-
-			//pObject->addChild(*pModelObject);
-		}
-
 		if (objectPlaceInfo.m_ObjectName == "ZiguZaguEnemy")
 		{
 			auto pObject = new GameObject(m_pGameMediator);
@@ -208,13 +209,6 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
 			//è§’åº¦è¨­å®š
 			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
-			Vec3 modelPosition = objectPlaceInfo.m_Position.normalized() * 2.0f;
-			float x = modelPosition.x;
-			float y = modelPosition.y;
-			modelPosition.x = y;
-			modelPosition.y = x;
-			modelPosition.z = 0.0f;
-			pObject->getChildren().at(0)->getTransform().setLocalPosition(modelPosition);
 			//FÝ’è
 			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Red, 1.0f));
 			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
@@ -229,10 +223,19 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
 			//è§’åº¦è¨­å®š
 			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
+
+			auto pModelObject = new GameObject(m_pGameMediator);
+			pModelObject->getTransform().setLocalScale(Vec3(0.1f));
+			pModelObject->getTransform().setLocalAngles(Vec3(0.0f, 180.0f, -90.0f));
+			pModelObject->addComponent<BBModelHelper>()->setRenderer(renderHelpers.at("monster_03"));
+
+			pObject->addChild(*pModelObject);
+
 			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
 			auto pJumpingEnemy = pObject->addComponent<JumpingEnemy>();
+			pJumpingEnemy->setTarget(pPlayer);
 			pJumpingEnemy->init(pObject->getTransform().getLocalPosition(),
-				1.0f, 0, 12.0f);
+				0.0f, 0.0f, 12.0f);
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "CollectItem")

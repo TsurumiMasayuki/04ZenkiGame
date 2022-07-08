@@ -48,11 +48,14 @@ StageInfo::StageInfo(const nlohmann::json& file)
 	//オブジェクトリストを読み込み
 	auto& objectList = file["objects"];
 
+	m_ObjectPlaceInfoList.resize(objectList.size());
+
 	//オブジェクトリストを走査
-	for (auto& object : objectList)
+	for (int i = 0; i < m_ObjectPlaceInfoList.size(); i++)
 	{
 		//オブジェクト配置情報を作成
-		auto& objectPlaceInfo = m_ObjectPlaceInfoList.emplace_back();
+		const auto& object = objectList[i];
+		auto& objectPlaceInfo = m_ObjectPlaceInfoList.at(i);
 
 		//名前から.の後を切る
 		std::string name = (std::string)object["name"];
@@ -63,7 +66,7 @@ StageInfo::StageInfo(const nlohmann::json& file)
 		objectPlaceInfo.m_ObjectName = split.at(0);
 
 		//transformを取得
-		auto& transform = object["transform"];
+		const auto& transform = object["transform"];
 
 		//オブジェクトの座標
 		objectPlaceInfo.m_Position = Vec3(transform["translation"][0], transform["translation"][1], transform["translation"][2]);
