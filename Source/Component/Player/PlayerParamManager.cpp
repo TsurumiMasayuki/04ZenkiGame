@@ -14,11 +14,6 @@ void PlayerParamManager::onStart()
 {
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 
-	//UIオブジェクト生成
-	GameObject* pTestUIObj = new GameObject(getUser().getGameMediator());
-	//UI生成
-	m_pTestUI = pTestUIObj->addComponent<TestUI>();
-
 	//オプションオブジェクト生成
 	GameObject* optionObj = new GameObject(getUser().getGameMediator());
 	m_Option = optionObj->addComponent<Option>();
@@ -35,25 +30,47 @@ void PlayerParamManager::onUpdate()
 {
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
-	//ダッシュボタンが押されているなら
-	if (GameInput::getInstance().getPlayerDash() && m_Fuel > 0.0f)
+	if (isHitEnemy)
 	{
-		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_DashSpeedUpTime;
+		if (m_RollingTime==0.0f)
+		{
+			m_RollingTime = 2.0f;
+			isHitEnemy = false;
+		}
+		else
+		{
+			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_AcceleratorSpeedUpTime;
 
-		//加速
-		m_Acceleration += deltaTime * timeMultiplier;
+			//加速
+			m_Acceleration += deltaTime * timeMultiplier;
 
-		//燃料減少
-		m_Fuel -= deltaTime;
-		m_Fuel = std::fmaxf(0.0f, m_Fuel);
+			m_RollingTime -= deltaTime;
+			m_RollingTime = std::fmaxf(0.0f, m_RollingTime);
+
+		}
+
 	}
-	else if (!GameInput::getInstance().getPlayerDash())
+	else
 	{
-		//燃料増加
-		m_Fuel += deltaTime;
-		m_Fuel = std::fminf(5.0f, m_Fuel);
-	}
+		//ダッシュボタンが押されているなら
+		if (GameInput::getInstance().getPlayerDash() && m_Fuel > 0.0f)
+		{
+			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_DashSpeedUpTime;
 
+			//加速
+			m_Acceleration += deltaTime * timeMultiplier;
+
+			//燃料減少
+			m_Fuel -= deltaTime;
+			m_Fuel = std::fmaxf(0.0f, m_Fuel);
+		}
+		else if (!GameInput::getInstance().getPlayerDash())
+		{
+			//燃料増加
+			m_Fuel += deltaTime;
+			m_Fuel = std::fminf(5.0f, m_Fuel);
+		}
+	}
 	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
 	{
 		//加速度を0にする
@@ -64,13 +81,8 @@ void PlayerParamManager::onUpdate()
 		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeedUpTime;
 
 		//加速
-		m_Acceleration += deltaTime * 0.1f;
+		m_Acceleration += deltaTime * timeMultiplier;
 	}
-
-	//UIに設定
-	m_pTestUI->SetParam(m_Health, m_Acceleration, m_Fuel);
-
-	m_Acceleration = std::fminf(1.0f, m_Acceleration);
 
 	//ロックされていないなら移動方向を設定
 	if (!m_IsLock)
