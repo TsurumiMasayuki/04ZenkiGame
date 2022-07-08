@@ -34,13 +34,14 @@ public:
 	//ˆÚ“®•ûŒü‚ğİ’è
 	void setMoveDir(const Vec3& moveDir);
 
+	void setHitEnemy() { isHitEnemy = true; }
+
 	//ˆÚ“®‘¬“x‚ğæ“¾
 	float getMoveSpeed() const;
 	//ˆÚ“®‘¬“x‚ğİ’è
 	void setMoveSpeed(float speed);
 
 private:
-	TestUI* m_pTestUI;
 	Option* m_Option;
 	CollectItemUI* m_Item;
 	TimeLimitDraw* m_TimeLimit;
@@ -50,11 +51,14 @@ private:
 	//‰Á‘¬“x‚ğæ“¾
 	float m_Acceleration;
 	//”R—¿
-	float m_Fuel = 5.0f;
+	float m_Fuel = 4.0f;
 
 	float m_BaseMoveSpeed;
 	Vec3 m_MoveDir;
 
 	bool m_IsLock;
 	PlayerStats m_Stats;
+
+	bool isHitEnemy = false;
+	float m_RollingTime = 2.0;
 };

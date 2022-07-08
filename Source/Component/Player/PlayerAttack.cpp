@@ -132,6 +132,8 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 	if (!pHit->compareTag("Enemy"))
 		return;
 
+	m_pPlayerParam->setHitEnemy();
+
 	if (m_pCameraActionManager->actionCount() == 0)
 		//カメラを揺らす
 		m_pCameraActionManager->enqueueAction(new Action::TestVibrationEffect(m_pCameraActionManager));
