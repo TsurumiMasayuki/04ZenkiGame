@@ -34,7 +34,10 @@ void PhalanxEnemy::onUpdate()
 		if (target && targetPos.distance(objectPos) <= 20.0f)
 		{
 			// ターゲットを追う動き
-			rotSpeed = (targetPos.y - objectPos.y) / 60;
+			Vec3 tmp_cylindertargetPos = CoordConverter::cartesianToCylinder(targetPos);
+			Vec3 tmp_cylinderobjectPos = CoordConverter::cartesianToCylinder(objectPos);
+
+			rotSpeed = (tmp_cylindertargetPos.y - tmp_cylinderobjectPos.y) / 60;
 		}
 		else
 		{
@@ -63,7 +66,7 @@ void PhalanxEnemy::onUpdate()
 		vec_object[i]->getTransform().setLocalAngles(
 			Vec3(0.0f,
 				0.0f,
-				MathUtility::toDegree(cylinderCoord.y))
+				MathUtility::toDegree(tmp_position.y) + 180.0f)
 		);
 	}
 
