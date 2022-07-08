@@ -26,8 +26,12 @@ private:
 	GUISpriteRenderer* gameOverBGSprite = nullptr;
 	GameObject* fireObjects[100];
 	GUISpriteRenderer* fireSprites[100];
-
+	GameObject* gameOverSelectObject = nullptr;
+	GUISpriteRenderer* gameOverSelectSprite = nullptr;
+	Vec3 SelectOnPos;
+	Vec3 SelectOffPos;
 	AudioSource* pAudio;
+	bool isSelectToTitle;
 
 	int life[100];
 	int currentLife[100];
