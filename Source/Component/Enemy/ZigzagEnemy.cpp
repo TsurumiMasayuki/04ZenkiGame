@@ -45,7 +45,7 @@ void Zigzagenemy::onUpdate()
 	getUser().getTransform().setLocalPosition(cartCoord);
 
 	//回転
-	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(position.y)));
+	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(position.y) + 180.0f));
 
 	// タイマーの更新
 	wrapTimer.update();

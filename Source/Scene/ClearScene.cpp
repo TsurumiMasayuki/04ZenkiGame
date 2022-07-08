@@ -17,12 +17,19 @@ bool ClearScene::isEnd()
 void ClearScene::start()
 {
 	ClearObject = new GameObject(this);
-	ClearObject->getTransform().setLocalPosition(Vec3{ 0,0,2 });
-	ClearObject->getTransform().setLocalScale(Vec3{ 700,600,1 });
+  
+	ClearObject->getTransform().setLocalPosition(Vec3{ 0,0,1 });
+	ClearObject->getTransform().setLocalScale(Vec3{ 1280,720,1 });
+
 	ClearSprite = ClearObject->addComponent<GUISpriteRenderer>();
 	ClearSprite->setTextureByName("clear");
 
-	//SceneEffectƒIƒuƒWƒFƒNƒg¶¬
+	//Sound
+	pAudio = ClearObject->addComponent<AudioSource>();
+	pAudio->setAudio("Endeng");
+
+	pAudio->play(255);
+	//SceneEffectÆ’IÆ’uÆ’WÆ’FÆ’NÆ’gÂÂ¶ÂÂ¬
 	pSceneEndEffect = new GameObject(this);
 	m_pSceneEndEffect = pSceneEndEffect->addComponent<SceneEffect>();
 	m_pSceneEndEffect->Initialize(1);
