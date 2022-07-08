@@ -2,6 +2,7 @@
 #include "Device/GameDevice.h"
 #include "Device/GameInput.h"
 #include "Utility/ModelGameObjectHelper.h"
+#include "Component/Player/PlayerParamManager.h"
 void GoalObject::onStart()
 {
 	goalObj = new GameObject(getUser().getGameMediator());
@@ -10,7 +11,7 @@ void GoalObject::onStart()
 	goalObjSprite =goalObj->addComponent<GUISpriteRenderer>();
 	goalObjSprite->setTextureByName("goal");
 	goalObjSprite->setActive(false);
-
+	velocity = 0.0f;
 	//Sound�֘A
 	pAudio = goalObj->addComponent<AudioSource>();
 	pAudio->setAudio("ClearJG");
@@ -20,15 +21,25 @@ void GoalObject::onStart()
 
 void GoalObject::onUpdate()
 {
-	if (goal->getTransform().getLocalPosition().distance(pPlayer->getTransform().getLocalPosition())<GOAL_DISTANCE)
+	Vec3 pos = goal->getTransform().getLocalPosition();
+	velocity = pPlayer->getComponent<PlayerParamManager>()->getMoveSpeed();
+	for (int i = 0; i < 60; i++)
 	{
+		pos.z += velocity / 60;
 		if(isGoal==false)pAudio->play();
 
-		GameDevice::getGameTime().m_TimeScale = 0;
-		GameInput::getInstance().setLock(true);
-	/*	goalObjSprite->setActive(true);*/
-		isGoal = true;
+		if (pos.distance(pPlayer->getTransform().getLocalPosition()) < GOAL_DISTANCE&&!isGoal)
+		{
+			//Sound�Đ�
+			pAudio->play();
+			 
+			GameDevice::getGameTime().m_TimeScale = 0;
+			GameInput::getInstance().setLock(true);
+			/*	goalObjSprite->setActive(true);*/
+			isGoal = true;
+		}
 	}
+	
 }
 
 void GoalObject::Initialize(Vec3 goalPos,GameObject* player)
