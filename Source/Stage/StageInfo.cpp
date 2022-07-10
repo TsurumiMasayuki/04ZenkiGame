@@ -68,8 +68,17 @@ StageInfo::StageInfo(const nlohmann::json& file)
 		//transformを取得
 		const auto& transform = object["transform"];
 
+		const auto& position = transform["translation"];
+
+		float posX = std::stof((std::string)(position[0]));
+		float posY = std::stof((std::string)(position[1]));
+		float posZ = std::stof((std::string)(position[2]));
+
 		//オブジェクトの座標
-		objectPlaceInfo.m_Position = Vec3(transform["translation"][0], transform["translation"][1], transform["translation"][2]);
+		objectPlaceInfo.m_Position = Vec3(posX,
+			posY,
+			posZ
+		);
 
 		//円筒座標に変換
 		Vec3 cylinder = CoordConverter::cartesianToCylinder(objectPlaceInfo.m_Position);
@@ -77,11 +86,45 @@ StageInfo::StageInfo(const nlohmann::json& file)
 		//オブジェクトの円筒座標
 		objectPlaceInfo.m_CylinderCoord = cylinder;
 
+		const auto& rotation = transform["rotation"];
+
+		float rotX = std::stof((std::string)(rotation[0]));
+		float rotY = std::stof((std::string)(rotation[1]));
+		float rotZ = std::stof((std::string)(rotation[2]));
+
+		if (objectPlaceInfo.m_ObjectName == "GarssBlock")
+		{
+			rotX = 0.0f;
+			rotY = std::stof((std::string)(rotation[1]));
+			rotZ = std::stof((std::string)(rotation[2]));
+		}
+
 		//オブジェクトの角度
-		objectPlaceInfo.m_Angles = Vec3(transform["rotation"][0], transform["rotation"][1], transform["rotation"][2]);
+		objectPlaceInfo.m_Angles = Vec3(rotX,
+			rotY,
+			rotZ
+		);
+
+		const auto& scale = transform["scaling"];
+
+		float scaleX = std::stof((std::string)(scale[0]));
+		float scaleY = std::stof((std::string)(scale[1]));
+		float scaleZ = std::stof((std::string)(scale[2]));
+
+		if (objectPlaceInfo.m_ObjectName == "GarssBlock")
+		{
+			scaleY = std::stof((std::string)(scale[2]));
+			scaleZ = std::stof((std::string)(scale[1]));
+		}
+
+		if (objectPlaceInfo.m_Position.z > 300.0f)
+		{
+			scaleX *= 1.25f;
+			scaleY *= 1.25f;
+			scaleZ *= 1.25f;
+		}
 
 		//オブジェクトのスケール
-		Vec3 scale = Vec3(transform["scaling"][0], transform["scaling"][1], transform["scaling"][2]);
-		objectPlaceInfo.m_Scale = scale * 2.0f;
+		objectPlaceInfo.m_Scale = Vec3(scaleX, scaleY, scaleZ) * 2.0f;
 	}
 }

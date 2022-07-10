@@ -61,26 +61,11 @@ void PlayerAttack::onUpdate()
 
 	//入力されていたら
 	if (gameInput.getSliding() &&
-		gameInput.getPlayerDash() &&
 		m_SlidingTimer.isTime())
 	{
-		//スケールを縮める&その分移動
+		//回転する
 		m_pModelActionManager->enqueueAction(
-			new Action::Spawn(
-				{
-					//ちょっとジャンプする
-					new Action::Sequence(
-						{
-							new Action::EaseOutQuart(new Action::MoveTo(Vec3(1.0f, 0.0f, 0.0f), 0.25f)),
-							new Action::EaseInQuart(new Action::MoveTo(Vec3(-0.25f, 0.0f, 0.0f), 0.4f))
-						}
-					),
-				//スケールを縮める
-				new Action::EaseInBack(new Action::ScaleTo(m_OriginModelScale * 0.75f, 0.35f)),
-				//前転する
-				new Action::EaseOutSine(new Action::RotateBy(Vec3(0.0f, -380.0f, 0.0f), 0.5f))
-				}
-			)
+			new Action::RepeatForever(new Action::EaseOutSine(new Action::RotateBy(Vec3(0.0f, -360.0f, 0.0f), 0.5f)))
 		);
 
 		m_SlidingTimer.reset();
@@ -98,6 +83,9 @@ void PlayerAttack::onUpdate()
 		m_pModelTransform->setLocalPosition(m_OriginModelPosition);
 		m_pModelTransform->setLocalScale(m_OriginModelScale);
 		m_pModelTransform->setLocalAngles(m_OriginModelAngles);
+
+		//回転終了
+		m_pModelActionManager->forceNext();
 
 		m_pRightSideAttack->endAttack();
 		m_pLeftSideAttack->endAttack();

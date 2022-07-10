@@ -77,7 +77,7 @@ void StageLoader::createStageBase(const StageInfo& stageInfo, std::unordered_map
 			//åº§æ¨™è¨­å®š
 			pFloor->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(cylinder));
 			//ã‚µã‚¤ã‚ºè¨­å®š
-			pFloor->getTransform().setLocalScale(Vec3(1.0f, floorSize, floorSize));
+			pFloor->getTransform().setLocalScale(Vec3(0.5f, floorSize, floorSize));
 			//å›žè»¢è¨­å®š
 			pFloor->getTransform().setLocalAngleZ(MathUtility::toDegree(rad * i) - 10.0f);
 
@@ -116,6 +116,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 			pPlayer = *ppPlayer;
 
 			*ppPlayerModel = new GameObject(m_pGameMediator);
+			(*ppPlayer)->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
 			(*ppPlayer)->getTransform().setLocalScale(Vec3(0.1f));
 			(*ppPlayer)->addChild((**ppPlayerModel));
 			auto pPlayerActionManager = (*ppPlayer)->addComponent<Action::ActionManager>();
