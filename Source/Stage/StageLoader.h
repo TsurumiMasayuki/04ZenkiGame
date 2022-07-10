@@ -33,7 +33,8 @@ public:
 	GoalObject* GetGoal() { return m_pGoal;}
 private:
 	//�X�e�[�W�y��쐬
-	void createStageBase(const StageInfo& stageInfo);
+	void createStageBase(const StageInfo& stageInfo,
+		std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*>& renderHelpers);
 
 	//�I�u�W�F�N�g�쐬
 	void createObjects(const StageInfo& stageInfo,

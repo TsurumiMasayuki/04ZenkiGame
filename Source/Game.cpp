@@ -61,6 +61,8 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("monster_03", L"Resources/BBModels/moster_03.png");
 	GameDevice::getTextureManager().load("monster_04", L"Resources/BBModels/moster_04.png");
 	GameDevice::getTextureManager().load("monster_04b", L"Resources/BBModels/moster_04b.png");
+	GameDevice::getTextureManager().load("block_wall", L"Resources/BBModels/block_wall.png");
+	GameDevice::getTextureManager().load("block_floor", L"Resources/BBModels/block_floor.png");
 
 	GameDevice::getTextureManager().load("ui_crystal", L"Resources/ui_crystal/crystal_red_tex.png");
 

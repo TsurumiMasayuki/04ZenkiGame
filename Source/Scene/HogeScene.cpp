@@ -98,6 +98,8 @@ void HogeScene::start()
 			m_BBModelLoader.load("Resources/BBModels/moster_03.geo.json", "monster_03", "monster_03");
 			m_BBModelLoader.load("Resources/BBModels/moster_04.geo.json", "monster_04", "monster_04");
 			m_BBModelLoader.load("Resources/BBModels/moster_04b.geo.json", "monster_04b", "monster_04b");
+			m_BBModelLoader.load("Resources/BBModels/block_wall.geo.json", "block_wall", "block_wall");
+			m_BBModelLoader.load("Resources/BBModels/block_floor.json", "block_floor", "block_floor");
 			m_BBModelLoader.load("Resources/BBModels/block_door.geo.json", "block_door_tex", "block_door_tex");
 		}
 
@@ -124,6 +126,16 @@ void HogeScene::start()
 			pRenderer->setMesh(m_pCube);
 			m_RenderHelpers.emplace("monster_04b", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("monster_04b"), pRenderer));
 		}
+		{
+			auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
+			pRenderer->setMesh(m_pCube);
+			m_RenderHelpers.emplace("block_wall", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("block_wall"), pRenderer));
+		}
+		{
+			auto pRenderer = pRendererObj->addComponent<InstancedRenderer<BBInstanceInfo>>();
+			pRenderer->setMesh(m_pCube);
+			m_RenderHelpers.emplace("block_floor", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("block_floor"), pRenderer));
+		}
 
 		//ステージ生成
 		JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
@@ -141,7 +153,7 @@ void HogeScene::start()
 
 		auto pFollow = pCameraObject->addComponent<LerpFollow>();
 		pFollow->SetGameObject(m_pPlayer);
-		pFollow->Setdistance(Vec3(8.0f, 0.0f, -8.0f));
+		pFollow->Setdistance(Vec3(4.0f, 0.0f, -8.0f));
 
 		//Sound関連
 		//Sound関連用Object生成
