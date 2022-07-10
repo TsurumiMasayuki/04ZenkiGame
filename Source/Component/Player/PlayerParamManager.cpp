@@ -50,27 +50,7 @@ void PlayerParamManager::onUpdate()
 		}
 
 	}
-	else
-	{
-		//ダッシュボタンが押されているなら
-		if (GameInput::getInstance().getPlayerDash() && m_Fuel > 0.0f)
-		{
-			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_DashSpeedUpTime;
 
-			//加速
-			m_Acceleration += deltaTime * timeMultiplier;
-
-			//燃料減少
-			m_Fuel -= deltaTime;
-			m_Fuel = std::fmaxf(0.0f, m_Fuel);
-		}
-		else if (!GameInput::getInstance().getPlayerDash())
-		{
-			//燃料増加
-			m_Fuel += deltaTime;
-			m_Fuel = std::fminf(5.0f, m_Fuel);
-		}
-	}
 	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
 	{
 		//加速度を0にする
