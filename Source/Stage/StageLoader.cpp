@@ -115,8 +115,11 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 
 			pPlayer = *ppPlayer;
 
+			Vec3 fix = CoordConverter::cartesianToCylinder(objectPlaceInfo.m_Position);
+			fix.x += 2.0f;
+
 			*ppPlayerModel = new GameObject(m_pGameMediator);
-			(*ppPlayer)->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
+			(*ppPlayer)->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(fix));
 			(*ppPlayer)->getTransform().setLocalScale(Vec3(0.1f));
 			(*ppPlayer)->addChild((**ppPlayerModel));
 			auto pPlayerActionManager = (*ppPlayer)->addComponent<Action::ActionManager>();

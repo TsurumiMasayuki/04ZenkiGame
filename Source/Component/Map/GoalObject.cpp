@@ -26,7 +26,7 @@ void GoalObject::onUpdate()
 	for (int i = 0; i < 60; i++)
 	{
 		pos.z += velocity / 60;
-		if(isGoal==false)pAudio->play();
+		//if(isGoal==false)pAudio->play();
 
 		if (pos.distance(pPlayer->getTransform().getLocalPosition()) < GOAL_DISTANCE&&!isGoal)
 		{

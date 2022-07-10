@@ -11,7 +11,7 @@ void PlayerSound::onUpdate()
 	//ダッシュ使用時
 	if (GameInput::getInstance().getPlayerDash())
 	{
-		if(GameInput::getInstance().getPlayerDashStart())
+		if (GameInput::getInstance().getPlayerDashStart())
 			dash();
 		//スライディング使用時
 		if (GameInput::getInstance().getSliding())
@@ -37,7 +37,7 @@ void PlayerSound::play(const std::string& audioName, int loopCount, float volume
 
 void PlayerSound::dash()
 {
-	play("Dash",0,0.5f);
+	play("Dash", 0, 0.5f);
 }
 
 void PlayerSound::sliding()
@@ -47,5 +47,5 @@ void PlayerSound::sliding()
 
 void PlayerSound::walk()
 {
-	if (!pAudio->isPlaying())play("Walk", 0, 0.1f);
+	if (!pAudio->isPlaying()) play("Walk", 0, 0.1f);
 }

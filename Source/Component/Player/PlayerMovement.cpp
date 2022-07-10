@@ -28,15 +28,11 @@ void PlayerMovement::onStart()
 {
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 
-	m_CylinderCoord.y = MathUtility::toRadian(90.0f);
-	m_CylinderCoord.z = getTransform().getLocalPosition().z;
-
 	m_pActionManager = getUser().getComponent<Action::ActionManager>();
 
 	m_pBoxCollider = getUser().getComponent<BoxColiiderBt>();
 
-	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
-	getTransform().setLocalPosition(cartCoord);
+	m_CylinderCoord = CoordConverter::cylinderToCartesian(getTransform().getLocalPosition());
 }
 
 void PlayerMovement::onUpdate()
@@ -88,7 +84,7 @@ void PlayerMovement::onUpdate()
 	}
 
 	convertCoord();
-		
+
 	//回転を決める
 	float yAngle = moveDir.x == 0.0f ? 0.0f : moveDir.x * 50.0f - moveDir.z * 35.0f;
 
@@ -97,7 +93,7 @@ void PlayerMovement::onUpdate()
 	getUser().getChildren().at(0)->getTransform().setLocalAngles(angles);
 
 	//回転
-	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(m_CylinderCoord.y)));
+	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(m_CylinderCoord.y) + 180.0f));
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)
@@ -118,13 +114,12 @@ void PlayerMovement::dash(const Vec3& moveDir)
 	//deltaTimeを取得
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
+	Vec3 preCylinderCoord = m_CylinderCoord;
+
 	//座標更新
 	m_CylinderCoord.y -= moveDir.x * deltaTime;
 	m_CylinderCoord.z += moveDir.z * speed * deltaTime;
-}
 
-void PlayerMovement::convertCoord()
-{
 	//円筒座標をデカルト座標に変換
 	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
 
@@ -132,21 +127,26 @@ void PlayerMovement::convertCoord()
 	Vec3 diff = cartCoord - m_PrePosition;
 	float sqrLength = diff.sqrLength();
 
-	if (sqrLength > 0.0f)
-	{
-		RayHitResult result;
-		if (getUser().getGameMediator()->getPhysicsManager()->raycastSingle(m_PrePosition, cartCoord, result))
-		{
-			if (!result.pHitObject->compareTag("Enemy"))
-			{
-				float distance = m_PrePosition.distance(result.hitPoint);
-				if (distance < 0.1f)
-					getTransform().setLocalPosition(m_PrePosition);
+	if (diff.length() == 0.0f) return;
 
-				return;
+	RayHitResult result;
+	if (getUser().getGameMediator()->getPhysicsManager()->raycastSingle(getTransform().getLocalPosition(), cartCoord, result))
+	{
+		if (!result.pHitObject->compareTag("Enemy"))
+		{
+			float distance = m_PrePosition.distance(result.hitPoint);
+			if (distance < 0.5f)
+			{
+				m_CylinderCoord = preCylinderCoord;
 			}
 		}
 	}
+}
+
+void PlayerMovement::convertCoord()
+{
+	//円筒座標をデカルト座標に変換
+	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
 
 	getTransform().setLocalPosition(cartCoord);
 	m_pBoxCollider->getRigidBody()->activate(true);
