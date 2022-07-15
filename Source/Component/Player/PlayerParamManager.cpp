@@ -30,6 +30,8 @@ void PlayerParamManager::onUpdate()
 {
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
+	m_KnockBack -= m_KnockBack.normalized() * 3.0f * GameDevice::getGameTime().getDeltaTime();
+
 	if (isHitEnemy)
 	{
 		if (m_RollingTime==0.0f)
@@ -105,6 +107,16 @@ const Vec3& PlayerParamManager::getMoveDir() const
 void PlayerParamManager::setMoveDir(const Vec3& moveDir)
 {
 	m_MoveDir = moveDir;
+}
+
+void PlayerParamManager::addKnockBack(const Vec3& knockback)
+{
+	m_KnockBack += knockback;
+}
+
+const Vec3& PlayerParamManager::getKnockBack()
+{
+	return m_KnockBack;
 }
 
 float PlayerParamManager::getMoveSpeed() const
