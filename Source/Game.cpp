@@ -54,8 +54,9 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("num9", L"Resources/textures/9.png");
 	GameDevice::getTextureManager().load("mask", L"Resources/textures/mask.png");
 	GameDevice::getTextureManager().load("clear", L"Resources/textures/Ending.png");
+	GameDevice::getTextureManager().load("select", L"Resources/textures/Select.png");
 	GameDevice::getTextureManager().load("gameOver", L"Resources/textures/GameOverScene.png");
-	
+
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
 	GameDevice::getTextureManager().load("monster_03", L"Resources/BBModels/moster_03.png");
