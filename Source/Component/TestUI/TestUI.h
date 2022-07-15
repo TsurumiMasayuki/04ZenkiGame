@@ -3,6 +3,7 @@
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Actor/Base/GameObject.h"
 #include <vector>
+#include "Component/Player/PlayerParamManager.h"
 class TestUI
 	:public AbstractComponent
 {
@@ -38,7 +39,6 @@ public:
 	/// <param name="fuel">残燃料</param>
 	void SetParam(float health, float acceleration, float fuel) { this->health = health; this->acceleration = acceleration;  this->fuel= fuel; }
 	
-
 private:
 	//各UIのデータ
 	GameObject* healthGaugeObj = nullptr;
@@ -68,7 +68,6 @@ private:
     float MAX_FUEL = 5.0f;
 	//現在値
 	float health;
-	float acceleration;
 	float fuel;
 	//初期座標
 	Vec3 startHealthPos;
@@ -84,5 +83,11 @@ private:
 	float fuelGaugeScale;
 	//加速ゲージ計算用変数
 	float accAdjustNum = 180;
+
+	//加速エフェクト
+	float acceleration;
+	GameObject* pPlayer = nullptr;
+	GameObject* accEffectObj = nullptr;
+	GUISpriteRenderer* accSprite = nullptr;
 };
 
