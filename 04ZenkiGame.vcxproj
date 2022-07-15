@@ -194,6 +194,7 @@
     <ClCompile Include="Source\Device\ControllerInput.cpp" />
     <ClCompile Include="Source\Device\GameInput.cpp" />
     <ClCompile Include="Source\Effect\CollectItemEffect.cpp" />
+    <ClCompile Include="Source\Effect\HitStop.cpp" />
     <ClCompile Include="Source\Effect\TestFlameEffect.cpp" />
     <ClCompile Include="Source\Effect\TestPlayerAttackedEffect.cpp" />
     <ClCompile Include="Source\Game.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="Source\Device\ControllerInput.h" />
     <ClInclude Include="Source\Device\GameInput.h" />
     <ClInclude Include="Source\Effect\CollectItemEffect.h" />
+    <ClInclude Include="Source\Effect\HitStop.h" />
     <ClInclude Include="Source\Effect\TestFlameEffect.h" />
     <ClInclude Include="Source\Effect\TestPlayerAttackedEffect.h" />
     <ClInclude Include="Source\Game.h" />
