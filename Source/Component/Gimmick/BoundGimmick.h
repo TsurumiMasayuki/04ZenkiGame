@@ -4,7 +4,7 @@
 #include "Utility/Timer.h"
 
 class BoundGimmick
-	: AbstractComponent
+	: public AbstractComponent
 {
 public:
 	// AbstractComponent ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
