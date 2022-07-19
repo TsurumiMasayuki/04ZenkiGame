@@ -1,7 +1,7 @@
 #pragma once
 #include "Component/Base/AbstractComponent.h"
 #include "PlayerStats.h"
-
+#include "Component/TestUI/TestUI.h"
 class TestUI;
 class Option;
 class CollectItemUI;
@@ -48,7 +48,7 @@ private:
 	Option* m_Option;
 	CollectItemUI* m_Item;
 	TimeLimitDraw* m_TimeLimit;
-
+	TestUI* m_testUI;
 	//‘Ì—Í
 	float m_Health = 5.0f;
 	//‰Á‘¬“x‚ðŽæ“¾
