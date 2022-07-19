@@ -24,6 +24,7 @@ void BoundGimmick::onUpdate()
 	// 時間が来たら切り替える
 	if (changeTime.isTime())
 	{
+		changeTime.reset();
 		isExpansion = !isExpansion;
 	}
 
@@ -40,9 +41,9 @@ void BoundGimmick::onUpdate()
 	// 跳ね返す
 	if (getUser().getTransform().getLocalPosition().distance(targetObj->getTransform().getLocalPosition()) < scale.x)
 	{
-		// 移動方向反転
-		Vec3 pMoveDir = targetObj->getComponent<PlayerParamManager>()->getMoveDir();
-		targetObj->getComponent<PlayerParamManager>()->setMoveDir(-pMoveDir);
+		Vec3 tmpDir = targetObj->getComponent<PlayerParamManager>()->getMoveDir();
+		float tmpSpeed = targetObj->getComponent<PlayerParamManager>()->getMoveSpeed();
+		targetObj->getComponent<PlayerParamManager>()->addKnockBack(tmpDir * tmpSpeed);
 	}
 
 	// サイズセット

@@ -56,6 +56,7 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("clear", L"Resources/textures/Ending.png");
 	GameDevice::getTextureManager().load("select", L"Resources/textures/Select.png");
 	GameDevice::getTextureManager().load("gameOver", L"Resources/textures/GameOverScene.png");
+	GameDevice::getTextureManager().load("accEffect", L"Resources/textures/accEffect.png");
 
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
