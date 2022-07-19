@@ -153,7 +153,7 @@ void HogeScene::start()
 
 		auto pFollow = pCameraObject->addComponent<LerpFollow>();
 		pFollow->SetGameObject(m_pPlayer);
-		pFollow->Setdistance(Vec3(4.0f, 0.0f, -8.0f));
+		pFollow->Setdistance(Vec3(5.0f, 0.0f, -10.0f));
 
 		//Sound関連
 		//Sound関連用Object生成
