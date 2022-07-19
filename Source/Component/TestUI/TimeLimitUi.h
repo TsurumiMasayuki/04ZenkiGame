@@ -40,8 +40,8 @@ public:
 
 	static void ResetNum(int& numFirst, int& numSecond)
 	{
-		numFirst = 6;
-		numSecond = 0;
+		numFirst = 9;
+		numSecond = 9;
 	}
 
 	static bool isMin(int& value) { return value < 0; }
