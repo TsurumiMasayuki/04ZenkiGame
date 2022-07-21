@@ -35,6 +35,7 @@ void PlayerParamManager::onUpdate()
 		if (m_RollingTime==0.0f)
 		{
 			m_RollingTime = 2.0f;
+			attackStock--;
 			isHitEnemy = false;
 		}
 		else
@@ -115,4 +116,9 @@ float PlayerParamManager::getMoveSpeed() const
 void PlayerParamManager::setMoveSpeed(float speed)
 {
 	m_BaseMoveSpeed = speed;
+}
+
+void PlayerParamManager::attackStockAddition()
+{
+	if(attackStock<4)attackStock++;
 }

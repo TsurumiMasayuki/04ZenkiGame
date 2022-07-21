@@ -41,6 +41,9 @@ public:
 	//ˆÚ“®‘¬“x‚ğİ’è
 	void setMoveSpeed(float speed);
 
+	//Œ‚”jstock‚ğ‰ÁZ
+	void attackStockAddition();
+
 private:
 	Option* m_Option;
 	CollectItemUI* m_Item;
@@ -61,4 +64,6 @@ private:
 
 	bool isHitEnemy = false;
 	float m_RollingTime = 2.0;
+
+	int attackStock = 0;
 };

@@ -22,4 +22,5 @@ private:
 	const float GOAL_DISTANCE = 3.0f;
 	bool isGoal;
 	float velocity;
+	bool isSound;
 };

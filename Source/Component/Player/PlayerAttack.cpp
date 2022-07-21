@@ -120,7 +120,9 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 	if (!pHit->compareTag("Enemy"))
 		return;
 
+	//撃破時加速
 	m_pPlayerParam->setHitEnemy();
+	m_pPlayerParam->attackStockAddition();
 
 	if (m_pCameraActionManager->actionCount() == 0)
 		//カメラを揺らす
