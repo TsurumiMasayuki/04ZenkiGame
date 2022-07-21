@@ -24,7 +24,11 @@ void PlayerParamManager::onStart()
 
 	GameObject* timeLimitObj = new GameObject(getUser().getGameMediator());
 	m_TimeLimit = timeLimitObj->addComponent<TimeLimitDraw>();
+
+	GameObject* testUIObj = new GameObject(getUser().getGameMediator());
+	m_testUI = testUIObj->addComponent<TestUI>();
 }
+
 
 void PlayerParamManager::onUpdate()
 {
@@ -72,6 +76,8 @@ void PlayerParamManager::onUpdate()
 		m_MoveDir = GameInput::getInstance().getPlayerMove();
 		m_BaseMoveSpeed = m_Stats.m_WalkSpeed;
 	}
+	//UIƒNƒ‰ƒX‚Ö‰Á‘¬“x‚ð“n‚·
+	m_testUI->SetAcceleration(m_Acceleration);
 }
 
 bool PlayerParamManager::isFuelZero() const

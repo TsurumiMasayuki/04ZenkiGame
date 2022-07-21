@@ -9,9 +9,9 @@ void TimeLimitDraw::onStart()
 	{
 		objFirst[i]  = new GameObject(getUser().getGameMediator());
 		objSecond[i] = new GameObject(getUser().getGameMediator());
-		objFirst[i]->getTransform().setLocalPosition(Vec3{ -32, 330,10 });
+		objFirst[i]->getTransform().setLocalPosition(Vec3{ -536, 315,10 });
         objFirst[i]->getTransform().setLocalScale(Vec3{ 64,64,1 });
-        objSecond[i]->getTransform().setLocalPosition(Vec3{ 32,330,10 });
+        objSecond[i]->getTransform().setLocalPosition(Vec3{ -472,315,10 });
         objSecond[i]->getTransform().setLocalScale(Vec3{ 64,64,1 });
 
 
