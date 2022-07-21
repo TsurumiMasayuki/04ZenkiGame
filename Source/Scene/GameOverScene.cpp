@@ -6,7 +6,14 @@
 
 std::string GameOverScene::nextScene()
 {
-	return "Title";
+	if (isSelectToTitle)
+	{
+		return "Title";
+	}
+	else
+	{
+		return "Hoge";
+	}
 }
 
 bool GameOverScene::isEnd()
@@ -16,6 +23,17 @@ bool GameOverScene::isEnd()
 
 void GameOverScene::start()
 {
+	SelectOnPos = Vec3{ 340,-250,1 };
+	SelectOffPos = Vec3{ -340,-250,1 };
+	isSelectToTitle = false;
+
+	gameOverSelectObject = new GameObject(this);
+	gameOverSelectSprite = gameOverSelectObject->addComponent<GUISpriteRenderer>();
+	gameOverSelectSprite->setTextureByName("select");
+	gameOverSelectSprite->getTransform().setLocalPosition(Vec3{ SelectOffPos });
+	gameOverSelectSprite->getTransform().setLocalScale(Vec3{ 350,356,1 });
+	gameOverSelectSprite->setActive(true);
+
 	//オブジェクト生成
 	gameOverObject = new GameObject(this);
 	gameOverSprite = gameOverObject->addComponent<GUISpriteRenderer>();
@@ -48,6 +66,20 @@ void GameOverScene::update()
 		{
 			m_pSceneEndEffect->StartEffect();
 		}
+	}
+
+	if (GameDevice::getInput().isKeyDown(DIK_RIGHT) || GameDevice::getInput().isKeyDown(DIK_LEFT))
+	{
+		isSelectToTitle = !isSelectToTitle;
+	}
+
+	if (isSelectToTitle)
+	{
+		gameOverSelectSprite->getTransform().setLocalPosition(Vec3{ SelectOnPos });
+	}
+	else
+	{
+		gameOverSelectSprite->getTransform().setLocalPosition(Vec3{ SelectOffPos });
 	}
 }
 

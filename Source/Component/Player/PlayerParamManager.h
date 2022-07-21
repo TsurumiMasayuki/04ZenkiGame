@@ -1,7 +1,7 @@
 #pragma once
 #include "Component/Base/AbstractComponent.h"
 #include "PlayerStats.h"
-
+#include "Component/TestUI/TestUI.h"
 class TestUI;
 class Option;
 class CollectItemUI;
@@ -34,6 +34,9 @@ public:
 	//ˆÚ“®•ûŒü‚ğİ’è
 	void setMoveDir(const Vec3& moveDir);
 
+	void addKnockBack(const Vec3& knockback);
+	const Vec3& getKnockBack();
+
 	void setHitEnemy() { isHitEnemy = true; }
 
 	//ˆÚ“®‘¬“x‚ğæ“¾
@@ -48,7 +51,7 @@ private:
 	Option* m_Option;
 	CollectItemUI* m_Item;
 	TimeLimitDraw* m_TimeLimit;
-
+	TestUI* m_testUI;
 	//‘Ì—Í
 	float m_Health = 5.0f;
 	//‰Á‘¬“x‚ğæ“¾
@@ -58,6 +61,7 @@ private:
 
 	float m_BaseMoveSpeed;
 	Vec3 m_MoveDir;
+	Vec3 m_KnockBack;
 
 	bool m_IsLock;
 	PlayerStats m_Stats;

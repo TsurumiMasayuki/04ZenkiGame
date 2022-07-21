@@ -24,11 +24,17 @@ void PlayerParamManager::onStart()
 
 	GameObject* timeLimitObj = new GameObject(getUser().getGameMediator());
 	m_TimeLimit = timeLimitObj->addComponent<TimeLimitDraw>();
+
+	GameObject* testUIObj = new GameObject(getUser().getGameMediator());
+	m_testUI = testUIObj->addComponent<TestUI>();
 }
+
 
 void PlayerParamManager::onUpdate()
 {
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
+
+	m_KnockBack -= m_KnockBack.normalized() * 3.0f * GameDevice::getGameTime().getDeltaTime();
 
 	if (isHitEnemy)
 	{
@@ -71,6 +77,8 @@ void PlayerParamManager::onUpdate()
 		m_MoveDir = GameInput::getInstance().getPlayerMove();
 		m_BaseMoveSpeed = m_Stats.m_WalkSpeed;
 	}
+	//UIƒNƒ‰ƒX‚Ö‰Á‘¬“x‚ð“n‚·
+	m_testUI->SetAcceleration(m_Acceleration);
 }
 
 bool PlayerParamManager::isFuelZero() const
@@ -106,6 +114,16 @@ const Vec3& PlayerParamManager::getMoveDir() const
 void PlayerParamManager::setMoveDir(const Vec3& moveDir)
 {
 	m_MoveDir = moveDir;
+}
+
+void PlayerParamManager::addKnockBack(const Vec3& knockback)
+{
+	m_KnockBack += knockback;
+}
+
+const Vec3& PlayerParamManager::getKnockBack()
+{
+	return m_KnockBack;
 }
 
 float PlayerParamManager::getMoveSpeed() const

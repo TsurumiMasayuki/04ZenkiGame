@@ -120,6 +120,9 @@ void PlayerMovement::dash(const Vec3& moveDir)
 	m_CylinderCoord.y -= moveDir.x * deltaTime;
 	m_CylinderCoord.z += moveDir.z * speed * deltaTime;
 
+	m_CylinderCoord.y -= m_pPlayerParam->getKnockBack().x * deltaTime;
+	m_CylinderCoord.z += m_pPlayerParam->getKnockBack().z * deltaTime;
+
 	//円筒座標をデカルト座標に変換
 	Vec3 cartCoord = CoordConverter::cylinderToCartesian(m_CylinderCoord);
 
