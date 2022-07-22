@@ -36,27 +36,7 @@ void PlayerParamManager::onUpdate()
 
 	m_KnockBack -= m_KnockBack.normalized() * 3.0f * GameDevice::getGameTime().getDeltaTime();
 
-	if (isHitEnemy)
-	{
-		if (m_RollingTime==0.0f)
-		{
-			m_RollingTime = 2.0f;
-			isHitEnemy = false;
-		}
-		else
-		{
-			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_AcceleratorSpeedUpTime;
-
-			//加速
-			m_Acceleration += deltaTime * timeMultiplier;
-
-			m_RollingTime -= deltaTime;
-			m_RollingTime = std::fmaxf(0.0f, m_RollingTime);
-
-		}
-
-	}
-
+	//通常時
 	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
 	{
 		//加速度を0にする
@@ -64,11 +44,47 @@ void PlayerParamManager::onUpdate()
 	}
 	else
 	{
-		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeedUpTime;
+		float timeMultiplier = 1.0f / m_Stats.m_WalkSpeedUpTime;
 
 		//加速
-		m_Acceleration += deltaTime * timeMultiplier;
+		if (m_Acceleration < m_Stats.m_WalkSpeed)
+			m_Acceleration += deltaTime * timeMultiplier;
 	}
+
+	//敵撃破関連
+	if (isHitEnemy)
+	{
+		if (m_RollingTime==0.0f)
+		{
+			m_RollingTime = 2.0f;
+			attackStock--;
+			isHitEnemy = false;
+		}
+		else
+		{
+			float timeMultiplier = 1.0f / m_Stats.m_AcceleratorSpeedUpTime;
+
+			//加速
+			if(m_Acceleration< m_Stats.m_AcceleratorSpeed)
+				m_Acceleration += deltaTime * timeMultiplier;
+
+			m_RollingTime -= deltaTime;
+			m_RollingTime = std::fmaxf(0.0f, m_RollingTime);
+
+		}
+
+	}
+	//ローリング時
+	if (GameInput::getInstance().getSliding())
+	{
+		float timeMultiplier = 1.0f / m_Stats.m_DashSpeedUpTime;
+
+		//加速
+		if (m_Acceleration < m_Stats.m_DashSpeed)
+			m_Acceleration += deltaTime * timeMultiplier;
+
+	}
+
 
 	//ロックされていないなら移動方向を設定
 	if (!m_IsLock)
@@ -97,7 +113,7 @@ float PlayerParamManager::getAcceleration() const
 
 void PlayerParamManager::onDamage()
 {
-	m_Acceleration = 0.0f;
+	m_Acceleration = 1.0f;
 }
 
 void PlayerParamManager::lockPlayerMove(bool isLock)
@@ -133,4 +149,9 @@ float PlayerParamManager::getMoveSpeed() const
 void PlayerParamManager::setMoveSpeed(float speed)
 {
 	m_BaseMoveSpeed = speed;
+}
+
+void PlayerParamManager::attackStockAddition()
+{
+	if(attackStock<4)attackStock++;
 }

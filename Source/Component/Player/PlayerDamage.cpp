@@ -44,7 +44,7 @@ void PlayerDamage::onCollisionEnter(GameObject* pHit)
 	//ƒ_ƒ[ƒW‚ðŽó‚¯‚é
 	m_pPlayerParamManager->onDamage();
 	m_pPlayerParamManager->lockPlayerMove(true);
-	m_pPlayerParamManager->setMoveSpeed(0.0f);
+	m_pPlayerParamManager->setMoveSpeed(2.0f);
 	m_pPlayerParamManager->setMoveDir(Vec3::zero());
 
 	auto pParam = m_pPlayerParamManager;

@@ -37,12 +37,15 @@ public:
 	void addKnockBack(const Vec3& knockback);
 	const Vec3& getKnockBack();
 
-	void setHitEnemy() { isHitEnemy = true; }
+	void setHitEnemy() { PlayerParamManager::isHitEnemy = true; }
 
 	//ˆÚ“®‘¬“x‚ğæ“¾
 	float getMoveSpeed() const;
 	//ˆÚ“®‘¬“x‚ğİ’è
 	void setMoveSpeed(float speed);
+
+	//Œ‚”jstock‚ğ‰ÁZ
+	void attackStockAddition();
 
 private:
 	Option* m_Option;
@@ -65,4 +68,6 @@ private:
 
 	bool isHitEnemy = false;
 	float m_RollingTime = 2.0;
+
+	int attackStock = 0;
 };
