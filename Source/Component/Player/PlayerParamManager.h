@@ -37,7 +37,7 @@ public:
 	void addKnockBack(const Vec3& knockback);
 	const Vec3& getKnockBack();
 
-	void setHitEnemy() { isHitEnemy = true; }
+	void setHitEnemy() { PlayerParamManager::isHitEnemy = true; }
 
 	//ˆÚ“®‘¬“x‚ðŽæ“¾
 	float getMoveSpeed() const;

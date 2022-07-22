@@ -36,6 +36,22 @@ void PlayerParamManager::onUpdate()
 
 	m_KnockBack -= m_KnockBack.normalized() * 3.0f * GameDevice::getGameTime().getDeltaTime();
 
+	//通常時
+	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
+	{
+		//加速度を0にする
+		m_Acceleration = 0.0f;
+	}
+	else
+	{
+		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeedUpTime;
+
+		//加速
+		if (m_Acceleration < JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeed)
+			m_Acceleration += deltaTime * timeMultiplier;
+	}
+
+	//敵撃破関連
 	if (isHitEnemy)
 	{
 		if (m_RollingTime==0.0f)
@@ -49,7 +65,8 @@ void PlayerParamManager::onUpdate()
 			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_AcceleratorSpeedUpTime;
 
 			//加速
-			m_Acceleration += deltaTime * timeMultiplier;
+			if(m_Acceleration< JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_AcceleratorSpeed)
+				m_Acceleration += deltaTime * timeMultiplier;
 
 			m_RollingTime -= deltaTime;
 			m_RollingTime = std::fmaxf(0.0f, m_RollingTime);
@@ -57,19 +74,17 @@ void PlayerParamManager::onUpdate()
 		}
 
 	}
-
-	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
+	//ローリング時
+	if (GameInput::getInstance().getPlayerDash())
 	{
-		//加速度を0にする
-		m_Acceleration = 0.0f;
-	}
-	else
-	{
-		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeedUpTime;
+		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_DashSpeedUpTime;
 
 		//加速
-		m_Acceleration += deltaTime * timeMultiplier;
+		if (m_Acceleration < JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_DashSpeed)
+			m_Acceleration += deltaTime * timeMultiplier;
+
 	}
+
 
 	//ロックされていないなら移動方向を設定
 	if (!m_IsLock)
