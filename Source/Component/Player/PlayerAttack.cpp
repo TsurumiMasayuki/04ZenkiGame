@@ -20,6 +20,7 @@
 #include "Device/ControllerInput.h"
 
 #include "Effect/TestVibrationEffect.h"
+#include "Effect/HitStop.h"
 
 #include "Utility/JsonFileManager.h"
 
@@ -159,4 +160,6 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 
 	//飛ばす
 	pActionManager->enqueueAction(pSpawn);
+
+	HitStop::getInstance().Start(0.1f, 1.0f);
 }

@@ -117,13 +117,6 @@ StageInfo::StageInfo(const nlohmann::json& file)
 			scaleZ = std::stof((std::string)(scale[1]));
 		}
 
-		if (objectPlaceInfo.m_Position.z > 300.0f)
-		{
-			scaleX *= 1.25f;
-			scaleY *= 1.25f;
-			scaleZ *= 1.25f;
-		}
-
 		//オブジェクトのスケール
 		objectPlaceInfo.m_Scale = Vec3(scaleX, scaleY, scaleZ) * 2.0f;
 	}
