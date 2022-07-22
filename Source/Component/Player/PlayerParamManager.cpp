@@ -44,10 +44,10 @@ void PlayerParamManager::onUpdate()
 	}
 	else
 	{
-		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeedUpTime;
+		float timeMultiplier = 1.0f / m_Stats.m_WalkSpeedUpTime;
 
 		//‰Á‘¬
-		if (m_Acceleration < JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeed)
+		if (m_Acceleration < m_Stats.m_WalkSpeed)
 			m_Acceleration += deltaTime * timeMultiplier;
 	}
 
@@ -62,10 +62,10 @@ void PlayerParamManager::onUpdate()
 		}
 		else
 		{
-			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_AcceleratorSpeedUpTime;
+			float timeMultiplier = 1.0f / m_Stats.m_AcceleratorSpeedUpTime;
 
 			//‰Á‘¬
-			if(m_Acceleration< JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_AcceleratorSpeed)
+			if(m_Acceleration< m_Stats.m_AcceleratorSpeed)
 				m_Acceleration += deltaTime * timeMultiplier;
 
 			m_RollingTime -= deltaTime;
@@ -75,12 +75,12 @@ void PlayerParamManager::onUpdate()
 
 	}
 	//ƒ[ƒŠƒ“ƒOŽž
-	if (GameInput::getInstance().getPlayerDash())
+	if (GameInput::getInstance().getSliding())
 	{
-		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_DashSpeedUpTime;
+		float timeMultiplier = 1.0f / m_Stats.m_DashSpeedUpTime;
 
 		//‰Á‘¬
-		if (m_Acceleration < JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_DashSpeed)
+		if (m_Acceleration < m_Stats.m_DashSpeed)
 			m_Acceleration += deltaTime * timeMultiplier;
 
 	}
@@ -113,7 +113,7 @@ float PlayerParamManager::getAcceleration() const
 
 void PlayerParamManager::onDamage()
 {
-	m_Acceleration = 0.0f;
+	m_Acceleration = 1.0f;
 }
 
 void PlayerParamManager::lockPlayerMove(bool isLock)
