@@ -10,6 +10,7 @@
 #include "Component/Player/PlayerStats.h"
 
 #include "Device/ControllerInput.h"
+#include "Effect/HitStop.h"
 
 Game::Game(HINSTANCE& hinstance, HWND& hwnd)
 	: AbstractGame(hinstance, hwnd)
@@ -113,6 +114,8 @@ void Game::onUpdate()
 		JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
 
 	ControllerInput::getInstance().update();
+
+	HitStop::getInstance().update();
 }
 
 void Game::onShutdown()
