@@ -13,12 +13,11 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-private:
-	GUISpriteRenderer* numTexFirst[10];
-	GUISpriteRenderer* numTexSecond[10];
+	void SetSprite(GUISpriteRenderer* sprite[3][10]);
 
+private:
+	GameObject* timeLimitObject[4][10];
+	GUISpriteRenderer* timeLimitSprite[4][10];
 	TimeLimitUi* GameObj;
-	GameObject* objFirst[10];
-	GameObject* objSecond[10];
 };
 

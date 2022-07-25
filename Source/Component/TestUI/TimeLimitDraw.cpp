@@ -5,62 +5,38 @@
 
 void TimeLimitDraw::onStart()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		objFirst[i]  = new GameObject(getUser().getGameMediator());
-		objSecond[i] = new GameObject(getUser().getGameMediator());
-		objFirst[i]->getTransform().setLocalPosition(Vec3{ -536, 315,10 });
-        objFirst[i]->getTransform().setLocalScale(Vec3{ 64,64,1 });
-        objSecond[i]->getTransform().setLocalPosition(Vec3{ -472,315,10 });
-        objSecond[i]->getTransform().setLocalScale(Vec3{ 64,64,1 });
+		for (int j = 0; j < 10; j++)
+		{
+			timeLimitObject[i][j] = new GameObject(getUser().getGameMediator());
+			timeLimitObject[i][j]->getTransform().setLocalPosition(Vec3{ (float)-530 + (64 * i),266,10 });
+			timeLimitObject[i][j]->getTransform().setLocalScale(Vec3{ 64,64,1 });
+		
+			timeLimitSprite[i][j] = timeLimitObject[i][j]->addComponent<GUISpriteRenderer>();
+			timeLimitSprite[i][j]->setActive(false);
+		}
+	}
 
-
-		numTexFirst[i] = objFirst[i]->addComponent<GUISpriteRenderer>();
-		numTexSecond[i] = objSecond[i]->addComponent<GUISpriteRenderer>();
-		numTexFirst[i]->setActive(false);
-		numTexSecond[i]->setActive(false);
-	}	
-
-	GameObj = objFirst[0]->addComponent<TimeLimitUi>();
-	GameObj->SetDead(false);
-
-	numTexFirst[0]->setTextureByName("num0");
-	numTexFirst[1]->setTextureByName("num1");
-	numTexFirst[2]->setTextureByName("num2");
-	numTexFirst[3]->setTextureByName("num3");
-	numTexFirst[4]->setTextureByName("num4");
-	numTexFirst[5]->setTextureByName("num5");
-	numTexFirst[6]->setTextureByName("num6");
-	numTexFirst[7]->setTextureByName("num7");
-	numTexFirst[8]->setTextureByName("num8");
-	numTexFirst[9]->setTextureByName("num9");
-
-	numTexSecond[0]->setTextureByName("num0");
-	numTexSecond[1]->setTextureByName("num1");
-	numTexSecond[2]->setTextureByName("num2");
-	numTexSecond[3]->setTextureByName("num3");
-	numTexSecond[4]->setTextureByName("num4");
-	numTexSecond[5]->setTextureByName("num5");
-	numTexSecond[6]->setTextureByName("num6");
-	numTexSecond[7]->setTextureByName("num7");
-	numTexSecond[8]->setTextureByName("num8");
-	numTexSecond[9]->setTextureByName("num9");
+	SetSprite(&timeLimitSprite[0]);
+	GameObj = timeLimitObject[0][0]->addComponent<TimeLimitUi>();
 }
 
 void TimeLimitDraw::onUpdate()
 {
-	if (!GameObj->isMin(TimeLimitUi::GetLimitFirst()))
+	for (int i = 0; i < 4; i++)
 	{
-		for (int i = 0; i < 10; i++)
+		for (int j = 0; j < 10; j++)
 		{
-			bool firstNum = TimeLimitUi::GetLimitFirst() == i;
-			bool secondNum = TimeLimitUi::GetLimitSecond() == i;
+			bool firstNum  = TimeLimitUi::GetLimitFirst()  == j;
+			bool secondNum = TimeLimitUi::GetLimitSecond() == j;
 
-			numTexFirst[i]->setActive(firstNum);
-			numTexSecond[i]->setActive(secondNum);
+			timeLimitSprite[0][j]->setActive(firstNum);
+			timeLimitSprite[1][j]->setActive(secondNum);
 		}
 	}
-	else if (GameObj->isMin(TimeLimitUi::GetLimitFirst()))
+
+	if (GameObj->isMin(TimeLimitUi::GetLimitFirst()))
 	{
 		GameObj->SetDead(true);
 		GameObj->ResetNum(TimeLimitUi::GetLimitFirst(), TimeLimitUi::GetLimitSecond());
@@ -70,5 +46,22 @@ void TimeLimitDraw::onUpdate()
 	{
 		TimeLimitUi::SetNum(TimeLimitUi::GetLimitSecond());
 		TimeLimitUi::ReduceTime(TimeLimitUi::GetLimitFirst());
+	}
+}
+
+void TimeLimitDraw::SetSprite(GUISpriteRenderer* sprite[3][10])
+{
+	for (int i = 0; i < 4; i++)
+	{
+		sprite[i][0]->setTextureByName("num0");
+		sprite[i][1]->setTextureByName("num1");
+		sprite[i][2]->setTextureByName("num2");
+		sprite[i][3]->setTextureByName("num3");
+		sprite[i][4]->setTextureByName("num4");
+		sprite[i][5]->setTextureByName("num5");
+		sprite[i][6]->setTextureByName("num6");
+		sprite[i][7]->setTextureByName("num7");
+		sprite[i][8]->setTextureByName("num8");
+		sprite[i][9]->setTextureByName("num9");
 	}
 }

@@ -20,6 +20,7 @@
 #include "Device/ControllerInput.h"
 
 #include "Effect/TestVibrationEffect.h"
+#include "Effect/HitStop.h"
 
 #include "Utility/JsonFileManager.h"
 
@@ -120,7 +121,9 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 	if (!pHit->compareTag("Enemy"))
 		return;
 
+	//撃破時加速
 	m_pPlayerParam->setHitEnemy();
+	m_pPlayerParam->attackStockAddition();
 
 	if (m_pCameraActionManager->actionCount() == 0)
 		//カメラを揺らす
@@ -159,4 +162,6 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 
 	//飛ばす
 	pActionManager->enqueueAction(pSpawn);
+
+	HitStop::getInstance().start(0.1f, 1.0f);
 }

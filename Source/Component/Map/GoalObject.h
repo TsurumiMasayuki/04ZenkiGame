@@ -5,6 +5,7 @@
 #include "Component/Audio/AudioSource.h"
 #include "Component/Graphics/GUI/GUISpriteRenderer.h"
 #include "Component/Graphics/MeshRenderer.h"
+
 class GoalObject : public AbstractComponent {
 public:
 	// AbstractComponent を介して継承されました
@@ -22,4 +23,6 @@ private:
 	const float GOAL_DISTANCE = 3.0f;
 	bool isGoal;
 	float velocity;
+	std::vector<Transform*> goalEffects;
+	bool isSound;
 };

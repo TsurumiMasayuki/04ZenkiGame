@@ -24,7 +24,7 @@ public:
 	/// ’âŽ~‚µ‚Ä‚¢‚é‚©
 	/// </summary>
 	/// <returns></returns>
-	bool isStop() { return isStop; }
+	bool isStop() { return isStopFlag; }
 
 private:
 	Timer stayTimer;
@@ -32,5 +32,5 @@ private:
 	float scale;
 	float stopTime;
 
-	bool isStop = false;
+	bool isStopFlag = false;
 };

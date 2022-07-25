@@ -14,12 +14,12 @@ void HitStop::start(float scale, float stopTime)
 	// タイマー開始
 	stayTimer.reset();
 
-	isStop = true;
+	isStopFlag = true;
 }
 
 void HitStop::update()
 {
-	if (isStop)
+	if (isStopFlag)
 	{
 		// 一定時間で元に戻す
 		if (stayTimer.isTime())
@@ -27,7 +27,7 @@ void HitStop::update()
 			// タイムスケールをセット
 			GameDevice::getGameTime().m_TimeScale = 1.0f;
 
-			isStop = false;
+			isStopFlag = false;
 		}
 
 		// タイマー更新

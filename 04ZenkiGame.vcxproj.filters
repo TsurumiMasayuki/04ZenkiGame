@@ -87,6 +87,10 @@
     <ClCompile Include="Source\Scene\ClearScene.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerDamage.cpp" />
     <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
+    <ClCompile Include="Source\Component\BackGround\BackGround.cpp" />
+    <ClCompile Include="Source\Component\TestUI\LapTime.cpp" />
+    <ClCompile Include="Source\Component\TestUI\LapTimeDraw.cpp" />
+    <ClCompile Include="Source\Component\Gimmick\CheckPoint.cpp" />
     <ClCompile Include="Source\Effect\HitStop.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +167,10 @@
     <ClInclude Include="Source\Component\Player\PlayerDamage.h" />
     <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
     <ClInclude Include="Source\Component\Enemy\BarrierEnemy.h" />
+    <ClInclude Include="Source\Component\BackGround\BackGround.h" />
+    <ClInclude Include="Source\Component\TestUI\LapTime.h" />
+    <ClInclude Include="Source\Component\TestUI\LapTimeDraw.h" />
+    <ClInclude Include="Source\Component\Gimmick\CheckPoint.h" />
     <ClInclude Include="Source\Effect\HitStop.h" />
   </ItemGroup>
   <ItemGroup>

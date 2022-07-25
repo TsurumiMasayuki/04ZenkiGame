@@ -10,6 +10,7 @@
 #include "Component/Player/PlayerStats.h"
 
 #include "Device/ControllerInput.h"
+#include "Effect/HitStop.h"
 
 Game::Game(HINSTANCE& hinstance, HWND& hwnd)
 	: AbstractGame(hinstance, hwnd)
@@ -56,6 +57,11 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("clear", L"Resources/textures/Ending.png");
 	GameDevice::getTextureManager().load("select", L"Resources/textures/Select.png");
 	GameDevice::getTextureManager().load("gameOver", L"Resources/textures/GameOverScene.png");
+	GameDevice::getTextureManager().load("backGround", L"Resources/textures/background_floor.png");	
+	GameDevice::getTextureManager().load("time",  L"Resources/textures/time.png");
+	GameDevice::getTextureManager().load("point", L"Resources/textures/point.png");
+	GameDevice::getTextureManager().load("colon", L"Resources/textures/colon.png");
+	
 	GameDevice::getTextureManager().load("accEffect", L"Resources/textures/accEffect.png");
 
 	//Blockbenchモデル用画像読み込み
@@ -108,6 +114,8 @@ void Game::onUpdate()
 		JsonFileManager<PlayerStats>::getInstance().load("PlayerStats", "Resources/PlayerStats.json");
 
 	ControllerInput::getInstance().update();
+
+	HitStop::getInstance().update();
 }
 
 void Game::onShutdown()
