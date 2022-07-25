@@ -163,5 +163,5 @@ void PlayerAttack::onCollisionEnter(GameObject* pHit)
 	//飛ばす
 	pActionManager->enqueueAction(pSpawn);
 
-	HitStop::getInstance().Start(0.1f, 1.0f);
+	HitStop::getInstance().start(0.1f, 1.0f);
 }

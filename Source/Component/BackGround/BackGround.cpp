@@ -45,7 +45,7 @@ void BackGround::onStart()
 	instancedObj->getComponent<Follow>()->Setdistance(Vec3(0, 0, 250));
 	instancedRenderer = instancedObj->getChildren().at(0)->getComponent<InstancedRenderer<InstancingInfo>>();
     
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		auto pos = Vec3(random.getRandom(-200, 200), random.getRandom(0, 15), random.getRandom(100, 700));
 		backGroundParticle[i] = new GameObject(m_pUser->getGameMediator());
@@ -68,7 +68,7 @@ void BackGround::onStart()
 
 void BackGround::onUpdate()
 {
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 10; i++)
     {
 	    auto& info = inctanceInfo.emplace_back();
 	    DirectX::XMStoreFloat4x4(&info.instancingMatrix, DirectX::XMMatrixTranspose(backGroundParticle[i]->getTransform().getWorldMatrix()));
