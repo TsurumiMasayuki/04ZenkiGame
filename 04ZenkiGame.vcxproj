@@ -161,8 +161,10 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Component\BackGround\BackGround.cpp" />
     <ClCompile Include="Source\Component\Gimmick\AccelBoard.cpp" />
     <ClCompile Include="Source\Component\Gimmick\BoundGimmick.cpp" />
+    <ClCompile Include="Source\Component\Gimmick\CheckPoint.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerDamage.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerSound.cpp" />
     <ClCompile Include="Source\Blockbench\BlockbenchLoader.cpp" />
@@ -186,6 +188,8 @@
     <ClCompile Include="Source\Component\Player\PlayerParamManager.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerSideAttack.cpp" />
     <ClCompile Include="Source\Component\Player\PlayerStats.cpp" />
+    <ClCompile Include="Source\Component\TestUI\LapTime.cpp" />
+    <ClCompile Include="Source\Component\TestUI\LapTimeDraw.cpp" />
     <ClCompile Include="Source\Component\TestUI\SceneEffect.cpp" />
     <ClCompile Include="Source\Component\TestUI\TestUI.cpp" />
     <ClCompile Include="Source\Component\TestUI\TimeLimitDraw.cpp" />
@@ -216,10 +220,12 @@
     <ClCompile Include="Source\Utility\CylinderUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Component\BackGround\BackGround.h" />
     <ClInclude Include="Source\Component\Gimmick\AccelBoard.h" />
     <ClInclude Include="Source\Blockbench\BBInstanceInfo.h" />
     <ClInclude Include="Source\Component\Enemy\BarrierEnemy.h" />
     <ClInclude Include="Source\Component\Gimmick\BoundGimmick.h" />
+    <ClInclude Include="Source\Component\Gimmick\CheckPoint.h" />
     <ClInclude Include="Source\Component\Player\PlayerDamage.h" />
     <ClInclude Include="Source\Component\Player\PlayerSound.h" />
     <ClInclude Include="Source\Blockbench\BlockbenchLoader.h" />
@@ -242,6 +248,8 @@
     <ClInclude Include="Source\Component\Player\PlayerParamManager.h" />
     <ClInclude Include="Source\Component\Player\PlayerSideAttack.h" />
     <ClInclude Include="Source\Component\Player\PlayerStats.h" />
+    <ClInclude Include="Source\Component\TestUI\LapTime.h" />
+    <ClInclude Include="Source\Component\TestUI\LapTimeDraw.h" />
     <ClInclude Include="Source\Component\TestUI\SceneEffect.h" />
     <ClInclude Include="Source\Component\TestUI\TestUI.h" />
     <ClInclude Include="Source\Component\TestUI\TimeLimitDraw.h" />

@@ -11,6 +11,6 @@ void Follow::onUpdate()
 	Vec3 rotateDistance = distance.multMatrix(rotation);
 
 	getTransform().setLocalPosition(pObj->getTransform().getLocalPosition() + rotateDistance);
-	float zAngle = pObj->getTransform().getLocalAngleZ();
-	getTransform().setLocalAngleZ(zAngle - 90.0f);
+	/*float zAngle = pObj->getTransform().getLocalAngleZ();
+	getTransform().setLocalAngleZ(zAngle - 90.0f);*/
 }

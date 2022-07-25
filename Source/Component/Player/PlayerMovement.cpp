@@ -53,7 +53,7 @@ void PlayerMovement::onUpdate()
 	Vec3 moveDir = GameInput::getInstance().getPlayerMove();
 
 	//ダッシュボタンが押されているなら&燃料がゼロでないなら
-	if (GameInput::getInstance().getPlayerDash() &&
+	if (GameInput::getInstance().getSliding() &&
 		!m_pPlayerParam->isFuelZero())
 	{
 		if (m_pActionManager->actionCount() == 0)

@@ -9,22 +9,25 @@
 #include "Component/Player/PlayerStats.h"
 #include "Utility/JsonFileManager.h"
 #include "Component/TestUI/TimeLimitDraw.h"
+#include "Component/TestUI/LapTimeDraw.h"
 
 void PlayerParamManager::onStart()
 {
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 
-	//ƒIƒvƒVƒ‡ƒ“ƒIƒuƒWƒFƒNƒg¶¬
+	//ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	GameObject* optionObj = new GameObject(getUser().getGameMediator());
 	m_Option = optionObj->addComponent<Option>();
 
-	//ƒAƒCƒeƒ€ƒXƒvƒ‰ƒCƒg
+	//ã‚¢ã‚¤ãƒ†ãƒ ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	GameObject* itemObj = new GameObject(getUser().getGameMediator());
 	m_Item = itemObj->addComponent<CollectItemUI>();
 
 	GameObject* timeLimitObj = new GameObject(getUser().getGameMediator());
 	m_TimeLimit = timeLimitObj->addComponent<TimeLimitDraw>();
 
+	GameObject* laptimeObj = new GameObject(getUser().getGameMediator());
+	m_LapTime = laptimeObj->addComponent<LapTimeDraw>();
 	GameObject* testUIObj = new GameObject(getUser().getGameMediator());
 	m_testUI = testUIObj->addComponent<TestUI>();
 }
@@ -36,19 +39,37 @@ void PlayerParamManager::onUpdate()
 
 	m_KnockBack -= m_KnockBack.normalized() * 3.0f * GameDevice::getGameTime().getDeltaTime();
 
+	//é€šå¸¸æ™‚
+	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
+	{
+		//åŠ é€Ÿåº¦ã‚’0ã«ã™ã‚‹
+		m_Acceleration = 0.0f;
+	}
+	else
+	{
+		float timeMultiplier = 1.0f / m_Stats.m_WalkSpeedUpTime;
+
+		//åŠ é€Ÿ
+		if (m_Acceleration < m_Stats.m_WalkSpeed)
+			m_Acceleration += deltaTime * timeMultiplier;
+	}
+
+	//æ•µæ’ƒç ´é–¢é€£
 	if (isHitEnemy)
 	{
 		if (m_RollingTime==0.0f)
 		{
 			m_RollingTime = 2.0f;
+			attackStock--;
 			isHitEnemy = false;
 		}
 		else
 		{
-			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_AcceleratorSpeedUpTime;
+			float timeMultiplier = 1.0f / m_Stats.m_AcceleratorSpeedUpTime;
 
-			//‰Á‘¬
-			m_Acceleration += deltaTime * timeMultiplier;
+			//åŠ é€Ÿ
+			if(m_Acceleration< m_Stats.m_AcceleratorSpeed)
+				m_Acceleration += deltaTime * timeMultiplier;
 
 			m_RollingTime -= deltaTime;
 			m_RollingTime = std::fmaxf(0.0f, m_RollingTime);
@@ -56,27 +77,25 @@ void PlayerParamManager::onUpdate()
 		}
 
 	}
-
-	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
+	//ãƒ­ãƒ¼ãƒªãƒ³ã‚°æ™‚
+	if (GameInput::getInstance().getSliding())
 	{
-		//‰Á‘¬“x‚ğ0‚É‚·‚é
-		m_Acceleration = 0.0f;
-	}
-	else
-	{
-		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeedUpTime;
+		float timeMultiplier = 1.0f / m_Stats.m_DashSpeedUpTime;
 
-		//‰Á‘¬
-		m_Acceleration += deltaTime * timeMultiplier;
+		//åŠ é€Ÿ
+		if (m_Acceleration < m_Stats.m_DashSpeed)
+			m_Acceleration += deltaTime * timeMultiplier;
+
 	}
 
-	//ƒƒbƒN‚³‚ê‚Ä‚¢‚È‚¢‚È‚çˆÚ“®•ûŒü‚ğİ’è
+
+	//ãƒ­ãƒƒã‚¯ã•ã‚Œã¦ã„ãªã„ãªã‚‰ç§»å‹•æ–¹å‘ã‚’è¨­å®š
 	if (!m_IsLock)
 	{
 		m_MoveDir = GameInput::getInstance().getPlayerMove();
 		m_BaseMoveSpeed = m_Stats.m_WalkSpeed;
 	}
-	//UIƒNƒ‰ƒX‚Ö‰Á‘¬“x‚ğ“n‚·
+	//UIã‚¯ãƒ©ã‚¹ã¸åŠ é€Ÿåº¦ã‚’æ¸¡ã™
 	m_testUI->SetAcceleration(m_Acceleration);
 }
 
@@ -97,7 +116,7 @@ float PlayerParamManager::getAcceleration() const
 
 void PlayerParamManager::onDamage()
 {
-	m_Acceleration = 0.0f;
+	m_Acceleration = 1.0f;
 }
 
 void PlayerParamManager::lockPlayerMove(bool isLock)
@@ -133,4 +152,9 @@ float PlayerParamManager::getMoveSpeed() const
 void PlayerParamManager::setMoveSpeed(float speed)
 {
 	m_BaseMoveSpeed = speed;
+}
+
+void PlayerParamManager::attackStockAddition()
+{
+	if(attackStock<4)attackStock++;
 }

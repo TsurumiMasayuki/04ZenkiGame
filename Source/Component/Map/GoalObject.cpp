@@ -20,7 +20,8 @@ void GoalObject::onStart()
 	pAudio = goalObj->addComponent<AudioSource>();
 	pAudio->setAudio("ClearJG");
 
-	isGoal = false;
+  isGoal = false;
+  isSound = false;
 }
 
 void GoalObject::onUpdate()
@@ -34,9 +35,11 @@ void GoalObject::onUpdate()
 
 		if (pos.distance(pPlayer->getTransform().getLocalPosition()) < GOAL_DISTANCE && !isGoal)
 		{
-			//Sound�Đ�
-			pAudio->play();
-
+			if (isGoal && !isSound)
+			{
+				pAudio->play();
+				isSound = true;
+			}
 			GameDevice::getGameTime().m_TimeScale = 0;
 			GameInput::getInstance().setLock(true);
 			/*	goalObjSprite->setActive(true);*/
