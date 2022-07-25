@@ -15,11 +15,11 @@ void PlayerParamManager::onStart()
 {
 	m_Stats = JsonFileManager<PlayerStats>::getInstance().get("PlayerStats");
 
-	//ÉIÉvÉVÉáÉìÉIÉuÉWÉFÉNÉgê∂ê¨
+	//„Ç™„Éó„Ç∑„Éß„É≥„Ç™„Éñ„Ç∏„Çß„ÇØ„ÉàÁîüÊàê
 	GameObject* optionObj = new GameObject(getUser().getGameMediator());
 	m_Option = optionObj->addComponent<Option>();
 
-	//ÉAÉCÉeÉÄÉXÉvÉâÉCÉg
+	//„Ç¢„Ç§„ÉÜ„É†„Çπ„Éó„É©„Ç§„Éà
 	GameObject* itemObj = new GameObject(getUser().getGameMediator());
 	m_Item = itemObj->addComponent<CollectItemUI>();
 
@@ -28,25 +28,48 @@ void PlayerParamManager::onStart()
 
 	GameObject* laptimeObj = new GameObject(getUser().getGameMediator());
 	m_LapTime = laptimeObj->addComponent<LapTimeDraw>();
+	GameObject* testUIObj = new GameObject(getUser().getGameMediator());
+	m_testUI = testUIObj->addComponent<TestUI>();
 }
+
 
 void PlayerParamManager::onUpdate()
 {
 	float deltaTime = GameDevice::getGameTime().getDeltaTime();
 
+	m_KnockBack -= m_KnockBack.normalized() * 3.0f * GameDevice::getGameTime().getDeltaTime();
+
+	//ÈÄöÂ∏∏ÊôÇ
+	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
+	{
+		//Âä†ÈÄüÂ∫¶„Çí0„Å´„Åô„Çã
+		m_Acceleration = 0.0f;
+	}
+	else
+	{
+		float timeMultiplier = 1.0f / m_Stats.m_WalkSpeedUpTime;
+
+		//Âä†ÈÄü
+		if (m_Acceleration < m_Stats.m_WalkSpeed)
+			m_Acceleration += deltaTime * timeMultiplier;
+	}
+
+	//ÊïµÊíÉÁ†¥Èñ¢ÈÄ£
 	if (isHitEnemy)
 	{
 		if (m_RollingTime==0.0f)
 		{
 			m_RollingTime = 2.0f;
+			attackStock--;
 			isHitEnemy = false;
 		}
 		else
 		{
-			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_AcceleratorSpeedUpTime;
+			float timeMultiplier = 1.0f / m_Stats.m_AcceleratorSpeedUpTime;
 
-			//â¡ë¨
-			m_Acceleration += deltaTime * timeMultiplier;
+			//Âä†ÈÄü
+			if(m_Acceleration< m_Stats.m_AcceleratorSpeed)
+				m_Acceleration += deltaTime * timeMultiplier;
 
 			m_RollingTime -= deltaTime;
 			m_RollingTime = std::fmaxf(0.0f, m_RollingTime);
@@ -54,46 +77,26 @@ void PlayerParamManager::onUpdate()
 		}
 
 	}
-	else
+	//„É≠„Éº„É™„É≥„Ç∞ÊôÇ
+	if (GameInput::getInstance().getSliding())
 	{
-		//É_ÉbÉVÉÖÉ{É^ÉìÇ™âüÇ≥ÇÍÇƒÇ¢ÇÈÇ»ÇÁ
-		if (GameInput::getInstance().getPlayerDash() && m_Fuel > 0.0f)
-		{
-			float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_DashSpeedUpTime;
+		float timeMultiplier = 1.0f / m_Stats.m_DashSpeedUpTime;
 
-			//â¡ë¨
+		//Âä†ÈÄü
+		if (m_Acceleration < m_Stats.m_DashSpeed)
 			m_Acceleration += deltaTime * timeMultiplier;
 
-			//îRóøå∏è≠
-			m_Fuel -= deltaTime;
-			m_Fuel = std::fmaxf(0.0f, m_Fuel);
-		}
-		else if (!GameInput::getInstance().getPlayerDash())
-		{
-			//îRóøëùâ¡
-			m_Fuel += deltaTime;
-			m_Fuel = std::fminf(5.0f, m_Fuel);
-		}
-	}
-	if (GameInput::getInstance().getPlayerMove().z == 0.0f)
-	{
-		//â¡ë¨ìxÇ0Ç…Ç∑ÇÈ
-		m_Acceleration = 0.0f;
-	}
-	else
-	{
-		float timeMultiplier = 1.0f / JsonFileManager<PlayerStats>::getInstance().get("PlayerStats").m_WalkSpeedUpTime;
-
-		//â¡ë¨
-		m_Acceleration += deltaTime * timeMultiplier;
 	}
 
-	//ÉçÉbÉNÇ≥ÇÍÇƒÇ¢Ç»Ç¢Ç»ÇÁà⁄ìÆï˚å¸Çê›íË
+
+	//„É≠„ÉÉ„ÇØ„Åï„Çå„Å¶„ÅÑ„Å™„ÅÑ„Å™„ÇâÁßªÂãïÊñπÂêë„ÇíË®≠ÂÆö
 	if (!m_IsLock)
 	{
 		m_MoveDir = GameInput::getInstance().getPlayerMove();
 		m_BaseMoveSpeed = m_Stats.m_WalkSpeed;
 	}
+	//UI„ÇØ„É©„Çπ„Å∏Âä†ÈÄüÂ∫¶„ÇíÊ∏°„Åô
+	m_testUI->SetAcceleration(m_Acceleration);
 }
 
 bool PlayerParamManager::isFuelZero() const
@@ -113,7 +116,7 @@ float PlayerParamManager::getAcceleration() const
 
 void PlayerParamManager::onDamage()
 {
-	m_Acceleration = 0.0f;
+	m_Acceleration = 1.0f;
 }
 
 void PlayerParamManager::lockPlayerMove(bool isLock)
@@ -131,6 +134,16 @@ void PlayerParamManager::setMoveDir(const Vec3& moveDir)
 	m_MoveDir = moveDir;
 }
 
+void PlayerParamManager::addKnockBack(const Vec3& knockback)
+{
+	m_KnockBack += knockback;
+}
+
+const Vec3& PlayerParamManager::getKnockBack()
+{
+	return m_KnockBack;
+}
+
 float PlayerParamManager::getMoveSpeed() const
 {
 	return m_BaseMoveSpeed * (1.0f + m_Acceleration);
@@ -139,4 +152,9 @@ float PlayerParamManager::getMoveSpeed() const
 void PlayerParamManager::setMoveSpeed(float speed)
 {
 	m_BaseMoveSpeed = speed;
+}
+
+void PlayerParamManager::attackStockAddition()
+{
+	if(attackStock<4)attackStock++;
 }

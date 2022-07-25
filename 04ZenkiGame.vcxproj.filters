@@ -91,6 +91,7 @@
     <ClCompile Include="Source\Component\TestUI\LapTime.cpp" />
     <ClCompile Include="Source\Component\TestUI\LapTimeDraw.cpp" />
     <ClCompile Include="Source\Component\Gimmick\CheckPoint.cpp" />
+    <ClCompile Include="Source\Effect\HitStop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Player\PlayerMovement.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Source\Component\TestUI\LapTime.h" />
     <ClInclude Include="Source\Component\TestUI\LapTimeDraw.h" />
     <ClInclude Include="Source\Component\Gimmick\CheckPoint.h" />
+    <ClInclude Include="Source\Effect\HitStop.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Sounds\Enemy\Enemy_Down.wav" />

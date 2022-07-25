@@ -25,6 +25,8 @@
 #include "Component/Player/PlayerSound.h"
 #include "Component/Player/PlayerDamage.h"
 
+#include "Component/Gimmick/BoundGimmick.h"
+
 #include "Component/Map/GoalObject.h"
 
 #include "Component/Utility/Action/ActionManager.h"
@@ -116,8 +118,11 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 
 			pPlayer = *ppPlayer;
 
+			Vec3 fix = CoordConverter::cartesianToCylinder(objectPlaceInfo.m_Position);
+			fix.x += 2.0f;
+
 			*ppPlayerModel = new GameObject(m_pGameMediator);
-			(*ppPlayer)->getTransform().setLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
+			(*ppPlayer)->getTransform().setLocalPosition(CoordConverter::cylinderToCartesian(fix));
 			(*ppPlayer)->getTransform().setLocalScale(Vec3(0.1f));
 			(*ppPlayer)->addChild((**ppPlayerModel));
 			auto pPlayerActionManager = (*ppPlayer)->addComponent<Action::ActionManager>();
@@ -217,6 +222,21 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 			auto pSlidingThrough = pObject->addComponent<SlidingThrough>();
 		}
 
+		if (objectPlaceInfo.m_ObjectName == "Bound")
+		{
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
+			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
+			//è§’åº¦è¨­å®š
+			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
+			//FÝ’è
+			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Yellow, 1.0f));
+			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
+			auto pBound = pObject->addComponent<BoundGimmick>();
+			pBound->setTarget(pPlayer);
+		}
+
 		if (objectPlaceInfo.m_ObjectName == "JumpEnemy")
 		{
 			auto pObject = new GameObject(m_pGameMediator);
@@ -228,7 +248,7 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 
 			auto pModelObject = new GameObject(m_pGameMediator);
 			pModelObject->getTransform().setLocalScale(Vec3(0.1f));
-			pModelObject->getTransform().setLocalAngles(Vec3(0.0f, 180.0f, -90.0f));
+			pModelObject->getTransform().setLocalAngles(Vec3(0.0f, 180.0f, 0.0f));
 			pModelObject->addComponent<BBModelHelper>()->setRenderer(renderHelpers.at("monster_03"));
 
 			pObject->addChild(*pModelObject);

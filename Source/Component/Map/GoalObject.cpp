@@ -17,6 +17,7 @@ void GoalObject::onStart()
 	pAudio->setAudio("ClearJG");
 
   isGoal = false;
+  isSound = false;
 }
 
 void GoalObject::onUpdate()
@@ -26,13 +27,16 @@ void GoalObject::onUpdate()
 	for (int i = 0; i < 60; i++)
 	{
 		pos.z += velocity / 60;
-		if(isGoal==false)pAudio->play();
+		//if(isGoal==false)pAudio->play();
 
 		if (pos.distance(pPlayer->getTransform().getLocalPosition()) < GOAL_DISTANCE&&!isGoal)
 		{
 			//Sound�Đ�
-			pAudio->play();
-			 
+			if (isGoal && !isSound)
+			{
+				pAudio->play();
+				isSound = true;
+			}
 			GameDevice::getGameTime().m_TimeScale = 0;
 			GameInput::getInstance().setLock(true);
 			/*	goalObjSprite->setActive(true);*/

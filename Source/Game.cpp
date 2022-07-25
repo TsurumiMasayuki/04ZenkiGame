@@ -54,12 +54,15 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("num9", L"Resources/textures/9.png");
 	GameDevice::getTextureManager().load("mask", L"Resources/textures/mask.png");
 	GameDevice::getTextureManager().load("clear", L"Resources/textures/Ending.png");
+	GameDevice::getTextureManager().load("select", L"Resources/textures/Select.png");
 	GameDevice::getTextureManager().load("gameOver", L"Resources/textures/GameOverScene.png");
 	GameDevice::getTextureManager().load("backGround", L"Resources/textures/background_floor.png");	
 	GameDevice::getTextureManager().load("time",  L"Resources/textures/time.png");
 	GameDevice::getTextureManager().load("point", L"Resources/textures/point.png");
 	GameDevice::getTextureManager().load("colon", L"Resources/textures/colon.png");
 	
+	GameDevice::getTextureManager().load("accEffect", L"Resources/textures/accEffect.png");
+
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
 	GameDevice::getTextureManager().load("monster_03", L"Resources/BBModels/moster_03.png");

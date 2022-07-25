@@ -26,6 +26,8 @@
 #include "Component/TestUI/TimeLimitUi.h"
 #include "Component/BackGround/BackGround.h"
 
+#include "Device/GameInput.h"
+
 std::string HogeScene::nextScene()
 {
 	return  pGoalObj->GetIsGoal() ? "Clear" : "GameOver";
@@ -228,5 +230,7 @@ void HogeScene::shutdown()
 		}
 
 		m_RenderHelpers.clear();
+		GameDevice::getGameTime().m_TimeScale = 1;
+		GameInput::getInstance().setLock(false);
 	}
 }
