@@ -23,6 +23,19 @@ public:
 		value += 1;
 	}
 
+	static void Add(int& value,const int num)
+	{
+		value += num;
+	}
+
+	static void set(float value);
+
+	static int AddLimit(int value)
+	{
+		set(GetLimitFirst() + value);
+		return GetLimitFirst();
+	}
+
 	static int& GetLimitFirst()
 	{
 		return firstNum;
@@ -31,6 +44,16 @@ public:
 	static int& GetLimitSecond()
 	{
 		return secondNum;
+	}
+
+	static int& GetLimitThird()
+	{
+		return thirdNum;
+	}
+
+	static int& GetLimitforth()
+	{
+		return forthNum;
 	}
 
 	static void  SetNum(int& num)
@@ -44,14 +67,18 @@ public:
 		numSecond = 9;
 	}
 
+	static int& GetMax() { return maxValue; }
+
+	static bool IsMax(int value){
+		return (GetMax() <= value);
+	}
+
 	static bool isMin(int& value) { return value < 0; }
 
 	static bool SetDead(bool dead) { return isDead = dead; }
 
 	static bool& IsDead() { return isDead; }
-
 private:
-	Timer limitTimer;
-	static int firstNum, secondNum;
+	static int firstNum, secondNum, thirdNum,forthNum,maxValue,minValue;
 	static bool isDead;
 };

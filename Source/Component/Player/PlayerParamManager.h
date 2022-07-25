@@ -6,8 +6,9 @@ class TestUI;
 class Option;
 class CollectItemUI;
 class TimeLimitDraw;
+class LapTimeDraw;
 
-//ƒvƒŒƒCƒ„[‚Ìƒpƒ‰ƒ[ƒ^ŠÇ—
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ç®¡ç†
 class PlayerParamManager
 	: public AbstractComponent
 {
@@ -15,23 +16,23 @@ public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
 
-	//”R—¿‚ªƒ[ƒ‚©‚Ç‚¤‚©
+	//ç‡ƒæ–™ãŒã‚¼ãƒ­ã‹ã©ã†ã‹
 	bool isFuelZero() const;
 
-	//‰Á‘¬“x‚ğİ’è
+	//åŠ é€Ÿåº¦ã‚’è¨­å®š
 	void setAcceleration(float acceleration);
 
-	//‰Á‘¬“x‚ğæ“¾
+	//åŠ é€Ÿåº¦ã‚’å–å¾—
 	float getAcceleration() const;
 
 	void onDamage();
 
-	//ƒvƒŒƒCƒ„[‚ÌˆÚ“®‚ğƒƒbƒN‚·‚é‚©‚Ç‚¤‚©
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•ã‚’ãƒ­ãƒƒã‚¯ã™ã‚‹ã‹ã©ã†ã‹
 	void lockPlayerMove(bool isLock);
 
-	//ˆÚ“®•ûŒü‚ğæ“¾
+	//ç§»å‹•æ–¹å‘ã‚’å–å¾—
 	const Vec3& getMoveDir() const;
-	//ˆÚ“®•ûŒü‚ğİ’è
+	//ç§»å‹•æ–¹å‘ã‚’è¨­å®š
 	void setMoveDir(const Vec3& moveDir);
 
 	void addKnockBack(const Vec3& knockback);
@@ -39,24 +40,25 @@ public:
 
 	void setHitEnemy() { PlayerParamManager::isHitEnemy = true; }
 
-	//ˆÚ“®‘¬“x‚ğæ“¾
+	//ç§»å‹•é€Ÿåº¦ã‚’å–å¾—
 	float getMoveSpeed() const;
-	//ˆÚ“®‘¬“x‚ğİ’è
+	//ç§»å‹•é€Ÿåº¦ã‚’è¨­å®š
 	void setMoveSpeed(float speed);
 
-	//Œ‚”jstock‚ğ‰ÁZ
+	//æ’ƒç ´stockã‚’åŠ ç®—
 	void attackStockAddition();
 
 private:
 	Option* m_Option;
 	CollectItemUI* m_Item;
 	TimeLimitDraw* m_TimeLimit;
+	LapTimeDraw* m_LapTime;
 	TestUI* m_testUI;
-	//‘Ì—Í
+	//ä½“åŠ›
 	float m_Health = 5.0f;
-	//‰Á‘¬“x‚ğæ“¾
+	//åŠ é€Ÿåº¦ã‚’å–å¾—
 	float m_Acceleration;
-	//”R—¿
+	//ç‡ƒæ–™
 	float m_Fuel = 4.0f;
 
 	float m_BaseMoveSpeed;

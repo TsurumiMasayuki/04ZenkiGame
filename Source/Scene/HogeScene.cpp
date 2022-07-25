@@ -24,7 +24,10 @@
 #include "btBulletDynamicsCommon.h"
 #include "Component/Item/CollectItemUI.h"
 #include "Component/TestUI/TimeLimitUi.h"
+#include "Component/BackGround/BackGround.h"
+
 #include "Device/GameInput.h"
+
 std::string HogeScene::nextScene()
 {
 	return  pGoalObj->GetIsGoal() ? "Clear" : "GameOver";
@@ -137,6 +140,9 @@ void HogeScene::start()
 			m_RenderHelpers.emplace("block_floor", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("block_floor"), pRenderer));
 		}
 
+		backGround = new GameObject(this);
+		backObj = backGround->addComponent<BackGround>();
+
 		//ステージ生成
 		JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
 		m_pStageLoader = new StageLoader(this);
@@ -147,7 +153,7 @@ void HogeScene::start()
 		auto& cameraTransform = getMainCamera()->getUser().getTransform();
 
 		getMainCamera()->setTarget(m_pPlayer);
-
+		
 		auto* pCameraObject = &getMainCamera()->getUser();
 		pCameraObject->addComponent<Action::ActionManager>();
 
@@ -178,7 +184,6 @@ void HogeScene::start()
 
 void HogeScene::update()
 {
-
 	if (m_pSceneStartEffect->IsEnd())
 	{
 		std::vector<DirectX::XMMATRIX> matrices;
@@ -206,8 +211,6 @@ void HogeScene::update()
 			{
 				m_pSceneEndEffect->StartEffect();
 			}
-
-		
 	}
 }
 
@@ -217,6 +220,7 @@ void HogeScene::shutdown()
 	{
 		delete m_pCube;
 		delete m_pStageLoader;
+		delete backGround;
 
 		m_BBModelLoader.unLoadModels();
 
