@@ -5,6 +5,7 @@
 #include "Blockbench/BlockbenchLoader.h"
 #include "Component/TestUI/SceneEffect.h"
 #include "Blockbench/BBInstanceInfo.h"
+#include "Utility/Timer.h"
 
 class DX12Mesh;
 class StageLoader;
@@ -46,5 +47,9 @@ private:
 	SceneEffect* m_pSceneEndEffect;
 	//シーン終了エフェクトが終わったかどうか
 	bool sceneEffectIsEnd;
-	
+
+	// カメラ演出が終わったか
+	bool clearCameraIsEnd;
+	float orbit = 0;
+	Timer cameraTimer;
 };

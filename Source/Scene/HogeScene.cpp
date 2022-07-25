@@ -173,6 +173,10 @@ void HogeScene::start()
 		m_pSceneStartEffect = pSceneStartEffect->addComponent<SceneEffect>();
 		m_pSceneStartEffect->Initialize(0);
 		m_pSceneStartEffect->StartEffect();
+
+		// カメラ演出タイマー初期化
+		cameraTimer.setMaxTime(10.0f);
+		cameraTimer.setUseUnscaledTime(true);
 	}
 }
 
@@ -191,23 +195,35 @@ void HogeScene::update()
 		{
 			renderHelper.second->sendInstanceInfo();
 		}
-
 		
-			if (!TimeLimitUi::IsDead())
+		if (!TimeLimitUi::IsDead())
+		{
+			std::vector<DirectX::XMMATRIX> matrices;
+			matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
+				DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
+				m_pPlayerModel->getTransform().getWorldMatrix());
+			m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
+			m_RenderHelpers.at("Player")->sendInstanceInfo();
+		}
+		if (pGoalObj->GetIsGoal() || TimeLimitUi::IsDead())
+		{
+			// カメラ回転
+			orbit += 0.01;
+			Vec3 orbitPos = Vec3(-15.0f, sinf(orbit) * 15.0f, cosf(orbit) * 15.0f);
+
+			getMainCamera()->getTransform().setLocalPosition(pGoalObj->getTransform().getLocalPosition() + orbitPos);
+			
+			cameraTimer.update();
+
+			// カメラ演出が終わったら
+			if (cameraTimer.isTime())
 			{
-				std::vector<DirectX::XMMATRIX> matrices;
-				matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
-					DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
-					m_pPlayerModel->getTransform().getWorldMatrix());
-				m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
-				m_RenderHelpers.at("Player")->sendInstanceInfo();
-			}
-			if (pGoalObj->GetIsGoal() || TimeLimitUi::IsDead())
-			{
+				// シーン切り替え演出
 				m_pSceneEndEffect->StartEffect();
 			}
+			
+		}
 
-		
 	}
 }
 
