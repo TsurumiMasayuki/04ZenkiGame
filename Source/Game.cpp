@@ -55,6 +55,10 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("mask", L"Resources/textures/mask.png");
 	GameDevice::getTextureManager().load("clear", L"Resources/textures/Ending.png");
 	GameDevice::getTextureManager().load("gameOver", L"Resources/textures/GameOverScene.png");
+	GameDevice::getTextureManager().load("backGround", L"Resources/textures/background_floor.png");	
+	GameDevice::getTextureManager().load("time",  L"Resources/textures/time.png");
+	GameDevice::getTextureManager().load("point", L"Resources/textures/point.png");
+	GameDevice::getTextureManager().load("colon", L"Resources/textures/colon.png");
 	
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");

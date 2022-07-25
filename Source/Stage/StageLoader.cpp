@@ -10,6 +10,7 @@
 #include "Component/Enemy/PressEnemy.h"
 #include "Component/Enemy/ZigzagEnemy.h"
 
+#include "Component/Gimmick/CheckPoint.h"
 #include "Obstacle/SlidingThrough.h"
 #include "Component/Item/CollectItem.h"
 #include "Component/Item/CollectItemDraw.h"
@@ -242,12 +243,26 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 		if (objectPlaceInfo.m_ObjectName == "CollectItem")
 		{
 			parentCollectItemObj = new GameObject(m_pGameMediator);
-			parentCollectItemObj->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			parentCollectItemObj->getTransform().setLocalPosition(objectPlaceInfo.m_Position * 1.1f);
 			childCollectItemObj = new GameObject(m_pGameMediator);
-			childCollectItemObj->getTransform().setLocalScale(Vec3(stageInfo.m_Radius, stageInfo.m_Radius, stageInfo.m_Radius));
+			childCollectItemObj->getTransform().setLocalScale(Vec3(1.0f, 1.0f, 1.0f));
 			parentCollectItemObj->addChild(*childCollectItemObj);
 			auto pCollectItem = parentCollectItemObj->addComponent<CollectItem>();
 			auto pCollectItemDraw = childCollectItemObj->addComponent<CollectItemDraw>();
+		}
+
+		if (objectPlaceInfo.m_ObjectName == "CheckPoint")
+		{
+			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
+			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
+			//è§’åº¦è¨­å®š
+			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
+			//FÝ’è
+			pObject->getChildren().at(0)->getComponent<MeshRenderer>()->setColor(Color(DirectX::Colors::Yellow, 1.0f));
+			//“G—pƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
+			auto pCheckPoint = pObject->addComponent<CheckPoint>();
 		}
 
 		if (objectPlaceInfo.m_ObjectName == "Goal")

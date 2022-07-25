@@ -5,6 +5,7 @@
 #include "Blockbench/BlockbenchLoader.h"
 #include "Component/TestUI/SceneEffect.h"
 #include "Blockbench/BBInstanceInfo.h"
+#include "Component/BackGround/BackGround.h"
 
 class DX12Mesh;
 class StageLoader;
@@ -29,6 +30,9 @@ private:
 	GoalObject* pGoalObj;
 	GameObject* m_pPlayer;
 	GameObject* m_pPlayerModel;
+
+	GameObject* backGround;
+	BackGround* backObj;
 
 	//Blockbench�ǂݍ���
 	BlockbenchLoader m_BBModelLoader;

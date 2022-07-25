@@ -9,6 +9,7 @@
 #include "Component/Player/PlayerStats.h"
 #include "Utility/JsonFileManager.h"
 #include "Component/TestUI/TimeLimitDraw.h"
+#include "Component/TestUI/LapTimeDraw.h"
 
 void PlayerParamManager::onStart()
 {
@@ -24,6 +25,9 @@ void PlayerParamManager::onStart()
 
 	GameObject* timeLimitObj = new GameObject(getUser().getGameMediator());
 	m_TimeLimit = timeLimitObj->addComponent<TimeLimitDraw>();
+
+	GameObject* laptimeObj = new GameObject(getUser().getGameMediator());
+	m_LapTime = laptimeObj->addComponent<LapTimeDraw>();
 }
 
 void PlayerParamManager::onUpdate()
