@@ -33,7 +33,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ウィンドウクラスの作成
 	HWND hwnd = CreateWindow(
 		wndClass.lpszClassName,		//クラス名
-		L"DirectXGame",				//タイトルバーの文字
+		L"FLAME BOOTS",				//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,		//標準的なウィンドウスタイル
 		CW_USEDEFAULT,				//X座標(OSに任せる)
 		CW_USEDEFAULT,				//Y座標(OSに任せる)
