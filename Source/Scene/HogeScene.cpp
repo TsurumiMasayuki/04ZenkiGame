@@ -24,7 +24,10 @@
 #include "btBulletDynamicsCommon.h"
 #include "Component/Item/CollectItemUI.h"
 #include "Component/TestUI/TimeLimitUi.h"
+#include "Component/BackGround/BackGround.h"
+
 #include "Device/GameInput.h"
+
 std::string HogeScene::nextScene()
 {
 	return  pGoalObj->GetIsGoal() ? "Clear" : "GameOver";
@@ -137,6 +140,9 @@ void HogeScene::start()
 			m_RenderHelpers.emplace("block_floor", new InstancedRendererHelper<BBInstanceInfo>(m_BBModelLoader.getModel("block_floor"), pRenderer));
 		}
 
+		backGround = new GameObject(this);
+		backObj = backGround->addComponent<BackGround>();
+
 		//ステージ生成
 		JsonFileManager<StageInfo>::getInstance().load("Map1", "Resources/Map1.json");
 		m_pStageLoader = new StageLoader(this);
@@ -147,13 +153,13 @@ void HogeScene::start()
 		auto& cameraTransform = getMainCamera()->getUser().getTransform();
 
 		getMainCamera()->setTarget(m_pPlayer);
-
+		
 		auto* pCameraObject = &getMainCamera()->getUser();
 		pCameraObject->addComponent<Action::ActionManager>();
 
 		auto pFollow = pCameraObject->addComponent<LerpFollow>();
 		pFollow->SetGameObject(m_pPlayer);
-		pFollow->Setdistance(Vec3(4.0f, 0.0f, -8.0f));
+		pFollow->Setdistance(Vec3(5.0f, 0.0f, -10.0f));
 
 		//Sound関連
 		//Sound関連用Object生成
@@ -182,7 +188,6 @@ void HogeScene::start()
 
 void HogeScene::update()
 {
-
 	if (m_pSceneStartEffect->IsEnd())
 	{
 		std::vector<DirectX::XMMATRIX> matrices;
@@ -220,10 +225,8 @@ void HogeScene::update()
 			{
 				// シーン切り替え演出
 				m_pSceneEndEffect->StartEffect();
-			}
-			
+			}			
 		}
-
 	}
 }
 
@@ -233,6 +236,7 @@ void HogeScene::shutdown()
 	{
 		delete m_pCube;
 		delete m_pStageLoader;
+		delete backGround;
 
 		m_BBModelLoader.unLoadModels();
 

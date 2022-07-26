@@ -7,6 +7,8 @@
 #include "Blockbench/BBInstanceInfo.h"
 #include "Utility/Timer.h"
 
+#include "Component/BackGround/BackGround.h"
+
 class DX12Mesh;
 class StageLoader;
 class BBModelMaterial;
@@ -30,6 +32,9 @@ private:
 	GoalObject* pGoalObj;
 	GameObject* m_pPlayer;
 	GameObject* m_pPlayerModel;
+
+	GameObject* backGround;
+	BackGround* backObj;
 
 	//Blockbench�ǂݍ���
 	BlockbenchLoader m_BBModelLoader;
