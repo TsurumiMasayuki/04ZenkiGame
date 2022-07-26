@@ -47,18 +47,36 @@ void TitleScene::start()
 
 	//オブジェクト生成
 	titleObject = new GameObject(this);
-	titleSprite = titleObject->addComponent<GUISpriteRenderer>();
-	titleSprite->setTextureByName("title");
 	titleObject->getTransform().setLocalPosition(Vec3{ 0,-50,3 });
 	titleObject->getTransform().setLocalScale(Vec3{ 900,600,1 });
+	titleSprite = titleObject->addComponent<GUISpriteRenderer>();
+	titleSprite->setTextureByName("title");
 	titleSprite->setActive(true);
-
+	
 	titleBGObject = new GameObject(this);
-	titleBGSprite = titleBGObject->addComponent<GUISpriteRenderer>();
-	titleBGSprite->setTextureByName("titleBG");
 	titleBGObject->getTransform().setLocalPosition(Vec3{ 0,0,5 });
 	titleBGObject->getTransform().setLocalScale(Vec3{ 1280,720,5});
+	titleBGSprite = titleBGObject->addComponent<GUISpriteRenderer>();
+	titleBGSprite->setTextureByName("titleBG");
 	titleBGSprite->setActive(true);
+
+	GameObject* pButtom = new GameObject(this);
+	pButtom->getTransform().setLocalPosition(Vec3{ -200,-200,1 });
+	pButtom->getTransform().setLocalScale(Vec3{ 100,100,1 });
+	GUISpriteRenderer* pButtomSprite = nullptr;
+	pButtomSprite = pButtom ->addComponent<GUISpriteRenderer>();
+	pButtomSprite->setTextureByName("buttom");
+	pButtomSprite->setActive(true);
+
+	GameObject* pStart = new GameObject(this);
+	pStart->getTransform().setLocalPosition(Vec3{ 0,-200,1 });
+	pStart->getTransform().setLocalScale(Vec3{ 300,100,1 });
+	GUISpriteRenderer* pStratSprite = nullptr;
+	pButtomSprite = pStart->addComponent<GUISpriteRenderer>();
+	pButtomSprite->setTextureByName("start");
+	pButtomSprite->setActive(true);
+
+
 	Random rand = GameDevice::getRandom();
 	for (int i = 0; i < 100; i++)
 	{

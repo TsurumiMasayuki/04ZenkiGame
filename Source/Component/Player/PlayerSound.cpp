@@ -21,7 +21,9 @@ void PlayerSound::onUpdate()
 		pAudio->stop();
 	//’ÊíˆÚ“®
 	if (GameInput::getInstance().getPlayerWalk())
+	{
 		walk();
+	}
 
 }
 

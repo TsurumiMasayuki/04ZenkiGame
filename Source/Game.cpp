@@ -61,6 +61,8 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("time",  L"Resources/textures/time.png");
 	GameDevice::getTextureManager().load("point", L"Resources/textures/point.png");
 	GameDevice::getTextureManager().load("colon", L"Resources/textures/colon.png");
+	GameDevice::getTextureManager().load("start", L"Resources/textures/ui_start.png");
+	GameDevice::getTextureManager().load("buttom", L"Resources/textures/ui_start_button.png");
 	
 	GameDevice::getTextureManager().load("accEffect", L"Resources/textures/accEffect.png");
 
