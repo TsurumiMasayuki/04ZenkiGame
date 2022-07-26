@@ -8,17 +8,12 @@ void PlayerSound::onStart()
 
 void PlayerSound::onUpdate()
 {
-	//ダッシュ使用時
-	if (GameInput::getInstance().getPlayerDash())
+	//スライディング使用時
+	if (GameInput::getInstance().getSliding())
 	{
-		if (GameInput::getInstance().getPlayerDashStart())
-			dash();
-		//スライディング使用時
-		if (GameInput::getInstance().getSliding())
-			sliding();
+		sliding();
 	}
-	if (GameInput::getInstance().getPlayerDashEND())
-		pAudio->stop();
+
 	//通常移動
 	if (GameInput::getInstance().getPlayerWalk())
 	{

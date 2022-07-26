@@ -61,7 +61,12 @@ bool GameInput::getPlayerWalk()
 		if (!moveLock)
 		{
 			// 左スティックの傾き取得
-			return true;
+			vec = ControllerInput::getInstance().getLStickInput();
+			if (vec.x != 0 || vec.y != 0)
+			{
+				return true;
+			}
+
 		}
 	}
 	// キーボード
