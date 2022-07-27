@@ -21,7 +21,17 @@ void SceneEffect::onUpdate()
 			{
 				if (ThirdDraw())
 				{
-					FourthDraw();
+					if (FourthDraw())
+					{
+						if (timerIsActive&&!endDrawFlg)
+						{
+							TimerDraw();
+						}
+						else
+						{
+							endDrawFlg = true;
+						}
+					}
 				}
 			}
 		 }
@@ -55,6 +65,7 @@ void SceneEffect::onUpdate()
 
 void SceneEffect::Initialize(short callNum)
 {
+	timerIsActive = false;
 	this->callNum = callNum;
 	if (callNum == 0)
 	{
@@ -76,6 +87,29 @@ void SceneEffect::Initialize(short callNum)
 		{
 			drawMaskSprite[i]->setTextureByName("mask");
 		}
+		for (int i = 0; i < 3; i++)
+		{
+			timeObject[i] = new GameObject(getUser().getGameMediator());
+			timeSprite[i] = timeObject[i]->addComponent<GUISpriteRenderer>();
+			timeObject[i]->getTransform().setLocalScale(Vec3{ 500,500,1 });
+			timeSprite[i]->setActive(false);
+		}
+		timeObject[2]->getTransform().setLocalPosition(Vec3{ 0,0,1 });
+		timeObject[1]->getTransform().setLocalPosition(Vec3{ 1530,0,1 });
+		timeObject[0]->getTransform().setLocalPosition(Vec3{ 1530,0,1 });
+		startObject = new GameObject(getUser().getGameMediator());
+		startSprite = startObject->addComponent<GUISpriteRenderer>();
+		startSprite->setTextureByName("start");
+		startSprite->setActive(false);
+		startObject->getTransform().setLocalPosition(Vec3{ 0,0,1 });
+		startObject->getTransform().setLocalScale(Vec3{ 700,500,1 });
+		timeSprite[0]->setTextureByName("1");
+		timeSprite[1]->setTextureByName("2");
+		timeSprite[2]->setTextureByName("3");
+		count = 0;
+		prog[0] = false;
+		prog[1] = false;
+		prog[2] = false;
 		//シーン開始個別初期化
 		drawObject->getTransform().setLocalPosition(Vec3{ 640,270,1 });
 		drawObject->getTransform().setLocalScale(Vec3{ 240,180,1 });
@@ -352,10 +386,66 @@ bool SceneEffect::FourthDraw()
 	{
 		drawMaskObj[3]->getTransform().setLocalScale(Vec3{ 0 ,180,1 });
 		drawFourthEndFlg = true;
-		endDrawFlg = true;
 		return true;
 	}
 
 	return false;
 }
 
+bool SceneEffect::TimerDraw()
+{
+	timeSprite[2]->setActive(true);
+	count++;
+	if (count > 60&&!prog[0]&&!prog[1]&&!prog[2])
+	{
+		Vec3 pos = timeObject[2]->getTransform().getLocalPosition();
+		timeObject[2]->getTransform().setLocalPosition(Vec3{ pos.x - 30,pos.y,pos.z });
+		if (pos.x < -1000)
+		{
+			count = 0;
+			prog[0] = true;
+			timeSprite[2]->setActive(false);
+			timeSprite[1]->setActive(true);
+		}
+	}
+    
+	if (prog[0]&& !prog[1] && !prog[2])
+	{
+		Vec3 pos = timeObject[1]->getTransform().getLocalPosition();
+		timeObject[1]->getTransform().setLocalPosition(Vec3{ pos.x - 30,pos.y,pos.z });
+		if (pos.x < -1000)
+		{
+			count = 0;
+			prog[1] = true;
+			timeSprite[1]->setActive(false);
+			timeSprite[0]->setActive(true);
+			prog[0] = false;
+		}
+	}
+	if (prog[1]&& !prog[2])
+	{
+		Vec3 pos = timeObject[0]->getTransform().getLocalPosition();
+		timeObject[0]->getTransform().setLocalPosition(Vec3{ pos.x - 30,pos.y,pos.z });
+		if (pos.x < -1000)
+		{
+			count = 0;
+			timeSprite[0]->setActive(false);
+			prog[2] = true;
+			prog[1] = false;
+			
+		}
+	}
+	if (prog[2])
+	{
+		startSprite->setActive(true);
+		if (count > 60)
+		{
+			count = 0;
+			startSprite->setActive(false);
+			prog[2] = false;
+			endDrawFlg = true;
+			return true;
+		}
+	}
+	return false;
+}
