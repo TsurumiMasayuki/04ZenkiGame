@@ -2,6 +2,8 @@
 #include "Component/Physics/BoxColliderBt.h"
 #include "Component/TestUI/TimeLimitUi.h"
 
+bool CheckPoint::isDead = false;
+
 void CheckPoint::onStart()
 {
 	auto collider = getUser().addComponent<BoxColiiderBt>();
@@ -10,14 +12,7 @@ void CheckPoint::onStart()
 	collider->setMass(0.0f);
 
 	// “G‚Æ‚µ‚Äƒ^ƒO•t‚¯
-	getUser().setTag("Gimmick");
-
-	isDead = false;
-
-	GameObj = new GameObject(getUser().getGameMediator());
-
-	// ŽÀ‘Ì‚ð‚È‚­‚·
-	getUser().getComponent<BoxColiiderBt>()->setTrigger(true);
+	getUser().setTag("CheckPoint");
 }
 
 void CheckPoint::onUpdate()
@@ -25,16 +20,6 @@ void CheckPoint::onUpdate()
 	if (IsDead())
 	{
 		getUser().destroy();
+		SetDead(false);
 	}
-}
-
-void CheckPoint::onTriggerEnter(GameObject* pHit)
-{
-	TimeLimitUi::AddLimit(3);
-
-	//“G‚Å‚È‚¢‚È‚çreturn
-	if (!pHit->compareTag("Gimmick"))
-		return;
-
-	SetDead(true);
 }

@@ -12,6 +12,8 @@
 
 #include "Component/Player/PlayerAttack.h"
 #include "Component/Player/PlayerParamManager.h"
+#include "Component/TestUI/TimeLimitUi.h"
+#include "Component/Gimmick/CheckPoint.h"
 
 #include "Device/GameInput.h"
 
@@ -94,6 +96,15 @@ void PlayerMovement::onUpdate()
 
 	//回転
 	getTransform().setLocalAngles(Vec3(0.0f, 0.0f, MathUtility::toDegree(m_CylinderCoord.y) + 180.0f));
+}
+
+void PlayerMovement::onCollisionEnter(GameObject* pHit)
+{
+	if (!pHit->compareTag("CheckPoint"))
+		return;
+
+	TimeLimitUi::AddLimit(3);
+	CheckPoint::SetDead(true);
 }
 
 void PlayerMovement::init(PlayerParamManager* pPlayerParam)

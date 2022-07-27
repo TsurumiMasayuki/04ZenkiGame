@@ -12,8 +12,16 @@ void LapTime::onStart()
 
 void LapTime::onUpdate()
 {
-	AddTime(GetOnePlace());
-	AddTime(GetOnePlace());
+	if (TimeLimitUi::IsStart())
+	{
+		AddTime(GetOnePlace());
+		AddTime(GetOnePlace());
+	}
+
+	if (TimeLimitUi::IsDead())
+	{
+		ResetTimer();
+	}
 
 	if (GetOnePlace() > 9)
 	{

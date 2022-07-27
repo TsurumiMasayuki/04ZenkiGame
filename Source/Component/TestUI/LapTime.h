@@ -44,6 +44,15 @@ public:
 		return onePlace;
 	}
 
+	static void ResetTimer()
+	{
+		tenThousandPlace = 0;
+		oneThousandPlace = 0;
+		oneHundredPlace  = 0;
+		tenPlace = 0;
+		onePlace = 0;
+	};
+
 private:
 	static int tenThousandPlace,oneThousandPlace,oneHundredPlace,tenPlace,onePlace;
 	static bool isDead;

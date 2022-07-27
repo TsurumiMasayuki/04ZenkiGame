@@ -41,8 +41,8 @@ void BackGround::onStart()
 	auto& random = GameDevice::getRandom();
 	//パーティクル(インスタンシング)
 	instancedObj = ModelGameObjectHelper::instantiateModel<InstancingInfo>(m_pUser->getGameMediator(), GameDevice::getModelManager().getModel("Cube"), true);
-	instancedObj->addComponent<Follow>()->SetGameObject(pCameraObject);
-	instancedObj->getComponent<Follow>()->Setdistance(Vec3(0, 0, 250));
+	//instancedObj->addComponent<Follow>()->SetGameObject(pCameraObject);
+	//instancedObj->getComponent<Follow>()->Setdistance(Vec3(90, 60, 250));
 	instancedRenderer = instancedObj->getChildren().at(0)->getComponent<InstancedRenderer<InstancingInfo>>();
     
 	for (int i = 0; i < 10; i++)
