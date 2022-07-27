@@ -1,9 +1,9 @@
 {
   "FlameRemainTime": 10.0,
-  "WalkSpeed": 3.0,
-  "DashSpeed": 10.0,
-  "AcceleratorSpeed": 10.0,
-  "WalkSpeedUpTime": 0.4,
+  "WalkSpeed": 3.5,
+  "DashSpeed": 8.0,
+  "AcceleratorSpeed": 8.0,
+  "WalkSpeedUpTime": 0.8,
   "DashSpeedUpTime": 0.2,
   "AcceleratorSpeedUpTime":  0.2
 }
