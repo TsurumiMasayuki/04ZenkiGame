@@ -73,8 +73,10 @@ private:
 	//ゲームスタート時演出
 	GameObject* timeObject[3];
 	GUISpriteRenderer* timeSprite[3];
+	GameObject* startObject;
+	GUISpriteRenderer* startSprite;
 	short count;
-	bool prog[2];
+	bool prog[3];
 	bool timerIsActive;
 	//共通変数
 	const float VELOCITY = 40.0f;
