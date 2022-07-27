@@ -21,9 +21,11 @@ public:
 
 private:
 	GameObject* titleObject = nullptr;
-	GUISpriteRenderer* titleSprite = nullptr;
 	GameObject* titleBGObject = nullptr;
+
+	GUISpriteRenderer* titleSprite = nullptr;
 	GUISpriteRenderer* titleBGSprite = nullptr;
+
 	GameObject* fireObjects[100];
 	GUISpriteRenderer* fireSprites[100];
 

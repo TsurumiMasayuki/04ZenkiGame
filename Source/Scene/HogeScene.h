@@ -5,7 +5,10 @@
 #include "Blockbench/BlockbenchLoader.h"
 #include "Component/TestUI/SceneEffect.h"
 #include "Blockbench/BBInstanceInfo.h"
+#include "Utility/Timer.h"
+
 #include "Component/BackGround/BackGround.h"
+#include "Component/Graphics/GUI/GUISpriteRenderer.h"
 
 class DX12Mesh;
 class StageLoader;
@@ -21,12 +24,12 @@ public:
 	virtual void update() override;
 	virtual void shutdown() override;
 
-	std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*> GetRenderHelpers() { return m_RenderHelpers;}
+	std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*> GetRenderHelpers() { return m_RenderHelpers; }
 
 private:
 	DX12Mesh* m_pCube;
 	StageLoader* m_pStageLoader;
-	
+
 	GoalObject* pGoalObj;
 	GameObject* m_pPlayer;
 	GameObject* m_pPlayerModel;
@@ -39,6 +42,7 @@ private:
 	//�C���X�^���V���O�⏕
 	std::unordered_map<std::string, InstancedRendererHelper<BBInstanceInfo>*> m_RenderHelpers;
 	BlockbenchLoader star_blockModelLoader;
+
 //シーン遷移
 	//開始
 	GameObject* pSceneStartEffect;
@@ -50,5 +54,9 @@ private:
 	SceneEffect* m_pSceneEndEffect;
 	//シーン終了エフェクトが終わったかどうか
 	bool sceneEffectIsEnd;
-	
+
+	// カメラ演出が終わったか
+	bool clearCameraIsEnd;
+	float orbit = 0;
+	Timer cameraTimer;
 };
