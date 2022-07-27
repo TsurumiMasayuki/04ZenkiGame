@@ -51,6 +51,13 @@ void JumpingEnemy::onUpdate()
 	//À•W‚ğ“K—p
 	getUser().getTransform().setLocalPosition(cartCoord);
 
+	//‰ñ“]
+	getUser().getTransform().setLocalAngles(
+		Vec3(0.0f,
+			0.0f,
+			MathUtility::toDegree(position.y) - 90.0f)
+	);
+
 	// 
 	cycleCnt += deltaTime;
 
