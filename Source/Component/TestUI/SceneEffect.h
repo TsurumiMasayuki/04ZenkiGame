@@ -25,6 +25,8 @@ public:
 	bool SecondDraw();
 	bool ThirdDraw();
 	bool FourthDraw();
+	bool TimerDraw();
+	void TimerISActive(bool timerIsActive) { this->timerIsActive = timerIsActive;}
 	//共通処理
 	void StartEffect();
 	bool IsEnd();
@@ -53,6 +55,7 @@ private:
 	GUISpriteRenderer* drawSprite;
 	GameObject* drawMaskObj[4];
 	GUISpriteRenderer* drawMaskSprite[4];
+	
 	bool drawStartFlg = false;
 	bool drawFirstRePosFlg = false;
 	bool drawSecondRePosFlg = false;
@@ -67,6 +70,12 @@ private:
 	Vec3 drawMaskStartPos[4];
 	Vec3 drawMaskPos[4];
 	bool endDrawFlg = false;
+	//ゲームスタート時演出
+	GameObject* timeObject[3];
+	GUISpriteRenderer* timeSprite[3];
+	short count;
+	bool prog[2];
+	bool timerIsActive;
 	//共通変数
 	const float VELOCITY = 40.0f;
 	short callNum;

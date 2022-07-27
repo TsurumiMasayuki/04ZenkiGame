@@ -61,8 +61,10 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("time",  L"Resources/textures/time.png");
 	GameDevice::getTextureManager().load("point", L"Resources/textures/point.png");
 	GameDevice::getTextureManager().load("colon", L"Resources/textures/colon.png");
-	
 	GameDevice::getTextureManager().load("accEffect", L"Resources/textures/accEffect.png");
+	GameDevice::getTextureManager().load("1", L"Resources/textures/UI_1.png");
+	GameDevice::getTextureManager().load("2", L"Resources/textures/UI_2.png");
+	GameDevice::getTextureManager().load("3", L"Resources/textures/UI_3.png");
 
 	//Blockbenchモデル用画像読み込み
 	GameDevice::getTextureManager().load("Player", L"Resources/BBModels/player.png");
