@@ -179,6 +179,7 @@ void HogeScene::start()
 		m_pSceneStartEffect = pSceneStartEffect->addComponent<SceneEffect>();
 		m_pSceneStartEffect->Initialize(0);
 		m_pSceneStartEffect->StartEffect();
+		m_pSceneStartEffect->TimerISActive(true);
 
 		// カメラ演出タイマー初期化
 		cameraTimer.setMaxTime(10.0f);
