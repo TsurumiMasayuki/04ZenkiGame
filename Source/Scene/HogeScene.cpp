@@ -217,7 +217,9 @@ void HogeScene::update()
 			m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
 			m_RenderHelpers.at("Player")->sendInstanceInfo();
 		}
-		if (pGoalObj->GetIsGoal() || TimeLimitUi::IsDead())
+
+		// ゲームクリア時
+		if (pGoalObj->GetIsGoal())
 		{
 			LapTime::SetResult3();
 			TimeLimitUi::SetStart(false);
@@ -235,6 +237,12 @@ void HogeScene::update()
 				// シーン切り替え演出
 				m_pSceneEndEffect->StartEffect();
 			}			
+		}
+		// ゲームオーバー時
+		if (TimeLimitUi::IsDead())
+		{
+			// シーン切り替え演出
+			m_pSceneEndEffect->StartEffect();
 		}
 	}
 }
