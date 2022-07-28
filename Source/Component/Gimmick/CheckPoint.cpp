@@ -1,6 +1,7 @@
 #include "CheckPoint.h"
 #include "Component/Physics/BoxColliderBt.h"
 #include "Component/TestUI/TimeLimitUi.h"
+#include "Component/TestUI/LapTime.h"
 
 bool CheckPoint::isDead = false;
 
@@ -9,7 +10,7 @@ void CheckPoint::onStart()
 	auto collider = getUser().addComponent<BoxColiiderBt>();
 	collider->setTrigger(true);
 	collider->setUseGravity(false);
-	collider->setMass(0.0f);
+	collider->setMass(3.0f);
 
 	// “G‚Æ‚µ‚Äƒ^ƒO•t‚¯
 	getUser().setTag("CheckPoint");

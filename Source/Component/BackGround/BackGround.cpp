@@ -22,18 +22,24 @@ void BackGround::onStart()
 		backGroundSprite[i]->setTextureByName("backGround");
 	}
 
-	backGrondObj[1]->getTransform().setLocalPosition(Vec3(0, 0, -250));
-	backGrondObj[2]->getTransform().setLocalPosition(Vec3(250, 0, 0));
-	backGrondObj[3]->getTransform().setLocalPosition(Vec3(-250, 0, 0));
-	backGrondObj[4]->getTransform().setLocalPosition(Vec3(0, 250, 0));
-	backGrondObj[5]->getTransform().setLocalPosition(Vec3(0, -250, 0));
+	backGrondObj[0]->getTransform().setLocalPosition(Vec3(0, 0, 0));
+	backGrondObj[1]->getTransform().setLocalPosition(Vec3(0, 0, 0));
+	backGrondObj[2]->getTransform().setLocalPosition(Vec3(0, 0, 0));
+	backGrondObj[3]->getTransform().setLocalPosition(Vec3(0, 0, 0));
+	backGrondObj[4]->getTransform().setLocalPosition(Vec3(0, 0, 0));
+	backGrondObj[5]->getTransform().setLocalPosition(Vec3(0, 0, 0));
 
-	backGrondObj[2]->getTransform().setLocalAngles(Vec3(0, 60, 0));
-	backGrondObj[3]->getTransform().setLocalAngles(Vec3(0, -60, 0));
-	backGrondObj[4]->getTransform().setLocalAngles(Vec3(60, 0, 0));
-	backGrondObj[5]->getTransform().setLocalAngles(Vec3(-60, 0, 0));
+	backGrondObj[2]->getTransform().setLocalAngles(Vec3(0, 90,  0));
+	backGrondObj[3]->getTransform().setLocalAngles(Vec3(0,-90,  0));
+	backGrondObj[4]->getTransform().setLocalAngles(Vec3(90, 0,  0));
+	backGrondObj[5]->getTransform().setLocalAngles(Vec3(-90,0,  0));
 
 	backGrondObj[0]->getComponent<Follow>()->Setdistance(Vec3(0, 0, 250));
+	backGrondObj[1]->getComponent<Follow>()->Setdistance(Vec3(0, 0, -250));
+	backGrondObj[2]->getComponent<Follow>()->Setdistance(Vec3(0, -250, 0));
+	backGrondObj[3]->getComponent<Follow>()->Setdistance(Vec3(0, 250,0));
+	backGrondObj[4]->getComponent<Follow>()->Setdistance(Vec3(250, 0, 0));
+	backGrondObj[5]->getComponent<Follow>()->Setdistance(Vec3(-250,0,0));
 
 	material = new InstancingMaterial();
 	material->init(DX12GraphicsCore::g_pDevice.Get());
@@ -41,8 +47,6 @@ void BackGround::onStart()
 	auto& random = GameDevice::getRandom();
 	//パーティクル(インスタンシング)
 	instancedObj = ModelGameObjectHelper::instantiateModel<InstancingInfo>(m_pUser->getGameMediator(), GameDevice::getModelManager().getModel("Cube"), true);
-	//instancedObj->addComponent<Follow>()->SetGameObject(pCameraObject);
-	//instancedObj->getComponent<Follow>()->Setdistance(Vec3(90, 60, 250));
 	instancedRenderer = instancedObj->getChildren().at(0)->getComponent<InstancedRenderer<InstancingInfo>>();
     
 	for (int i = 0; i < 10; i++)
