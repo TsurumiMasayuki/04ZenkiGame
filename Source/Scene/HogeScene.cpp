@@ -189,8 +189,13 @@ void HogeScene::start()
 
 void HogeScene::update()
 {
+	if (!m_pSceneStartEffect->IsEnd())
+	{
+		GameInput::getInstance().setLock(true);
+	}
 	if (m_pSceneStartEffect->IsEnd())
 	{
+		GameInput::getInstance().setLock(false);
 		std::vector<DirectX::XMMATRIX> matrices;
 		matrices.emplace_back(DirectX::XMMatrixRotationY(MathUtility::toRadian(180.0f)) *
 			DirectX::XMMatrixRotationZ(MathUtility::toRadian(-90.0f)) *
