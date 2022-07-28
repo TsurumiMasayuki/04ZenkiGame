@@ -28,6 +28,14 @@ public:
 		value += num;
 	}
 
+	static void ResetTimer()
+	{
+		firstNum  = 9;
+		secondNum = 9;
+		thirdNum  = 9;
+		forthNum  = 9;
+	};
+
 	static void set(float value);
 
 	static int AddLimit(int value)
@@ -61,12 +69,6 @@ public:
 		num = 9;
 	}
 
-	static void ResetNum(int& numFirst, int& numSecond)
-	{
-		numFirst = 9;
-		numSecond = 9;
-	}
-
 	static int& GetMax() { return maxValue; }
 
 	static bool IsMax(int value){
@@ -76,9 +78,11 @@ public:
 	static bool isMin(int& value) { return value < 0; }
 
 	static bool SetDead(bool dead) { return isDead = dead; }
-
 	static bool& IsDead() { return isDead; }
+
+	static bool SetStart(bool start) { return isStart = start; }
+	static bool& IsStart() { return isStart; }
 private:
 	static int firstNum, secondNum, thirdNum,forthNum,maxValue,minValue;
-	static bool isDead;
+	static bool isDead,isStart;
 };
