@@ -10,15 +10,15 @@ public:
 	// AbstractComponent ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 	virtual void onStart() override;
 	virtual void onUpdate() override;
-	virtual void onTriggerEnter(GameObject* pHit) override;
-
-	bool  SetDead(bool flag) { return isDead = flag; }
+	static bool  SetDead(bool flag) { return isDead = flag; }
 
 	bool& IsDead() { return isDead; }
 
 private:
 	GameObject* GameObj;
 	TimeLimitUi* timeLimit;
-	bool isDead;
+	static bool isDead;
+	FLOAT128 checkPointScore;
+	Vec3 reStartPos;
 };
 

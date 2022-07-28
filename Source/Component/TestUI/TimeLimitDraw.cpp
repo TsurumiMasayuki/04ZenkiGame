@@ -39,7 +39,8 @@ void TimeLimitDraw::onUpdate()
 	if (GameObj->isMin(TimeLimitUi::GetLimitFirst()))
 	{
 		GameObj->SetDead(true);
-		GameObj->ResetNum(TimeLimitUi::GetLimitFirst(), TimeLimitUi::GetLimitSecond());
+		GameObj->ResetTimer();
+		GameObj->SetStart(false);
 	}
 	
 	if (GameObj->isMin(TimeLimitUi::GetLimitSecond()))

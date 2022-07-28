@@ -9,8 +9,8 @@ void Follow::onUpdate()
 {
 	const auto& rotation = pObj->getTransform().getRotationMatrix();
 	Vec3 rotateDistance = distance.multMatrix(rotation);
+	getTransform().setLocalPosition(Vec3(pObj->getTransform().getLocalPosition()+ rotateDistance));
 
-	getTransform().setLocalPosition(pObj->getTransform().getLocalPosition() + rotateDistance);
-	/*float zAngle = pObj->getTransform().getLocalAngleZ();
-	getTransform().setLocalAngleZ(zAngle - 90.0f);*/
+	//float zAngle = pObj->getTransform().getLocalAngleZ();
+	//getTransform().setLocalAngleZ(zAngle - 90.0f);
 }

@@ -30,7 +30,6 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("white100x100", L"Resources/white100x100.png");
 	GameDevice::getTextureManager().load("OptionBotton", L"Resources/button_A.png");
 	GameDevice::getTextureManager().load("OptionCurBotton", L"Resources/button_B.png");
-	GameDevice::getTextureManager().load("OptionBackGround", L"Resources/background.png");
 	GameDevice::getTextureManager().load("healthStock", L"Resources/textures/healthStock.png");
 	GameDevice::getTextureManager().load("healthStockBlack", L"Resources/textures/healthStockBlack.png");
 	GameDevice::getTextureManager().load("accelerationEffect", L"Resources/textures/accelerationEffect.png");
@@ -63,7 +62,13 @@ void Game::onStart()
 	GameDevice::getTextureManager().load("colon", L"Resources/textures/colon.png");
 	GameDevice::getTextureManager().load("start", L"Resources/textures/ui_start.png");
 	GameDevice::getTextureManager().load("buttom", L"Resources/textures/ui_start_button.png");
-	
+	GameDevice::getTextureManager().load("ui_check1", L"Resources/textures/ui_check1.png");
+	GameDevice::getTextureManager().load("ui_check2", L"Resources/textures/ui_check2.png");
+	GameDevice::getTextureManager().load("ui_check3", L"Resources/textures/ui_check3.png");
+	GameDevice::getTextureManager().load("ui_clear", L"Resources/textures/ui_clear.png");
+	GameDevice::getTextureManager().load("ui_line", L"Resources/textures/ui_line.png");
+	GameDevice::getTextureManager().load("ui_sougou", L"Resources/textures/UI_sougou.png");
+	GameDevice::getTextureManager().load("OptionBackGround", L"Resources/background.png");
 	GameDevice::getTextureManager().load("accEffect", L"Resources/textures/accEffect.png");
 	GameDevice::getTextureManager().load("1", L"Resources/textures/UI_1.png");
 	GameDevice::getTextureManager().load("2", L"Resources/textures/UI_2.png");
@@ -110,6 +115,7 @@ void Game::onStart()
 	m_SceneManager.addScene("GameOver", new GameOverScene());
 	m_SceneManager.addScene("Clear", new ClearScene());
 	m_SceneManager.changeScene("Title");
+	//m_SceneManager.changeScene("Clear");
 	//m_SceneManager.changeScene("EnemyTest");
 }
 
