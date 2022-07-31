@@ -24,6 +24,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "Component/Item/CollectItemUI.h"
 #include "Component/TestUI/TimeLimitUi.h"
+#include "Component/TestUI/LapTime.h"
 #include "Component/BackGround/BackGround.h"
 
 #include "Device/GameInput.h"
@@ -216,8 +217,12 @@ void HogeScene::update()
 			m_RenderHelpers.at("Player")->appendInstanceInfo(matrices);
 			m_RenderHelpers.at("Player")->sendInstanceInfo();
 		}
-		if (pGoalObj->GetIsGoal() || TimeLimitUi::IsDead())
+
+		// ゲームクリア時
+		if (pGoalObj->GetIsGoal())
 		{
+			LapTime::SetResult3();
+			TimeLimitUi::SetStart(false);
 			// カメラ回転
 			orbit += 0.01;
 			Vec3 orbitPos = Vec3(-15.0f, sinf(orbit) * 15.0f, cosf(orbit) * 15.0f);
@@ -232,6 +237,12 @@ void HogeScene::update()
 				// シーン切り替え演出
 				m_pSceneEndEffect->StartEffect();
 			}			
+		}
+		// ゲームオーバー時
+		if (TimeLimitUi::IsDead())
+		{
+			// シーン切り替え演出
+			m_pSceneEndEffect->StartEffect();
 		}
 	}
 }

@@ -20,6 +20,7 @@ class PlayerMovement
 public:
 	virtual void onStart() override;
 	virtual void onUpdate() override;
+	virtual void onCollisionEnter(GameObject* pHit) override;
 
 	void init(PlayerParamManager* pPlayerParam);
 
