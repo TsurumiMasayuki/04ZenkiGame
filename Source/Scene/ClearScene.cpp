@@ -25,27 +25,27 @@ void ClearScene::start()
 	ClearSprite = ClearObject->addComponent<SpriteRenderer>();
 	ClearSprite->setTextureByName("backGround");
 
-	//リザルト画面(中身)
+	//クリアスプライト
 	resultContents.resultClear = new GameObject(this);
-	resultContents.resultClear->getTransform().setLocalPosition(Vec3{ 0,200,0.5 });
-	resultContents.resultClear->getTransform().setLocalScale(Vec3{ 300,150,1 });
 	resultContents.resultClearSprite = resultContents.resultClear->addComponent<GUISpriteRenderer>();
 	resultContents.resultClearSprite->setTextureByName("ui_clear");
+	resultContents.resultClearSprite->getTransform().setLocalPosition(Vec3{ 0,200,1.5f });
+	resultContents.resultClearSprite->getTransform().setLocalScale(Vec3{ 300,150,1 });
 
 	//総合スプライト
 	resultContents.resultComprehensive = new GameObject(this);
-	resultContents.resultComprehensive->getTransform().setLocalPosition(Vec3{ -200,-150,1 });
-	resultContents.resultComprehensive->getTransform().setLocalScale(Vec3{ 300,100,1 });
 	resultContents.resultComprehensiveSprite = resultContents.resultComprehensive->addComponent<GUISpriteRenderer>();
 	resultContents.resultComprehensiveSprite->setTextureByName("ui_sougou");
+	resultContents.resultComprehensiveSprite->getTransform().setLocalPosition(Vec3{ -200,-150,1.5f });
+	resultContents.resultComprehensiveSprite->getTransform().setLocalScale(Vec3{ 300,100,1.0 });
 
 	//チェックポイントスプライト
 	for (int i = 0; i < 2; i++)
     {
 	    resultContents.resultCheckPoint[i] = new GameObject(this);
-		resultContents.resultCheckPoint[i]->getTransform().setLocalScale(Vec3{ 300,100,1 });
-		resultContents.resultCheckPoint[i]->getTransform().setLocalPosition(Vec3{ -200,50 - ((float)i * 100),1 });
 		resultContents.resultCheckPointSprite[i] = resultContents.resultCheckPoint[i]->addComponent<GUISpriteRenderer>();
+		resultContents.resultCheckPointSprite[i]->getTransform().setLocalPosition(Vec3{ -200,50 - ((float)i * 100),1.5f });
+		resultContents.resultCheckPointSprite[i]->getTransform().setLocalScale(Vec3{ 300,100,1 });
 	}
 	resultContents.resultCheckPointSprite[0]->setTextureByName("ui_check1");
 	resultContents.resultCheckPointSprite[1]->setTextureByName("ui_check2");
@@ -58,11 +58,10 @@ void ClearScene::start()
 			for (int k = 0; k < 10; k++)                
 			{
 				resultContents.lapTimeObject[i][j][k] = new GameObject(this);
-				resultContents.lapTimeObject[i][j][k]->getTransform().setLocalPosition(Vec3{ (float)50 + (64 * j) ,(float)50 - (100 * i),10 });
-				resultContents.lapTimeObject[i][j][k]->getTransform().setLocalScale(Vec3{ 64,64,1 });
-
 				resultContents.lapTimeSprite[i][j][k] = resultContents.lapTimeObject[i][j][k]->addComponent<GUISpriteRenderer>();
 				resultContents.lapTimeSprite[i][j][k]->setActive(true);
+				resultContents.lapTimeSprite[i][j][k]->getTransform().setLocalPosition(Vec3{ (float)50 + (64 * j) ,(float)50 - (100 * i),1.5f});
+				resultContents.lapTimeSprite[i][j][k]->getTransform().setLocalScale(Vec3{ 64,64,1.0f });
 			}
 		}
 	}
@@ -73,18 +72,18 @@ void ClearScene::start()
 	for (int i = 0; i < 3; i++)
     {
     	resultContents.resultBar[i] = new GameObject(this);
-		resultContents.resultBar[i]->getTransform().setLocalScale(Vec3{ 332,100,1 });
-		resultContents.resultBar[i]->getTransform().setLocalPosition(Vec3{ 184,0 - ((float)i * 100),1 });
 		resultContents.resultBarSprite[i] = resultContents.resultBar[i]->addComponent<GUISpriteRenderer>();
 		resultContents.resultBarSprite[i]->setTextureByName("ui_line");
+		resultContents.resultBarSprite[i]->getTransform().setLocalScale(Vec3{ 332,100,1 });
+		resultContents.resultBarSprite[i]->getTransform().setLocalPosition(Vec3{ 184,0 - ((float)i * 100),1.5f });
     }
 
 	//リザルト画面
 	resultBack = new GameObject(this);
-	resultBack->getTransform().setLocalPosition(Vec3{ 0,0,0.3f });
-	resultBack->getTransform().setLocalScale(Vec3{ 700,650,0.5f });
 	resultBackSprite = resultBack->addComponent<GUISpriteRenderer>();
 	resultBackSprite->setTextureByName("OptionBackGround");
+	resultBackSprite->getTransform().setLocalPosition(Vec3{ 0,0,1.5f });
+	resultBackSprite->getTransform().setLocalScale(Vec3{ 750,650,0.5f });
 
 	//Sound
 	pAudio = ClearObject->addComponent<AudioSource>();
