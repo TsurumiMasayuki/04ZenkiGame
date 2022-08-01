@@ -274,9 +274,10 @@ void StageLoader::createObjects(const StageInfo& stageInfo,
 		if (objectPlaceInfo.m_ObjectName == "CheckPoint")
 		{
 			auto pObject = ModelGameObjectHelper::instantiateModel<int>(m_pGameMediator, pCube);
-			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position);
+			pObject->getTransform().setLocalPosition(objectPlaceInfo.m_Position * 1.1f);
 			//ã‚¹ã‚±ãƒ¼ãƒ«è¨­å®š
-			pObject->getTransform().setLocalScale(objectPlaceInfo.m_Scale);
+			pObject->getTransform().setLocalScale((objectPlaceInfo.m_Scale * 0.1f, objectPlaceInfo.m_Scale * 1.0f,
+				objectPlaceInfo.m_Scale * 1.0f));
 			//è§’åº¦è¨­å®š
 			pObject->getTransform().setLocalAngles(objectPlaceInfo.m_Angles);
 			//FÝ’è
