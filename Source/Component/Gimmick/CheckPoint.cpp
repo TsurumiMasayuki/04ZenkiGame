@@ -10,7 +10,7 @@ void CheckPoint::onStart()
 	auto collider = getUser().addComponent<BoxColiiderBt>();
 	collider->setTrigger(true);
 	collider->setUseGravity(false);
-	collider->setMass(3.0f);
+	collider->setMass(1.0f);
 
 	// “G‚Æ‚µ‚Äƒ^ƒO•t‚¯
 	getUser().setTag("CheckPoint");

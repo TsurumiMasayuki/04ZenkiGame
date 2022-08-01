@@ -2355,8 +2355,8 @@
             }
         },
         {
-            "type": "ChackPoint",
-            "name": "ChackPoint",
+            "type": "CheckPoint",
+            "name": "CheckPoint",
             "transform": {
                 "translation": [
                     "-11.806",
@@ -2376,8 +2376,8 @@
             }
         },
         {
-            "type": "ChackPoint",
-            "name": "ChackPoint",
+            "type": "CheckPoint",
+            "name": "CheckPoint",
             "transform": {
                 "translation": [
                     "-7.170",
